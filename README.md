@@ -9,7 +9,7 @@ Instrctions:
 
 3) `npm install` (need npm? get it here! https://nodejs.org/en/)
 
-4) `npm install watchman`
+4) error? try `npm install watchman`
 
 5) download "Expo" from App Store
 
