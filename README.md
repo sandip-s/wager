@@ -3,16 +3,14 @@ CS 147 Final Project
 
 Instrctions:
 
-1) clone directory
+1) `git clone https://github.com/sandip-s/wager.git`
 
 2) `cd wager`
 
 3) `npm install` (need npm? get it here! https://nodejs.org/en/)
 
-4) error? try `npm install watchman`
+4) download "Expo Client" from App Store
 
-5) download "Expo" from App Store
+5) `npm start`
 
-6) `npm start`
-
-7) scan QR code in terminal with Expo
+6) scan QR code in terminal with Expo
