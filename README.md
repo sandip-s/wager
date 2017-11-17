@@ -1,6 +1,8 @@
 # wager
 CS 147 Final Project
 
+Adam, Charlie, Sandip, Allen
+
 Instrctions:
 
 1) `git clone https://github.com/sandip-s/wager.git`
