@@ -3,7 +3,7 @@ CS 147 Final Project
 
 Adam, Charlie, Sandip, Allen
 
-Instrctions:
+Instructions:
 
 1) `git clone https://github.com/sandip-s/wager.git`
 
