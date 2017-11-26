@@ -58,7 +58,7 @@ export default class Home extends React.Component {
   };
 
   clickedSendWager() {
-    Alert.alert('You clicked send wager test!');
+    Alert.alert('You clicked send wager!');
   };
 }
 
