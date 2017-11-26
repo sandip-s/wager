@@ -11,8 +11,13 @@ import {
   ScrollView,
   Image,
   Button,
-  Alert
+  Alert,
+  AppRegistry
 } from 'react-native';
+
+import {
+  StackNavigator
+} from 'react-navigation';
 
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
@@ -22,12 +27,23 @@ import ProfileIcon from './Images/ProfileIcon.png'
 import Background from './Images/Background.png'
 
 // home page
-import Home from './Home'
+import HomeScreen from './HomeScreen'
+import ProfileScreen from './ProfileScreen'
+import NewWagerScreen from './NewWagerScreen'
+
 
 export default class App extends React.Component {
   render() {
     return (
-      <Home/>
+        <Nav/>
     );
   };
 }
+
+const Nav = StackNavigator(
+  {
+    Home: {screen:HomeScreen},
+    Profile: {screen: ProfileScreen},
+    NewWager: {screen: NewWagerScreen},
+  }
+);

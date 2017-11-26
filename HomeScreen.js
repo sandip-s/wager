@@ -11,8 +11,13 @@ import {
   ScrollView,
   Image,
   Button,
-  Alert
+  Alert,
+  Navigator
 } from 'react-native';
+
+import {
+  StackNavigator
+} from 'react-navigation';
 
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
@@ -20,23 +25,30 @@ import ProfileIcon from './Images/ProfileIcon.png'
 
 // background
 import Background from './Images/Background.png'
+import ProfileScreen from './ProfileScreen'
+import NewWagerScreen from './NewWagerScreen'
 
-export default class Home extends React.Component {
+
+
+
+export default class HomeScreen extends React.Component {
+
   render() {
+
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
-        
         {/* Top NavBar */}
         <View style={styles.TopBar}>
           <View style={{flexDirection: 'row'}}>
             {/* Profile Icon */}
-            <TouchableWithoutFeedback onPress = { this.clickedProfile }>
+
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
               <Image source={ProfileIcon} style={styles.ProfileIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
             <Text style={styles.Wager}>Wager</Text>
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { this.clickedSendWager }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager() }>
               <Image source={SendWagerIcon} style={styles.SendWagerIcon} />
             </TouchableWithoutFeedback>
           </View>
@@ -48,19 +60,22 @@ export default class Home extends React.Component {
         </ScrollView>
 
       {/* Bottom NavBar */}
-        
+
       </View>
     );
   };
 
+
+
   clickedProfile() {
-    Alert.alert('You clicked profile!');
+    this.props.navigation.navigate('Profile'); //navigate('Profile', {//props to pass in})
   };
 
   clickedSendWager() {
-    Alert.alert('You clicked send wager!');
+    this.props.navigation.navigate('NewWager');
   };
 }
+
 
 const styles = StyleSheet.create({
   // top bar
@@ -92,5 +107,5 @@ const styles = StyleSheet.create({
   ProfileIcon: {
     marginTop: 5
   }
-  
+
 });
