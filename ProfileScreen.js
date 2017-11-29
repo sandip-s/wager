@@ -29,38 +29,36 @@ export default class ProfileScreen extends React.Component {
     var person = this.props.navigation.state.params.person;
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
-
         {/* Top NavBar */}
         <View style={styles.TopBar}>
-          <View style={{flexDirection: 'row'}}>
-            {/* Profile Icon */}
+          <View style={{flexDirection: 'row'}}>
+            {/* Profile Icon */}
 
-            <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
-              <Image source={ProfileIcon} style={styles.ProfileIcon} />
-            </TouchableWithoutFeedback>
-            {/* Wager Text */}
-            <Text style={styles.Wager}>Wager</Text>
-            {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedSendWager() }>
-              <Image source={SendWagerIcon} style={styles.SendWagerIcon} />
-            </TouchableWithoutFeedback>
-          </View>
-        </View>
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
+              <Image source={ProfileIcon} style={styles.ProfileIcon} />
+            </TouchableWithoutFeedback>
+            {/* Wager Text */}
+            <Text style={styles.Wager}>Wager</Text>
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager() }>
+              <Image source={SendWagerIcon} style={styles.SendWagerIcon} />
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
 
         {/* Middle */}
         <View style={{ flex:1, backgroundColor: 'transparent' }}>
-          <View>
-              <Image style={{ height: 1000, width: '100%', position: 'absolute', top:0, left:0 }} source={Background} />
-          </View>
-          <ScrollView style={{ flex:1 }}>
-            <View>
-              <Text style={styles.fullName}>{person.fullName}</Text>
-            </View>
-          </ScrollView>
-        </View>
-
-        {/* Bottom NavBar */}
+          <View>
+            <Image style={{ height: 1000, width: '100%', position: 'absolute', top:0, left:0 }} source={Background} />
+          </View>
+          <ScrollView style={{ flex:1 }}>
+            <View>
+              <Text style={styles.fullName}>{person.fullName}</Text>
+            </View>
+          </ScrollView>
         </View>
+        {/* Bottom NavBar */}
+      </View>
     );
   };
 
