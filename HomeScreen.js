@@ -28,7 +28,7 @@ import Background from './Images/Background.png'
 import ProfileScreen from './ProfileScreen'
 import NewWagerScreen from './NewWagerScreen'
 
-
+const database = require('./global.js');
 
 
 export default class HomeScreen extends React.Component {
@@ -65,10 +65,8 @@ export default class HomeScreen extends React.Component {
     );
   };
 
-
-
   clickedProfile() {
-    this.props.navigation.navigate('Profile'); //navigate('Profile', {//props to pass in})
+    this.props.navigation.navigate('Profile', {person: database.adam});
   };
 
   clickedSendWager() {

@@ -26,18 +26,38 @@ import Background from './Images/Background.png'
 
 export default class ProfileScreen extends React.Component {
   render() {
+    var person = this.props.navigation.state.params.person;
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
 
         {/* Top NavBar */}
         <View style={styles.TopBar}>
-          <Text> Navigated to Profile! </Text>
-        </View>
+          <View style={{flexDirection: 'row'}}>
+            {/* Profile Icon */}
+
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
+              <Image source={ProfileIcon} style={styles.ProfileIcon} />
+            </TouchableWithoutFeedback>
+            {/* Wager Text */}
+            <Text style={styles.Wager}>Wager</Text>
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedSendWager() }>
+              <Image source={SendWagerIcon} style={styles.SendWagerIcon} />
+            </TouchableWithoutFeedback>
+          </View>
+        </View>
 
         {/* Middle */}
-        <ScrollView>
-          <Image style={{ height: 1000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
-        </ScrollView>
+        <View style={{ flex:1, backgroundColor: 'transparent' }}>
+          <View>
+              <Image style={{ height: 1000, width: '100%', position: 'absolute', top:0, left:0 }} source={Background} />
+          </View>
+          <ScrollView style={{ flex:1 }}>
+            <View>
+              <Text style={styles.fullName}>{person.fullName}</Text>
+            </View>
+          </ScrollView>
+        </View>
 
         {/* Bottom NavBar */}
         </View>
@@ -82,6 +102,14 @@ const styles = StyleSheet.create({
   // profile icon
   ProfileIcon: {
     marginTop: 5
-  }
+  },
+
+  fullName: {
+    fontSize: 40,
+    fontFamily: 'Noteworthy',
+    color: '#3BC446',
+    textAlign: 'center',
+    marginTop: 20
+  }
 
 });
