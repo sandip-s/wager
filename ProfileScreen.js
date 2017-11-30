@@ -22,11 +22,18 @@ import ProfileIcon from './Images/ProfileIcon.png'
 // background
 import Background from './Images/Background.png'
 
-
+// profile images
+import AdamImg from './Images/Adam.png'
+import CharlieImg from './Images/Charlie.png'
+import SandipImg from './Images/Sandip.png'
+import ZhiweiImg from './Images/Zhiwei.png'
+var profilePicture;
 
 export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
+    this.choosePicture(person.fullName);
+
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
         {/* Top NavBar */}
@@ -52,8 +59,9 @@ export default class ProfileScreen extends React.Component {
             <Image style={{ height: 1000, width: '100%', position: 'absolute', top:0, left:0 }} source={Background} />
           </View>
           <ScrollView style={{ flex:1 }}>
-            <View>
+            <View style={styles.header}>
               <Text style={styles.fullName}>{person.fullName}</Text>
+              <Image source={profilePicture} />
             </View>
           </ScrollView>
         </View>
@@ -68,6 +76,23 @@ export default class ProfileScreen extends React.Component {
 
   clickedSendWager() {
     Alert.alert('You clicked send wager!');
+  };
+
+  choosePicture(name) {
+    switch(name) {
+      case "Adam Mosharrafa":
+        profilePicture = AdamImg;
+        break;
+      case "Charlie Furrer":
+        profilePicture = AdamImg;
+        break;
+      case "Sandip Srinivas":
+        profilePicture = AdamImg;
+        break;
+      case "Zhiwei Gu":
+        profilePicture = ZhiweiImg;
+        break;
+    }
   };
 }
 
@@ -106,8 +131,12 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontFamily: 'Noteworthy',
     color: '#3BC446',
-    textAlign: 'center',
     marginTop: 20
-  }
+  },
+
+  header: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 
 });
