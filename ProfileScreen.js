@@ -22,17 +22,10 @@ import ProfileIcon from './Images/ProfileIcon.png'
 // background
 import Background from './Images/Background.png'
 
-// profile images
-import AdamImg from './Images/Adam.png'
-import CharlieImg from './Images/Charlie.png'
-import SandipImg from './Images/Sandip.png'
-import ZhiweiImg from './Images/Zhiwei.png'
-var profilePicture;
-
 export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
-    this.choosePicture(person.fullName);
+    var profilePicture = this.choosePicture(person.fullName);
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
@@ -81,22 +74,19 @@ export default class ProfileScreen extends React.Component {
   choosePicture(name) {
     switch(name) {
       case "Adam Mosharrafa":
-        profilePicture = AdamImg;
-        break;
+        return require('./Images/Adam.png');
       case "Charlie Furrer":
-        profilePicture = AdamImg;
-        break;
+        return require('./Images/Charlie.png');
       case "Sandip Srinivas":
-        profilePicture = AdamImg;
-        break;
+        return require('./Images/Sandip.png');
       case "Zhiwei Gu":
-        profilePicture = ZhiweiImg;
-        break;
+        return require('./Images/Zhiwei.png');
     }
   };
 }
 
 const styles = StyleSheet.create({
+  
   // top bar
   TopBar: {
     backgroundColor: '#ffffff',
@@ -127,6 +117,13 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
 
+  // name and picture at top of profile
+  header: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  // name at top of profile
   fullName: {
     fontSize: 40,
     fontFamily: 'Noteworthy',
@@ -134,11 +131,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
 
-  header: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-
+  // profile picture
   profilePicture: {
     width: 150,
     height: 150,
