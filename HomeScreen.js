@@ -66,7 +66,7 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedProfile() {
-    this.props.navigation.navigate('Profile', {person: database.adam});
+    this.props.navigation.navigate('Profile', {person: database.adam, adam: database.adam});
   };
 
   clickedSendWager() {

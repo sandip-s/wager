@@ -34,7 +34,7 @@ export default class ProfileScreen extends React.Component {
           <View style={{flexDirection: 'row'}}>
             {/* Profile Icon */}
 
-            <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(person) }>
               <Image source={ProfileIcon} style={styles.ProfileIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
@@ -63,8 +63,8 @@ export default class ProfileScreen extends React.Component {
     );
   };
 
-  clickedProfile() {
-    Alert.alert('You clicked profile');
+  clickedProfile(person) {
+    this.props.navigation.navigate('Profile', {person: this.props.navigation.state.params.adam});
   };
 
   clickedSendWager() {
