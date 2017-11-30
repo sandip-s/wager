@@ -61,7 +61,7 @@ export default class ProfileScreen extends React.Component {
           <ScrollView style={{ flex:1 }}>
             <View style={styles.header}>
               <Text style={styles.fullName}>{person.fullName}</Text>
-              <Image source={profilePicture} />
+              <Image source={profilePicture} style={styles.profilePicture} />
             </View>
           </ScrollView>
         </View>
@@ -137,6 +137,13 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+
+  profilePicture: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    marginTop: 10
   }
 
 });
