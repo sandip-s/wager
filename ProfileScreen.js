@@ -18,14 +18,19 @@ import {
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
 import ProfileIcon from './Images/ProfileIcon.png'
+import LocationIcon from './Images/redpin.png'
 
 // background
 import Background from './Images/Background.png'
 
+var isFriend = false;
+
 export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
+    var adam = this.props.navigation.state.params.adam;
     var profilePicture = this.choosePicture(person.fullName);
+    isFriend = adam.friends.includes(person.fullName)
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
@@ -54,7 +59,19 @@ export default class ProfileScreen extends React.Component {
           <ScrollView style={{ flex:1 }}>
             <View style={styles.header}>
               <Text style={styles.fullName}>{person.fullName}</Text>
+              <View style={{flexDirection: 'row'}}>
+                <Image source={LocationIcon} style={styles.LocationIcon} />
+                <Text style={styles.LocationText}>{person.location}</Text>
+              </View>
               <Image source={profilePicture} style={styles.profilePicture} />
+              <View style={{flexDirection: 'row'}}>
+                <Button onPress = { () => this.friendButton() } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
+                <Button onPress = { () => this.wagerFriendButton() } title={"Send Wager"} color="#000000" />
+              </View>
+              <View style={{alignItems: 'center'}}>
+                <View style={styles.grayRectangle} />
+                <View style={{width: 200 * person.successRate, height: 20, backgroundColor: '#3BC446', borderRadius: 50, marginRight: 200 - 200 * person.successRate}} />
+              </View>
             </View>
           </ScrollView>
         </View>
@@ -64,7 +81,7 @@ export default class ProfileScreen extends React.Component {
   };
 
   clickedProfile(person) {
-    this.props.navigation.navigate('Profile', {person: this.props.navigation.state.params.adam});
+    this.props.navigation.navigate('Profile', {person: this.props.navigation.state.params.adam, adam: this.props.navigation.state.params.adam});
   };
 
   clickedSendWager() {
@@ -82,6 +99,14 @@ export default class ProfileScreen extends React.Component {
       case "Zhiwei Gu":
         return require('./Images/Zhiwei.png');
     }
+  };
+
+  friendButton() {
+    isFriend = !isFriend;
+  };
+
+  wagerFriendButton() {
+    
   };
 }
 
@@ -136,7 +161,28 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    marginTop: 10
+    margin: 10
+  },
+
+  // location red pin
+  LocationIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 10
+  },
+
+  LocationText: {
+    fontSize: 20,
+    fontFamily: 'Noteworthy',
+    color: '#3BC446'
+  },
+
+  grayRectangle: {
+    width: 200,
+    height: 20,
+    backgroundColor: '#BDC3C7',
+    borderRadius: 50,
+    position: 'absolute'
   }
 
 });
