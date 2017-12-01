@@ -30,7 +30,7 @@ export default class ProfileScreen extends React.Component {
     var person = this.props.navigation.state.params.person;
     var adam = this.props.navigation.state.params.adam;
     var profilePicture = this.choosePicture(person.fullName);
-    //isFriend = adam.friends.includes(person.fullName);
+    isFriend = adam.friends.includes(person.fullName);
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
@@ -65,7 +65,7 @@ export default class ProfileScreen extends React.Component {
               </View>
               <Image source={profilePicture} style={styles.profilePicture} />
               <View style={{flexDirection: 'row'}}>
-                <Button onPress = { () => this.friendButton() } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
+                <Button onPress = { () => this.friendButton(adam, person) } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
                 <Button onPress = { () => this.wagerFriendButton() } title={"Send Wager"} color="#000000" />
               </View>
               <View style={{alignItems: 'center'}}>
@@ -101,8 +101,18 @@ export default class ProfileScreen extends React.Component {
     }
   };
 
-  friendButton() {
+  friendButton(adam, person) {
+    var index1 = adam.friends.indexOf(person.fullName);
+    var index2 = person.friends.indexOf(adam.fullName);
     isFriend = !isFriend;
+    if(index1 < 0) {
+        adam.friends.push(person.fullName);
+        person.friends.push(adam.fullName);
+    } else {
+        adam.friends.splice(index1, 1);
+        person.friends.splice(index2, 1);
+    }
+    this.forceUpdate();
   };
 
   wagerFriendButton() {
