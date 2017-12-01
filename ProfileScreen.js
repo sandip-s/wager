@@ -30,7 +30,7 @@ export default class ProfileScreen extends React.Component {
     var person = this.props.navigation.state.params.person;
     var adam = this.props.navigation.state.params.adam;
     var profilePicture = this.choosePicture(person.fullName);
-    isFriend = adam.friends.includes(person.fullName)
+    //isFriend = adam.friends.includes(person.fullName);
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
