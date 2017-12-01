@@ -19,6 +19,8 @@ import {
   StackNavigator
 } from 'react-navigation';
 
+
+
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
 import ProfileIcon from './Images/ProfileIcon.png'
@@ -60,7 +62,32 @@ export default class HomeScreen extends React.Component {
         </ScrollView>
 
       {/* Bottom NavBar */}
+        <View style={styles.NavBarContainer}>
+        <View style={{flexDirection: 'row'}}>
 
+          {/* Profile Icon */}
+          <TouchableWithoutFeedback onPress = { () => this.clickedHome() }>
+            <Image source={require('./Images/WagerHomeIcon.png')} style={styles.NavBarIcon} />
+          </TouchableWithoutFeedback>
+
+          {/* Send Wager Icon */}
+          <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore() }>
+            <Image source={require('./Images/WagerSearchIcon.png')} style={styles.NavBarIcon} />
+          </TouchableWithoutFeedback>
+
+          {/* Send Wager Icon */}
+          <TouchableWithoutFeedback onPress = { ()=> this.clickedPending() }>
+            <Image source={require('./Images/WagerBellIcon.png')} style={styles.NavBarIcon} />
+          </TouchableWithoutFeedback>
+
+          {/* Send Wager Icon */}
+          <TouchableWithoutFeedback onPress = { ()=> this.clickedActive() }>
+            <Image source={require('./Images/WagerCommentIcon.png')} style={styles.NavBarIcon} />
+          </TouchableWithoutFeedback>
+
+
+        </View>
+      </View>
       </View>
     );
   };
@@ -71,6 +98,24 @@ export default class HomeScreen extends React.Component {
 
   clickedSendWager() {
     this.props.navigation.navigate('NewWager');
+  };
+
+  clickedPending(){
+    //this.props.rootNavigation.navigation.navigate('Pending');
+    this.props.navigation.navigate('Home');
+  };
+
+  clickedActive(){
+    //this.props.rootNavigation.navigation.navigate('Active');
+    this.props.navigation.navigate('Home');
+  };
+
+  clickedExplore(){
+    this.props.navigation.navigate('Explore');
+  };
+  
+  clickedHome(){
+    this.props.navigation.navigate('Home');
   };
 }
 
@@ -104,6 +149,11 @@ const styles = StyleSheet.create({
   // profile icon
   ProfileIcon: {
     marginTop: 5
+  },
+
+  NavBarIcon: {
+    height: 25,
+    width: 25
   }
 
 });

@@ -30,6 +30,7 @@ import Background from './Images/Background.png'
 import HomeScreen from './HomeScreen'
 import ProfileScreen from './ProfileScreen'
 import NewWagerScreen from './NewWagerScreen'
+import ExploreScreen from './ExploreScreen'
 
 
 export default class App extends React.Component {
@@ -45,5 +46,6 @@ const Nav = StackNavigator(
     Home: {screen:HomeScreen},
     Profile: {screen: ProfileScreen},
     NewWager: {screen: NewWagerScreen},
+    Explore: {screen: ExploreScreen}
   }
 );
