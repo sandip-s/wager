@@ -77,12 +77,12 @@ export default class HomeScreen extends React.Component {
 
           {/* Send Wager Icon */}
           <TouchableWithoutFeedback onPress = { ()=> this.clickedPending() }>
-            <Image source={require('./Images/WagerBellIcon.png')} style={styles.NavBarIcon} />
+            <Image source={require('./Images/WagerPendingIcon.png')} style={styles.NavBarIcon} />
           </TouchableWithoutFeedback>
 
           {/* Send Wager Icon */}
           <TouchableWithoutFeedback onPress = { ()=> this.clickedActive() }>
-            <Image source={require('./Images/WagerCommentIcon.png')} style={styles.NavBarIcon} />
+            <Image source={require('./Images/WagerActiveIcon.png')} style={styles.NavBarIcon} />
           </TouchableWithoutFeedback>
 
 
@@ -152,8 +152,11 @@ const styles = StyleSheet.create({
   },
 
   NavBarIcon: {
-    height: 25,
-    width: 25
+    height: 35,
+    width: 35,
+    marginRight: 75,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 
 });
