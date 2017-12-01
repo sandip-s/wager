@@ -42,17 +42,14 @@ export default class ExploreScreen extends React.Component {
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
 
         {/* Middle */}
-        <View style = {{flexDirection: 'column'}}>
+        
 
 
           <ScrollView style = {styles.FriendsList}>
+              <View style = {{flexDirection: 'row'}}>
             
             <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(database.charlie) } style = {styles.FriendListEntry}>
               <Image source = {this.choosePicture(database.charlie.fullName)} style = {styles.FriendsListEntryElement}/>
-            </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(database.adam) } style = {styles.FriendListEntry}>
-              <Image source = {this.choosePicture(database.adam.fullName)} style = {styles.FriendsListEntryElement}/>
             </TouchableWithoutFeedback>
 
             <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(database.sandip) } style = {styles.FriendListEntry}>
@@ -63,8 +60,9 @@ export default class ExploreScreen extends React.Component {
               <Image source = {this.choosePicture(database.zhiwei.fullName)} style = {styles.FriendsListEntryElement}/>
             </TouchableWithoutFeedback>
 
-          </ScrollView>
-        </View>
+          
+            </View>
+        </ScrollView>
       </View>
         
     );
@@ -101,11 +99,11 @@ const styles = StyleSheet.create({
     height: 50,
   },
   FriendsList: {
-    flexDirection: 'column',
+
   },
 
   FriendsListEntry:{
-    flexDirection: 'row',
+  
   },
 
   FriendsListEntryElement:{

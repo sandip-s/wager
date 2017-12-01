@@ -82,7 +82,7 @@ export default class HomeScreen extends React.Component {
 
           {/* Send Wager Icon */}
           <TouchableWithoutFeedback onPress = { ()=> this.clickedActive() }>
-            <Image source={require('./Images/WagerActiveIcon.png')} style={styles.NavBarIcon} />
+            <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.NavBarIcon} />
           </TouchableWithoutFeedback>
 
 
