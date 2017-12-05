@@ -18,6 +18,8 @@ Instructions:
 
 Branch Workflow:
 
+0) `git pull`
+
 1) `git checkout -b "your name here"`
 
 2) `git checkout "your name here"`
@@ -26,8 +28,14 @@ Branch Workflow:
 
 4) From here, do all your work on your local branch. Once you're positive that the app won't crash:
 
-5) `git checkout master`
+5) `git add .`
 
-6) `git merge "your name here"`
+6) `git commit -m "your message here"`
 
 7) `git push`
+
+8) `git checkout master`
+
+9) `git merge "your name here"`
+
+10) `git push`
