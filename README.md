@@ -15,3 +15,19 @@ Instructions:
 5) `npm start`
 
 6) scan QR code in terminal with Expo
+
+Branch Workflow:
+
+1) `git checkout -b "your name here"`
+
+2) `git checkout "your name here"`
+
+3) `git merge master`
+
+4) From here, do all your work on your local branch. Once you're positive that the app won't crash:
+
+5) git checkout master
+
+6) git merge "your name here"
+
+7) git push
