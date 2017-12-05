@@ -32,7 +32,7 @@ Branch Workflow:
 
 6) `git commit -m "your message here"`
 
-7) `git push`
+7) `git push --set-upstream origin your_name_here`
 
 8) `git checkout master`
 
