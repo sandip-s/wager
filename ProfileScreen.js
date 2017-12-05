@@ -28,25 +28,25 @@ var isFriend = false;
 export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
-    var adam = this.props.navigation.state.params.adam;
+    var adam = this.props.navigation.state.params.database.adam;
     var profilePicture = this.choosePicture(person.fullName);
     isFriend = adam.friends.includes(person.fullName);
 
     return (
-      <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
+      <View style={{flex: 1, alignSelf: 'stretch'}}>
         {/* Top NavBar */}
         <View style={styles.TopBar}>
           <View style={{flexDirection: 'row'}}>
             {/* Profile Icon */}
 
-            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(person) }>
-              <Image source={ProfileIcon} style={styles.ProfileIcon} />
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
+              <Image source={ProfileIcon} style={styles.TopIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
             <Text style={styles.Wager}>Wager</Text>
             {/* Send Wager Icon */}
             <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager() }>
-              <Image source={SendWagerIcon} style={styles.SendWagerIcon} />
+              <Image source={SendWagerIcon} style={styles.TopIcon} />
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -75,17 +75,43 @@ export default class ProfileScreen extends React.Component {
             </View>
           </ScrollView>
         </View>
+        
         {/* Bottom NavBar */}
+        <View style={styles.NavBarContainer}>
+          <View style={{flexDirection: 'row'}}>
+
+            {/* Profile Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedHome() }>
+              <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
+
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore() }>
+              <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
+
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedPending() }>
+              <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
+
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedActive() }>
+              <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
+
+          </View>
+        </View>
       </View>
     );
   };
 
   clickedProfile(person) {
-    this.props.navigation.navigate('Profile', {person: this.props.navigation.state.params.adam, adam: this.props.navigation.state.params.adam});
+    this.props.navigation.navigate('Profile', {person: this.props.navigation.state.params.adam, wagers: this.props.navigation.state.params.wagers, database: this.props.navigation.state.params.database});
   };
 
   clickedSendWager() {
-    Alert.alert('You clicked send wager!');
+    this.props.navigation.navigate('NewWager', {wagers: this.props.navigation.state.params.wagers, database: this.props.navigation.state.params.database});
   };
 
   choosePicture(name) {
@@ -106,11 +132,11 @@ export default class ProfileScreen extends React.Component {
     var index2 = person.friends.indexOf(adam.fullName);
     isFriend = !isFriend;
     if(index1 < 0) {
-        adam.friends.push(person.fullName);
-        person.friends.push(adam.fullName);
+      adam.friends.push(person.fullName);
+      person.friends.push(adam.fullName);
     } else {
-        adam.friends.splice(index1, 1);
-        person.friends.splice(index2, 1);
+      adam.friends.splice(index1, 1);
+      person.friends.splice(index2, 1);
     }
     this.forceUpdate();
   };
@@ -133,7 +159,7 @@ const styles = StyleSheet.create({
   // wager text
   Wager: {
     backgroundColor: 'transparent',
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 'bold',
     fontFamily: 'Noteworthy',
     color: '#3BC446',
@@ -143,13 +169,26 @@ const styles = StyleSheet.create({
   },
 
   // send wager icon
-  SendWagerIcon: {
+  TopIcon: {
+    width: 30,
+    height: 30,
     marginTop: 5
   },
 
-  // profile icon
-  ProfileIcon: {
-    marginTop: 5
+  NavBarContainer: {
+    backgroundColor: '#ffffff',
+    height: 50
+  },
+
+  BottomIcon: {
+    height: 30,
+    width: 30,
+    margin: 20,
+    marginBottom: 10,
+    marginTop: 10,
+    marginRight: 50,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   // name and picture at top of profile

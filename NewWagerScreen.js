@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 
 import DatePicker from 'react-native-datepicker'
+import SearchBar from 'react-native-elements'
 
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
@@ -24,8 +25,10 @@ import ProfileIcon from './Images/ProfileIcon.png'
 // background
 import Background from './Images/Background.png'
 
-var sender = {fullName: 'Adam Mosharrafa', goal: '', reward: '', penalty: ''};
-var receiver = {fullName: '', goal: '', reward: '', penalty: ''};
+// icons
+import Target from './Images/goalIcon.png'
+import Reward from './Images/rewardIcon.png'
+import Skull from './Images/penaltyIcon.png'
 
 export default class NewWagerScreen extends React.Component {
   render() {
@@ -33,26 +36,8 @@ export default class NewWagerScreen extends React.Component {
     var database = this.props.navigation.state.params.database;
 
     return (
-      <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
+      <View style={{flex: 1, alignSelf: 'stretch'}}>
 
-        {/* Top NavBar */}
-        <View style={styles.TopBar}>
-          <View style={{flexDirection: 'row'}}>
-            {/* Profile Icon */}
-
-            <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
-              <Image source={ProfileIcon} style={styles.ProfileIcon} />
-            </TouchableWithoutFeedback>
-            {/* Wager Text */}
-            <Text style={styles.Wager}>Wager</Text>
-            {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager() }>
-              <Image source={SendWagerIcon} style={styles.SendWagerIcon} />
-            </TouchableWithoutFeedback>
-          </View>
-        </View>
-
-        {/* Middle */}
         <ScrollView>
           <Image style={{ height: 1000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
           <View style={styles.center}>
@@ -60,7 +45,7 @@ export default class NewWagerScreen extends React.Component {
               <Text style={styles.deadline}>Deadline:</Text>
               <DatePicker
                 style={styles.datepicker}
-                date={this.state.date}
+                date={this.state.deadline}
                 mode="date"
                 placeholder="Select Date"
                 format="MM-DD-YYYY"
@@ -88,11 +73,14 @@ export default class NewWagerScreen extends React.Component {
                     marginLeft: 20
                   }
                 }}
-                onDateChange={(date) => {this.setState({sender: sender, 
-                                                        receiver: receiver, 
-                                                        deadline: this.state.date, 
-                                                        status: this.state.status, 
-                                                        date: date})}}/>
+                onDateChange={(date) => {this.setState({deadline: date, 
+                                        myGoal: this.state.myGoal,
+                                        myReward: this.state.myReward,
+                                        myPenalty: this.state.myPenalty,
+                                        yourGoal: this.state.yourGoal,
+                                        yourReward: this.state.yourReward,
+                                        yourPenalty: this.state.yourPenalty
+                                      })}}/>
             </View>
           </View>
           <View style={styles.center}>
@@ -102,32 +90,111 @@ export default class NewWagerScreen extends React.Component {
               <Image source={ProfileIcon} style={styles.profilePicture} />
             </View>
           </View>
+          <View style={{marginLeft: 15}}>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={Target} style={styles.headerIcon} />
+              <TextInput style={styles.myPlaceholder} placeholder="Enter a goal" onChangeText={(myGoal) => 
+                this.setState({deadline: this.state.deadline, 
+                              myGoal: myGoal,
+                              myReward: this.state.myReward,
+                              myPenalty: this.state.myPenalty,
+                              yourGoal: this.state.yourGoal,
+                              yourReward: this.state.yourReward,
+                              yourPenalty: this.state.yourPenalty
+                            })}/>
+              <TextInput style={styles.yourPlaceholder} placeholder="Enter a goal" onChangeText={(yourGoal) => 
+                this.setState({deadline: this.state.deadline, 
+                              myGoal: this.state.myGoal,
+                              myReward: this.state.myReward,
+                              myPenalty: this.state.myPenalty,
+                              yourGoal: yourGoal,
+                              yourReward: this.state.yourReward,
+                              yourPenalty: this.state.yourPenalty
+                            })}/>
+              <Image source={Target} style={styles.headerIcon} />
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={Reward} style={styles.headerIcon} />
+              <TextInput style={styles.myPlaceholder} placeholder="Enter a reward" onChangeText={(myReward) => 
+                this.setState({deadline: this.state.deadline, 
+                              myGoal: this.state.myGoal,
+                              myReward: myReward,
+                              myPenalty: this.state.myPenalty,
+                              yourGoal: this.state.yourGoal,
+                              yourReward: this.state.yourReward,
+                              yourPenalty: this.state.yourPenalty
+                            })}/>
+              <TextInput style={styles.yourPlaceholder} placeholder="Enter a reward" onChangeText={(yourReward) => 
+              this.setState({deadline: this.state.deadline, 
+                            myGoal: this.state.myGoal,
+                            myReward: this.state.myReward,
+                            myPenalty: this.state.myPenalty,
+                            yourGoal: this.state.yourGoal,
+                            yourReward: yourReward,
+                            yourPenalty: this.state.yourPenalty
+                          })}/>
+              <Image source={Reward} style={styles.headerIcon} />
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={Skull} style={styles.headerIcon} />
+              <TextInput style={styles.myPlaceholder} placeholder="Enter a penalty" onChangeText={(myPenalty) => 
+                this.setState({deadline: this.state.deadline, 
+                              myGoal: this.state.myGoal,
+                              myReward: this.state.myReward,
+                              myPenalty: myPenalty,
+                              yourGoal: this.state.yourGoal,
+                              yourReward: this.state.yourReward,
+                              yourPenalty: this.state.yourPenalty
+                            })}/>
+              <TextInput style={styles.yourPlaceholder} placeholder="Enter a penalty" onChangeText={(yourPenalty) => 
+              this.setState({deadline: this.state.deadline, 
+                            myGoal: this.state.myGoal,
+                            myReward: this.state.myReward,
+                            myPenalty: this.state.myPenalty,
+                            yourGoal: this.state.yourGoal,
+                            yourReward: this.state.yourReward,
+                            yourPenalty: yourPenalty
+                          })}/>
+              <Image source={Skull} style={styles.headerIcon} />
+            </View>
+          </View>
           <View style={styles.center}>
             <TouchableHighlight style={styles.button} onPress={this.sendWager}>
               <Text style={styles.buttonText}>Send Wager</Text>
             </TouchableHighlight>
+            <Text>{JSON.stringify(wagers, null, 4)}</Text>
           </View>
         </ScrollView>
-
-        {/* Bottom NavBar */}
-        </View>
+      </View>
     );
   };
 
   constructor(props) {
     super(props)
-    this.state = { sender: sender, receiver: receiver, status: 'Pending' }
+    this.state = {}
   }
 
   sendWager = () => {
-    if(this.state.date == null) {
-      alert("You must enter a deadline.")
+    if(this.state.deadline == null) {
+      alert("You must enter a deadline.");
+    } else if (this.state.myGoal == null || this.state.yourGoal == null) {
+      alert("You must enter a goal for both people.");
+    } else if (this.state.myReward == null || this.state.yourReward == null) {
+      alert("You must enter a reward for both people.");
+    } else if (this.state.myPenalty == null || this.state.yourPenalty == null) {
+      alert("You must enter a penalty for both people.");
     } else {
-      var wager = {sender: this.state.sender, receiver: this.state.receiver, deadline: this.state.date, status: this.state.status}
+      var sender = {fullName: 'Adam Mosharrafa', goal: this.state.myGoal, reward: this.state.myReward, penalty: this.state.myPenalty};
+      var receiver = {fullName: '', goal: this.state.yourGoal, reward: this.state.yourReward, penalty: this.state.yourPenalty};
+      var wager = {sender: sender, 
+                   receiver: receiver, 
+                   deadline: this.state.deadline, 
+                   status: 'Pending'}
       this.props.navigation.state.params.wagers.push(wager);
       this.forceUpdate();
     }
   }
+
 }
 
 const styles = StyleSheet.create({
@@ -142,7 +209,7 @@ const styles = StyleSheet.create({
   // wager text
   Wager: {
     backgroundColor: 'transparent',
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: 'bold',
     fontFamily: 'Noteworthy',
     color: '#3BC446',
@@ -152,13 +219,25 @@ const styles = StyleSheet.create({
   },
 
   // send wager icon
-  SendWagerIcon: {
+  TopIcon: {
+    width: 30,
+    height: 30,
     marginTop: 5
   },
 
-  // profile icon
-  ProfileIcon: {
-    marginTop: 5
+  NavBarContainer: {
+    height: 50
+  },
+
+  BottomIcon: {
+    height: 30,
+    width: 30,
+    margin: 20,
+    marginBottom: 10,
+    marginTop: 10,
+    marginRight: 50,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   deadline: {
@@ -178,12 +257,21 @@ const styles = StyleSheet.create({
     marginTop: 50
   },
 
-  placeholder: {
+  myPlaceholder: {
     backgroundColor: 'transparent',
-    fontSize: 23,
+    fontSize: 14,
     fontFamily: 'Noteworthy',
     color: 'gray',
-    marginTop: 20
+    width: 90,
+    marginRight: 50
+  },
+
+  yourPlaceholder: {
+    backgroundColor: 'transparent',
+    fontSize: 14,
+    fontFamily: 'Noteworthy',
+    color: 'gray',
+    width: 90
   },
 
   center: {
@@ -195,7 +283,8 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    margin: 25
+    margin: 25,
+    marginBottom: 0
   },
 
   button: {
@@ -213,6 +302,12 @@ const styles = StyleSheet.create({
   datepicker: {
     width: 170,
     marginTop: 20
+  },
+
+  headerIcon: {
+    width: 40,
+    height: 40,
+    margin: 10
   }
 
 });
