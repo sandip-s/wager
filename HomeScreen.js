@@ -30,8 +30,8 @@ import Background from './Images/Background.png'
 import ProfileScreen from './ProfileScreen'
 import NewWagerScreen from './NewWagerScreen'
 
-const database = require('./global.js');
-
+var database = require('./global.js');
+var wagers = require('./wagers.js');
 
 export default class HomeScreen extends React.Component {
 
@@ -97,7 +97,7 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedSendWager() {
-    this.props.navigation.navigate('NewWager');
+    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database});
   };
 
   clickedPending(){
