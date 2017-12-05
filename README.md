@@ -1,5 +1,5 @@
 # wager
-CS 147 Final Project
+CS147 Final Project
 Adam, Charlie, Sandip, Allen
 
 Instructions:
