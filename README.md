@@ -26,8 +26,8 @@ Branch Workflow:
 
 4) From here, do all your work on your local branch. Once you're positive that the app won't crash:
 
-5) git checkout master
+5) `git checkout master`
 
-6) git merge "your name here"
+6) `git merge "your name here"`
 
-7) git push
+7) `git push`
