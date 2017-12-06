@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
+  AppRegistry,
+  FlatList,
+  List,
+  ListItem,
   StyleSheet,
   Text,
   View,
@@ -29,6 +33,16 @@ import ProfileIcon from './Images/ProfileIcon.png'
 import Background from './Images/Background.png'
 import ProfileScreen from './ProfileScreen'
 import NewWagerScreen from './NewWagerScreen'
+
+//four users
+import Adam from './Images/Adam.png'
+import Charlie from './Images/Charlie.png'
+import Sandip from './Images/Sandip.png'
+import Zhiwei from './Images/Zhiwei.png'
+
+//like and comment
+import LikeButton from './Images/WagerLikeIcon.png'
+import CommentButton from './Images/WagerCommentIcon.png'
 
 var database = require('./global.js');
 var wagers = require('./wagers.js');
@@ -59,7 +73,37 @@ export default class HomeScreen extends React.Component {
 
         {/* Middle */}
         <ScrollView>
-          <Image style={{ height: 1000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
+          <Image style={{ height: 2000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
+          <View style={styles.container}>
+            <FlatList
+              data={[
+                {key: "Zhiwei failed Sandip's wager to try new juice cleanse by November 25th.", photo: "Zhiwei Gu", index: 3, timestamp: "2 hours ago"},
+                {key: "Charlie completed Sandip's wager to cook family dinner by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago"},
+                {key: "Charlie completed Zhiwei's wager to go a day without checking Instagram by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago"},
+                {key: "Charlie completed Zhiwei's wager to get lunch with a professor by November 21st.", photo: "Charlie Furrer", index: 0, timestamp: "4 days ago"},
+                {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", photo: "Sandip Srinivas", index: 2, timestamp: "7 days ago"},
+                {key: "Sandip completed Charlie's wager to go to the gym by November 17th.", photo: "Sandip Srinivas", index: 2, timestamp: "Nov 17"},
+                {key: "Sandip failed Zhiwei's wager to swim laps by November 16th.", photo: "Sandip Srinivas", index: 2, timestamp: "Nov 16"},
+                {key: "Zhiwei completed Charlie's wager to run a half marathon by November 15th.", photo: "Zhiwei Gu", index: 3, timestamp: "Nov 15"},
+                {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", photo: "Zhiwei Gu", index: 3, timestamp: "Nov 14"},
+              ]}
+            renderItem={({item}) =>
+              <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item.index) } style = {styles.FriendListEntry}>
+                    <Image source = {this.choosePicture(item.photo)} style ={styles.WagerPhoto}/>
+                  </TouchableWithoutFeedback>
+                  <Text style={styles.item}>{item.key}</Text>
+                </View>
+                <Text style={styles.timestamp}>{item.timestamp}</Text>
+                <View style={{flexDirection: 'row', paddingLeft: 55}}>
+                  <Image source = {LikeButton} style ={styles.LikeIcon}/>
+                  <Image source = {CommentButton} style ={styles.CommentIcon}/>
+                </View> 
+              </View>
+            }
+            />
+          </View>
         </ScrollView>
 
         {/* Bottom NavBar */}
@@ -117,8 +161,25 @@ export default class HomeScreen extends React.Component {
   clickedHome(){
     this.props.navigation.navigate('Home');
   };
-}
 
+  choosePicture(name) {
+    switch(name) {
+      case "Adam Mosharrafa":
+        return require('./Images/Adam.png');
+      case "Charlie Furrer":
+        return require('./Images/Charlie.png');
+      case "Sandip Srinivas":
+        return require('./Images/Sandip.png');
+      case "Zhiwei Gu":
+        return require('./Images/Zhiwei.png');
+    }
+  };
+
+  clickedFriendsListEntry(index){
+    this.props.navigation.navigate('Profile', {person: database[index], wagers: wagers, database: database});
+  };
+
+}
 
 const styles = StyleSheet.create({
   // top bar
@@ -162,6 +223,50 @@ const styles = StyleSheet.create({
     marginRight: 50,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+
+  container: {
+   flex: 5,
+   paddingTop: 10,
+   paddingBottom: 10
+  },
+
+  item: {
+    fontFamily: 'Verdana',
+    backgroundColor: 'transparent',
+    flexWrap: 'wrap',
+    width: 325,
+    padding: 10,
+    fontSize: 12,
+    height: 44,
+  },
+
+  timestamp: {
+    fontFamily: 'Verdana',
+    backgroundColor: 'transparent',
+    fontStyle: 'italic',
+    padding: 10,
+    fontSize: 12,
+    height: 44,
+    marginLeft: 55
+  },
+
+  WagerPhoto: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginLeft: 5
+  },
+
+  LikeIcon: {
+    width: 30,
+    height: 30
+  },
+
+  CommentIcon: {
+    width: 30,
+    height: 30,
+    marginLeft: 25
   }
 
 });
