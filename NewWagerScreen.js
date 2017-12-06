@@ -17,6 +17,7 @@ import {
 
 import DatePicker from 'react-native-datepicker'
 import SearchBar from 'react-native-elements'
+import Toggle from 'react-native-toggle';
 
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
