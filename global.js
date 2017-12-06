@@ -1,5 +1,5 @@
-module.exports = {
-	charlie: {
+module.exports = [
+	{
 		fullName: "Charlie Furrer",
 		location: "Stanford, CA",
 		successRate: 0.82,
@@ -9,8 +9,8 @@ module.exports = {
 				 "(Charlie) completed (Zhiwei)'s wager to get lunch with a professor by November 21st."]
 	},
 
-	adam: {
-		fullName: "Adam Mosharrafa", 
+	{
+		fullName: "Adam Mosharrafa",
 		location: "Paradise Valley, AZ",
 		successRate: 0.69,
 		friends: ["Sandip Srinivas", "Zhiwei Gu"],
@@ -19,7 +19,7 @@ module.exports = {
 				 "(Adam) failed (Sandip)'s wager to call brothers and parents by November 22nd."]
 	},
 
-	sandip: {
+	{
 		fullName: "Sandip Srinivas",
 		location: "Belmont, CA",
 		successRate: 0.38,
@@ -29,7 +29,7 @@ module.exports = {
 				 "(Sandip) failed (Zhiwei)'s wager to swim laps by November 16th."]
 	},
 
-	zhiwei: {
+	{
 		fullName: "Zhiwei Gu",
 		location: "Stanford, CA",
 		successRate: 0.94,
@@ -38,5 +38,4 @@ module.exports = {
 				 "(Zhiwei) completed (Charlie)'s wager to run a half marathon by November 15th.",
 				 "(Zhiwei) completed (Adam)'s wager to read a new book by November 14th."]
 	}
-}
-
+]
