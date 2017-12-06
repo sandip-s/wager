@@ -17,7 +17,6 @@ import {
 
 import DatePicker from 'react-native-datepicker'
 import SearchBar from 'react-native-elements'
-import Toggle from 'react-native-toggle';
 
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
@@ -171,9 +170,25 @@ export default class NewWagerScreen extends React.Component {
   };
 
   constructor(props) {
-    super(props)
-    this.state = {}
+    super(props);
+    this.state = {
+      hidden: false
+    }
   }
+
+  toggle = () => {
+    this.setState({
+      deadline: this.state.deadline, 
+      myGoal: this.state.myGoal,
+      myReward: this.state.myReward,
+      myPenalty: this.state.myPenalty,
+      yourGoal: this.state.yourGoal,
+      yourReward: this.state.yourReward,
+      yourPenalty: this.state.yourPenalty,
+      hidden: !this.state.hidden
+    });
+    this.forceUpdate();
+  };
 
   sendWager = () => {
     if(this.state.deadline == null) {
