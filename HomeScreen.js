@@ -33,6 +33,7 @@ import ProfileIcon from './Images/ProfileIcon.png'
 import Background from './Images/Background.png'
 import ProfileScreen from './ProfileScreen'
 import NewWagerScreen from './NewWagerScreen'
+import Display from 'react-native-display'
 
 //four users
 import Adam from './Images/Adam.png'
@@ -41,12 +42,14 @@ import Sandip from './Images/Sandip.png'
 import Zhiwei from './Images/Zhiwei.png'
 
 //like and comment
-import LikeButton from './Images/WagerLikeIcon.png'
+import EmptyHeart from './Images/WagerLikeIcon.png'
+import FullHeart from './Images/WagerUnLikeIcon.png'
 import CommentButton from './Images/WagerCommentIcon.png'
 
 var database = require('./global.js');
 var wagers = require('./wagers.js');
 var adam_index = 1
+var map = [false, false, false, false, false, false, false, false, false]
 
 export default class HomeScreen extends React.Component {
 
@@ -77,27 +80,30 @@ export default class HomeScreen extends React.Component {
           <View style={styles.container}>
             <FlatList
               data={[
-                {key: "Zhiwei failed Sandip's wager to try new juice cleanse by November 25th.", photo: "Zhiwei Gu", index: 3, timestamp: "2 hours ago"},
-                {key: "Charlie completed Sandip's wager to cook family dinner by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago"},
-                {key: "Charlie completed Zhiwei's wager to go a day without checking Instagram by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago"},
-                {key: "Charlie completed Zhiwei's wager to get lunch with a professor by November 21st.", photo: "Charlie Furrer", index: 0, timestamp: "4 days ago"},
-                {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", photo: "Sandip Srinivas", index: 2, timestamp: "7 days ago"},
-                {key: "Sandip completed Charlie's wager to go to the gym by November 17th.", photo: "Sandip Srinivas", index: 2, timestamp: "Nov 17"},
-                {key: "Sandip failed Zhiwei's wager to swim laps by November 16th.", photo: "Sandip Srinivas", index: 2, timestamp: "Nov 16"},
-                {key: "Zhiwei completed Charlie's wager to run a half marathon by November 15th.", photo: "Zhiwei Gu", index: 3, timestamp: "Nov 15"},
-                {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", photo: "Zhiwei Gu", index: 3, timestamp: "Nov 14"},
+                {key: "Zhiwei failed Sandip's wager to try new juice cleanse by November 25th.", photo: "Zhiwei Gu", index: 3, timestamp: "2 hours ago", ID: 0},
+                {key: "Charlie completed Sandip's wager to cook family dinner by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago", ID: 1},
+                {key: "Charlie completed Zhiwei's wager to go a day without checking Instagram by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago", ID: 2},
+                {key: "Charlie completed Zhiwei's wager to get lunch with a professor by November 21st.", photo: "Charlie Furrer", index: 0, timestamp: "4 days ago", ID: 3},
+                {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", photo: "Sandip Srinivas", index: 2, timestamp: "7 days ago", ID: 4},
+                {key: "Sandip completed Charlie's wager to go to the gym by November 17th.", photo: "Sandip Srinivas", index: 2, timestamp: "Nov 17", ID: 5},
+                {key: "Sandip failed Zhiwei's wager to swim laps by November 16th.", photo: "Sandip Srinivas", index: 2, timestamp: "Nov 16", ID: 6},
+                {key: "Zhiwei completed Charlie's wager to run a half marathon by November 15th.", photo: "Zhiwei Gu", index: 3, timestamp: "Nov 15", ID: 7},
+                {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", photo: "Zhiwei Gu", index: 3, timestamp: "Nov 14", ID: 8},
               ]}
             renderItem={({item}) =>
               <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
                 <View style={{flexDirection: 'row'}}>
-                  <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item.index) } style = {styles.FriendListEntry}>
+                  <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item.index,database,wagers) } style = {styles.FriendListEntry}>
                     <Image source = {this.choosePicture(item.photo)} style ={styles.WagerPhoto}/>
                   </TouchableWithoutFeedback>
                   <Text style={styles.item}>{item.key}</Text>
                 </View>
                 <Text style={styles.timestamp}>{item.timestamp}</Text>
                 <View style={{flexDirection: 'row', paddingLeft: 55}}>
-                  <Image source = {LikeButton} style ={styles.LikeIcon}/>
+                  <TouchableWithoutFeedback onPress = { () => {this.toggleHeart(item.ID)} }>
+                    <Image source = {map[item.ID] ? FullHeart : EmptyHeart} style ={styles.LikeIcon}/>
+                  </TouchableWithoutFeedback>
+
                   <Image source = {CommentButton} style ={styles.CommentIcon}/>
                 </View> 
               </View>
@@ -135,6 +141,18 @@ export default class HomeScreen extends React.Component {
       </View>
     );
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      enable: false
+    }
+  }
+
+  toggleHeart(ID) {
+    map[ID] = !map[ID];
+    this.forceUpdate();
+  }
 
   clickedProfile() {
     this.props.navigation.navigate('Profile', {user: database[adam_index], person: database[adam_index], wagers: wagers, database: database});
@@ -175,8 +193,8 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  clickedFriendsListEntry(index){
-    this.props.navigation.navigate('Profile', {person: database[index], wagers: wagers, database: database});
+  clickedFriendsListEntry(index,database,wagers){
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[index], wagers: wagers, database: database});
   };
 
 }

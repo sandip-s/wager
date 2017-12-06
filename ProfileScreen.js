@@ -28,9 +28,10 @@ var isFriend = false;
 export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
+    var user = this.props.navigation.state.params.user;
 
     var profilePicture = this.choosePicture(person.fullName);
-    isFriend = person.friends.includes(person.fullName);
+    isFriend = user.friends.includes(person.fullName);
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
