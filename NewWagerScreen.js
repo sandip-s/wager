@@ -17,6 +17,7 @@ import {
 
 import DatePicker from 'react-native-datepicker'
 import SearchBar from 'react-native-elements'
+import Display from 'react-native-display';
 
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
@@ -29,11 +30,13 @@ import Background from './Images/Background.png'
 import Target from './Images/goalIcon.png'
 import Reward from './Images/rewardIcon.png'
 import Skull from './Images/penaltyIcon.png'
+var clickCount = 0;
 
 export default class NewWagerScreen extends React.Component {
   render() {
     var wagers = this.props.navigation.state.params.wagers;
     var database = this.props.navigation.state.params.database;
+    var profilePicture = this.choosePicture();
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
@@ -79,90 +82,116 @@ export default class NewWagerScreen extends React.Component {
                                         myPenalty: this.state.myPenalty,
                                         yourGoal: this.state.yourGoal,
                                         yourReward: this.state.yourReward,
-                                        yourPenalty: this.state.yourPenalty
+                                        yourPenalty: this.state.yourPenalty,
+                                        enable: this.state.enable
                                       })}}/>
             </View>
           </View>
           <View style={styles.center}>
             <View style={{flexDirection: 'row'}}>
-              <Image source={require('./Images/Adam.png')} style={styles.profilePicture} />
+              <View style={{flexDirection: 'column'}}>
+                <View style={styles.center}>
+                  <Image source={require('./Images/Adam.png')} style={styles.profilePicture} />
+                  <Text style={styles.fullName}>Adam Mosharrafa</Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Image source={Target} style={styles.headerIcon} />
+                    <TextInput style={styles.placeholder} placeholder="Enter a goal" onChangeText={(myGoal) => 
+                      this.setState({deadline: this.state.deadline, 
+                                    myGoal: myGoal,
+                                    myReward: this.state.myReward,
+                                    myPenalty: this.state.myPenalty,
+                                    yourGoal: this.state.yourGoal,
+                                    yourReward: this.state.yourReward,
+                                    yourPenalty: this.state.yourPenalty,
+                                    enable: this.state.enable
+                                  })}/>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <Image source={Reward} style={styles.headerIcon} />
+                    <TextInput style={styles.placeholder} placeholder="Enter a reward" onChangeText={(myReward) => 
+                      this.setState({deadline: this.state.deadline, 
+                                    myGoal: this.state.myGoal,
+                                    myReward: myReward,
+                                    myPenalty: this.state.myPenalty,
+                                    yourGoal: this.state.yourGoal,
+                                    yourReward: this.state.yourReward,
+                                    yourPenalty: this.state.yourPenalty,
+                                    enable: this.state.enable
+                                  })}/>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <Image source={Skull} style={styles.headerIcon} />
+                    <TextInput style={styles.placeholder} placeholder="Enter a penalty" onChangeText={(myPenalty) => 
+                      this.setState({deadline: this.state.deadline, 
+                                    myGoal: this.state.myGoal,
+                                    myReward: this.state.myReward,
+                                    myPenalty: myPenalty,
+                                    yourGoal: this.state.yourGoal,
+                                    yourReward: this.state.yourReward,
+                                    yourPenalty: this.state.yourPenalty,
+                                    enable: this.state.enable
+                                  })}/>
+                  </View>
+                </View>
+              </View>
               <Text style={styles.w}>W</Text>
-              <Image source={ProfileIcon} style={styles.profilePicture} />
-            </View>
-          </View>
-          <View style={{marginLeft: 15}}>
-            <View style={{flexDirection: 'row'}}>
-              <Image source={Target} style={styles.headerIcon} />
-              <TextInput style={styles.myPlaceholder} placeholder="Enter a goal" onChangeText={(myGoal) => 
-                this.setState({deadline: this.state.deadline, 
-                              myGoal: myGoal,
-                              myReward: this.state.myReward,
-                              myPenalty: this.state.myPenalty,
-                              yourGoal: this.state.yourGoal,
-                              yourReward: this.state.yourReward,
-                              yourPenalty: this.state.yourPenalty
-                            })}/>
-              <TextInput style={styles.yourPlaceholder} placeholder="Enter a goal" onChangeText={(yourGoal) => 
-                this.setState({deadline: this.state.deadline, 
-                              myGoal: this.state.myGoal,
-                              myReward: this.state.myReward,
-                              myPenalty: this.state.myPenalty,
-                              yourGoal: yourGoal,
-                              yourReward: this.state.yourReward,
-                              yourPenalty: this.state.yourPenalty
-                            })}/>
-              <Image source={Target} style={styles.headerIcon} />
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <Image source={Reward} style={styles.headerIcon} />
-              <TextInput style={styles.myPlaceholder} placeholder="Enter a reward" onChangeText={(myReward) => 
-                this.setState({deadline: this.state.deadline, 
-                              myGoal: this.state.myGoal,
-                              myReward: myReward,
-                              myPenalty: this.state.myPenalty,
-                              yourGoal: this.state.yourGoal,
-                              yourReward: this.state.yourReward,
-                              yourPenalty: this.state.yourPenalty
-                            })}/>
-              <TextInput style={styles.yourPlaceholder} placeholder="Enter a reward" onChangeText={(yourReward) => 
-              this.setState({deadline: this.state.deadline, 
-                            myGoal: this.state.myGoal,
-                            myReward: this.state.myReward,
-                            myPenalty: this.state.myPenalty,
-                            yourGoal: this.state.yourGoal,
-                            yourReward: yourReward,
-                            yourPenalty: this.state.yourPenalty
-                          })}/>
-              <Image source={Reward} style={styles.headerIcon} />
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <Image source={Skull} style={styles.headerIcon} />
-              <TextInput style={styles.myPlaceholder} placeholder="Enter a penalty" onChangeText={(myPenalty) => 
-                this.setState({deadline: this.state.deadline, 
-                              myGoal: this.state.myGoal,
-                              myReward: this.state.myReward,
-                              myPenalty: myPenalty,
-                              yourGoal: this.state.yourGoal,
-                              yourReward: this.state.yourReward,
-                              yourPenalty: this.state.yourPenalty
-                            })}/>
-              <TextInput style={styles.yourPlaceholder} placeholder="Enter a penalty" onChangeText={(yourPenalty) => 
-              this.setState({deadline: this.state.deadline, 
-                            myGoal: this.state.myGoal,
-                            myReward: this.state.myReward,
-                            myPenalty: this.state.myPenalty,
-                            yourGoal: this.state.yourGoal,
-                            yourReward: this.state.yourReward,
-                            yourPenalty: yourPenalty
-                          })}/>
-              <Image source={Skull} style={styles.headerIcon} />
+              <View style={{flexDirection: 'column'}}>
+                <View style={styles.center}>
+                  <TouchableWithoutFeedback onPress = { () => this.updateClickCount() }>
+                    <Image source={profilePicture} style={styles.profilePicture} />
+                  </TouchableWithoutFeedback>
+                  <Text style={styles.fullName}>{this.getReceiverName()}</Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <TextInput style={styles.placeholder} placeholder="Enter a goal" onChangeText={(yourGoal) => 
+                      this.setState({deadline: this.state.deadline, 
+                                    myGoal: this.state.myGoal,
+                                    myReward: this.state.myReward,
+                                    myPenalty: this.state.myPenalty,
+                                    yourGoal: yourGoal,
+                                    yourReward: this.state.yourReward,
+                                    yourPenalty: this.state.yourPenalty,
+                                    enable: this.state.enable
+                                  })}/>
+                    <Image source={Target} style={styles.headerIcon} />
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <TextInput style={styles.placeholder} placeholder="Enter a reward" onChangeText={(yourReward) => 
+                      this.setState({deadline: this.state.deadline, 
+                                    myGoal: this.state.myGoal,
+                                    myReward: this.state.myReward,
+                                    myPenalty: this.state.myPenalty,
+                                    yourGoal: this.state.yourGoal,
+                                    yourReward: yourReward,
+                                    yourPenalty: this.state.yourPenalty,
+                                    enable: this.state.enable
+                                  })}/>
+                    <Image source={Reward} style={styles.headerIcon} />
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <TextInput style={styles.placeholder} placeholder="Enter a penalty" onChangeText={(yourPenalty) => 
+                      this.setState({deadline: this.state.deadline, 
+                                    myGoal: this.state.myGoal,
+                                    myReward: this.state.myReward,
+                                    myPenalty: this.state.myPenalty,
+                                    yourGoal: this.state.yourGoal,
+                                    yourReward: this.state.yourReward,
+                                    yourPenalty: yourPenalty,
+                                    enable: this.state.enable
+                                  })}/>
+                    <Image source={Skull} style={styles.headerIcon} />
+                  </View>
+                </View>
+              </View>
             </View>
           </View>
           <View style={styles.center}>
             <TouchableHighlight style={styles.button} onPress={this.sendWager}>
-              <Text style={styles.buttonText}>Send Wager</Text>
+              <Text style={styles.buttonText}>Send Wager!</Text>
             </TouchableHighlight>
-            <Text>{JSON.stringify(wagers, null, 4)}</Text>
+            <Button onPress={this.toggleDisplay.bind(this)} title="Toggle display" color="#34495e"/>
+            <Display enable={this.state.enable}>
+              <Text>{JSON.stringify(wagers, null, 4)}</Text>
+            </Display>
           </View>
         </ScrollView>
       </View>
@@ -172,11 +201,11 @@ export default class NewWagerScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hidden: false
+      enable: false
     }
   }
 
-  toggle = () => {
+  toggleDisplay() {
     this.setState({
       deadline: this.state.deadline, 
       myGoal: this.state.myGoal,
@@ -185,14 +214,16 @@ export default class NewWagerScreen extends React.Component {
       yourGoal: this.state.yourGoal,
       yourReward: this.state.yourReward,
       yourPenalty: this.state.yourPenalty,
-      hidden: !this.state.hidden
+      enable: !this.state.enable
     });
     this.forceUpdate();
-  };
+  }
 
   sendWager = () => {
     if(this.state.deadline == null) {
       alert("You must enter a deadline.");
+    } else if(this.getReceiverName() == 'Tap to choose!') {
+      alert("You must choose a friend to wager.");
     } else if (this.state.myGoal == null || this.state.yourGoal == null) {
       alert("You must enter a goal for both people.");
     } else if (this.state.myReward == null || this.state.yourReward == null) {
@@ -201,15 +232,45 @@ export default class NewWagerScreen extends React.Component {
       alert("You must enter a penalty for both people.");
     } else {
       var sender = {fullName: 'Adam Mosharrafa', goal: this.state.myGoal, reward: this.state.myReward, penalty: this.state.myPenalty};
-      var receiver = {fullName: '', goal: this.state.yourGoal, reward: this.state.yourReward, penalty: this.state.yourPenalty};
+      var receiver = {fullName: this.getReceiverName(), goal: this.state.yourGoal, reward: this.state.yourReward, penalty: this.state.yourPenalty};
       var wager = {sender: sender, 
                    receiver: receiver, 
                    deadline: this.state.deadline, 
                    status: 'Pending'}
       this.props.navigation.state.params.wagers.push(wager);
+      clickCount = 0;
       this.forceUpdate();
     }
   }
+
+  updateClickCount() {
+    clickCount++;
+    this.forceUpdate();
+  }
+
+  choosePicture() {
+    if(clickCount == 0) return ProfileIcon;
+    switch((clickCount - 1) % 3) {
+      case 0:
+        return require('./Images/Charlie.png');
+      case 1:
+        return require('./Images/Sandip.png');
+      case 2:
+        return require('./Images/Zhiwei.png');
+    }
+  };
+
+  getReceiverName() {
+    if(clickCount == 0) return 'Tap to choose!';
+    switch((clickCount - 1) % 3) {
+      case 0:
+        return 'Charlie Furrer';
+      case 1:
+        return 'Sandip Srinivas';
+      case 2:
+        return 'Zhiwei Gu';
+    }
+  };
 
 }
 
@@ -273,21 +334,13 @@ const styles = StyleSheet.create({
     marginTop: 50
   },
 
-  myPlaceholder: {
+  placeholder: {
     backgroundColor: 'transparent',
     fontSize: 14,
     fontFamily: 'Noteworthy',
     color: 'gray',
     width: 90,
-    marginRight: 50
-  },
-
-  yourPlaceholder: {
-    backgroundColor: 'transparent',
-    fontSize: 14,
-    fontFamily: 'Noteworthy',
-    color: 'gray',
-    width: 90
+    margin: 10
   },
 
   center: {
@@ -305,13 +358,14 @@ const styles = StyleSheet.create({
 
   button: {
     backgroundColor: '#3BC446',
-    padding: 15,
-    borderRadius: 15
+    padding: 20,
+    borderRadius: 15,
+    marginTop: 25
   },
 
   buttonText: {
     color: 'white',
-    fontSize: 26,
+    fontSize: 40,
     fontFamily: 'Noteworthy'
   },
 
@@ -324,6 +378,15 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     margin: 10
+  },
+
+  fullName: {
+    backgroundColor: 'transparent',
+    fontSize: 20,
+    fontFamily: 'Noteworthy',
+    color: '#3BC446',
+    marginTop: 5,
+    marginBottom: 25
   }
 
 });
