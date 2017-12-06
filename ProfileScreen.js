@@ -23,6 +23,8 @@ import LocationIcon from './Images/redpin.png'
 // background
 import Background from './Images/Background.png'
 
+import Display from 'react-native-display';
+
 var isFriend = false;
 
 export default class ProfileScreen extends React.Component {
@@ -65,10 +67,12 @@ export default class ProfileScreen extends React.Component {
                 <Text style={styles.LocationText}>{person.location}</Text>
               </View>
               <Image source={profilePicture} style={styles.profilePicture} />
-              <View style={{flexDirection: 'row'}}>
-                <Button onPress = { () => this.friendButton(this.props.navigation.state.params.user, person) } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
-                <Button onPress = { () => this.wagerFriendButton() } title={"Send Wager"} color="#000000" />
-              </View>
+              <Display enable={user != person}>
+                <View style={{flexDirection: 'row'}}>
+                  <Button onPress = { () => this.friendButton(this.props.navigation.state.params.user, person) } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
+                  <Button onPress = { () => this.wagerFriendButton() } title={"Send Wager"} color="#000000" />
+                </View>
+              </Display>
               <View style={{alignItems: 'center'}}>
                 <View style={styles.grayRectangle} />
                 <View style={{width: 200 * person.successRate, height: 20, backgroundColor: '#3BC446', borderRadius: 50, marginRight: 200 - 200 * person.successRate}} />
