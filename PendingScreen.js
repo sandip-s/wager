@@ -34,14 +34,13 @@ export default class ExploreScreen extends React.Component {
   render() {
     var database = this.props.navigation.state.params.database;
     var wagers = this.props.navigation.state.params.wagers;
-
-
+    var active_wagers = activeWagers(wagers)
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
       <FlatList
-        data = {database}
-        renderItem = { ({item,}) =>
+        data = {active_wagers}
+        renderItem = { ({item}) =>
           (
           <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item) } style = {styles.FriendListEntry}>
             <Image source = {this.choosePicture(item.fullName)} style = {styles.FriendsListEntryElement}/>
@@ -60,6 +59,15 @@ export default class ExploreScreen extends React.Component {
     );
   }
 
+  activeWagers(wagers){
+    active = []
+    for (i = 0; i < wagers.length; i++){
+      if (wagers[i].status == "Pending") active.push(wagers[i])
+    }
+    return active
+  }
+
+
   choosePicture(name) {
     switch(name) {
       case "Adam Mosharrafa":
@@ -74,8 +82,8 @@ export default class ExploreScreen extends React.Component {
   }
 
 
-  clickedFriendsListEntry(personClicked){
-    this.props.navigation.navigate('Profile', {person: personClicked, wagers: this.wagers, database: this.database});
+  clickedActiveWager(personClicked,data){
+    this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database}); //currently sending them to newWagerScreen with adam profile
   }
 
 

@@ -99,6 +99,7 @@ export default class ProfileScreen extends React.Component {
               <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
+
           </View>
         </View>
       </View>
