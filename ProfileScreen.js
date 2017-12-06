@@ -28,6 +28,7 @@ var isFriend = false;
 export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
+
     var profilePicture = this.choosePicture(person.fullName);
     isFriend = person.friends.includes(person.fullName);
 
@@ -64,7 +65,7 @@ export default class ProfileScreen extends React.Component {
               </View>
               <Image source={profilePicture} style={styles.profilePicture} />
               <View style={{flexDirection: 'row'}}>
-                <Button onPress = { () => this.friendButton(adam, person) } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
+                <Button onPress = { () => this.friendButton(this.props.navigation.state.params.user, person) } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
                 <Button onPress = { () => this.wagerFriendButton() } title={"Send Wager"} color="#000000" />
               </View>
               <View style={{alignItems: 'center'}}>
@@ -128,6 +129,7 @@ export default class ProfileScreen extends React.Component {
   };
 
   friendButton(adam, person) {
+    console.log(adam)
     var index1 = adam.friends.indexOf(person.fullName);
     var index2 = person.friends.indexOf(adam.fullName);
     isFriend = !isFriend;

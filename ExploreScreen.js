@@ -43,7 +43,7 @@ export default class ExploreScreen extends React.Component {
         data = {database}
         renderItem = { ({item,}) =>
           (
-          <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item) } style = {styles.FriendListEntry}>
+          <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item,database,wagers) } style = {styles.FriendListEntry}>
             <Image source = {this.choosePicture(item.fullName)} style = {styles.FriendsListEntryElement}/>
           </TouchableWithoutFeedback>
           )
@@ -74,8 +74,10 @@ export default class ExploreScreen extends React.Component {
   }
 
 
-  clickedFriendsListEntry(personClicked){
-    this.props.navigation.navigate('Profile', {person: personClicked, wagers: this.wagers, database: this.database});
+  clickedFriendsListEntry(personClicked,database,wagers){
+    console.log(database)
+    console.log("data")
+    this.props.navigation.navigate('Profile', {user: database[1], person: personClicked, wagers: wagers, database: database});
   }
 
 
