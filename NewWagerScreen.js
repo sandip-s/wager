@@ -12,7 +12,8 @@ import {
   Image,
   Button,
   Alert,
-  Navigator
+  Navigator,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import DatePicker from 'react-native-datepicker'
@@ -40,9 +41,8 @@ export default class NewWagerScreen extends React.Component {
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
-
         <ScrollView>
-          <Image style={{ height: 1000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
+          <Image style={{ height: 2000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
           <View style={styles.center}>
             <View style={{flexDirection: 'row'}}>
               <Text style={styles.deadline}>Deadline:</Text>
@@ -87,11 +87,12 @@ export default class NewWagerScreen extends React.Component {
                                       })}}/>
             </View>
           </View>
+          
           <View style={styles.center}>
             <View style={{flexDirection: 'row'}}>
               <View style={{flexDirection: 'column'}}>
                 <View style={styles.center}>
-                  <Image source={require('./Images/Adam.png')} style={styles.profilePicture} />
+                  <Image source={database[1].image} style={styles.profilePicture} />
                   <Text style={styles.fullName}>Adam Mosharrafa</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Target} style={styles.headerIcon} />
@@ -188,7 +189,7 @@ export default class NewWagerScreen extends React.Component {
             <TouchableHighlight style={styles.button} onPress={this.sendWager}>
               <Text style={styles.buttonText}>Send Wager!</Text>
             </TouchableHighlight>
-            <Button onPress={this.toggleDisplay.bind(this)} title="Toggle display" color="#34495e"/>
+            <Button onPress={this.toggleDisplay.bind(this)} title="Show/Hide Wagers" color="#34495e"/>
             <Display enable={this.state.enable}>
               <Text>{JSON.stringify(wagers, null, 4)}</Text>
             </Display>
@@ -387,6 +388,10 @@ const styles = StyleSheet.create({
     color: '#3BC446',
     marginTop: 5,
     marginBottom: 25
+  },
+
+  keyboard: {
+
   }
 
 });
