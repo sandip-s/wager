@@ -28,9 +28,8 @@ var isFriend = false;
 export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
-    var adam = this.props.navigation.state.params.database.adam;
     var profilePicture = this.choosePicture(person.fullName);
-    isFriend = adam.friends.includes(person.fullName);
+    isFriend = person.friends.includes(person.fullName);
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
@@ -75,7 +74,7 @@ export default class ProfileScreen extends React.Component {
             </View>
           </ScrollView>
         </View>
-        
+
         {/* Bottom NavBar */}
         <View style={styles.NavBarContainer}>
           <View style={{flexDirection: 'row'}}>
@@ -107,7 +106,7 @@ export default class ProfileScreen extends React.Component {
   };
 
   clickedProfile(person) {
-    this.props.navigation.navigate('Profile', {person: this.props.navigation.state.params.adam, wagers: this.props.navigation.state.params.wagers, database: this.props.navigation.state.params.database});
+    //this.props.navigation.navigate('Profile', {person: this.props.navigation.state.params.person, wagers: this.props.navigation.state.params.wagers, database: this.props.navigation.state.params.database});
   };
 
   clickedSendWager() {
@@ -142,12 +141,12 @@ export default class ProfileScreen extends React.Component {
   };
 
   wagerFriendButton() {
-    
+
   };
 }
 
 const styles = StyleSheet.create({
-  
+
   // top bar
   TopBar: {
     backgroundColor: '#ffffff',

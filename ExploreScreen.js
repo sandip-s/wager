@@ -12,7 +12,8 @@ import {
   Image,
   Button,
   Alert,
-  Navigator
+  Navigator,
+  FlatList
 } from 'react-native';
 
 // top bar icons
@@ -22,55 +23,43 @@ import ProfileIcon from './Images/ProfileIcon.png'
 // background
 import Background from './Images/Background.png'
 
-var database = require('./global.js');
+
+
 
 
 
 export default class ExploreScreen extends React.Component {
 
-  /*
-  const peopleList = database.map((person) =>
-    <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(person) } style = {styles.FriendListEntry}>
-      <Image source = {require(person.photo)} style = {styles.FriendsListEntryElement}/>
-      <Text> {database.fullName} </Text>
-    </TouchableWithoutFeedback>
-  );
-  */
 
   render() {
+    var database = this.props.navigation.state.params.database;
+    var wagers = this.props.navigation.state.params.wagers;
+
+
+
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
+      <FlatList
+        data = {database}
+        renderItem = { ({item}) =>
+          (
+          <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item) } style = {styles.FriendListEntry}>
+            <Image source = {this.choosePicture(item.fullName)} style = {styles.FriendsListEntryElement}/>
+          </TouchableWithoutFeedback>
+          )
+        }
+        keyExtractor={(item,index) => index}
 
-        {/* Middle */}
-        
-
+      />
 
           <ScrollView style = {styles.FriendsList}>
               <View style = {{flexDirection: 'row'}}>
-            
-            <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(database.charlie) } style = {styles.FriendListEntry}>
-              <Image source = {this.choosePicture(database.charlie.fullName)} style = {styles.FriendsListEntryElement}/>
-            </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(database.sandip) } style = {styles.FriendListEntry}>
-              <Image source = {this.choosePicture(database.sandip.fullName)} style = {styles.FriendsListEntryElement}/>
-            </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(database.zhiwei) } style = {styles.FriendListEntry}>
-              <Image source = {this.choosePicture(database.zhiwei.fullName)} style = {styles.FriendsListEntryElement}/>
-            </TouchableWithoutFeedback>
-
-          
             </View>
         </ScrollView>
       </View>
-        
+
     );
-  }
-
-
-  clickedFriendsListEntry(personClicked){
-    this.props.navigation.navigate('Profile', {person: personClicked, adam: database.adam});
   }
 
   choosePicture(name) {
@@ -84,7 +73,12 @@ export default class ExploreScreen extends React.Component {
       case "Zhiwei Gu":
         return require('./Images/Zhiwei.png');
     }
-  };
+  }
+
+
+  clickedFriendsListEntry(personClicked,data){
+    this.props.navigation.navigate('Profile', {person: personClicked, wagers: wagers, database: database});
+  }
 
 
 }
@@ -103,7 +97,7 @@ const styles = StyleSheet.create({
   },
 
   FriendsListEntry:{
-  
+
   },
 
   FriendsListEntryElement:{
@@ -111,7 +105,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
   },
-  
+
   FriendsListEntryName:{
 
   },

@@ -32,6 +32,7 @@ import NewWagerScreen from './NewWagerScreen'
 
 var database = require('./global.js');
 var wagers = require('./wagers.js');
+var adam_index = 1
 
 export default class HomeScreen extends React.Component {
 
@@ -92,7 +93,7 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedProfile() {
-    this.props.navigation.navigate('Profile', {person: database.adam, wagers: wagers, database: database});
+    this.props.navigation.navigate('Profile', {person: database[adam_index], wagers: wagers, database: database});
   };
 
   clickedSendWager() {
@@ -110,9 +111,9 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedExplore(){
-    this.props.navigation.navigate('Explore');
+    this.props.navigation.navigate('Explore',{wagers: wagers, database: database});
   };
-  
+
   clickedHome(){
     this.props.navigation.navigate('Home');
   };
