@@ -137,7 +137,7 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedProfile() {
-    this.props.navigation.navigate('Profile', {person: database[adam_index], wagers: wagers, database: database});
+    this.props.navigation.navigate('Profile', {user: database[adam_index], person: database[adam_index], wagers: wagers, database: database});
   };
 
   clickedSendWager() {
@@ -155,7 +155,7 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedExplore(){
-    this.props.navigation.navigate('Explore',{wagers: wagers, database: database});
+    this.props.navigation.navigate('Explore',{user: database[adam_index], wagers: wagers, database: database});
   };
 
   clickedHome(){
