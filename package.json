@@ -27,6 +27,7 @@
     "prop-types": "^15.6.0",
     "react-native-datepicker": "^1.6.0",
     "react-native-elements": "^0.18.4",
-    "react-native-toggle": "^1.0.3"
+    "react-native-animatable": "^1.2.4",
+    "react-native-display": "^1.0.8"
   }
 }
