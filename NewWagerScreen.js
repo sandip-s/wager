@@ -237,7 +237,9 @@ export default class NewWagerScreen extends React.Component {
       var wager = {sender: sender,
                    receiver: receiver,
                    deadline: this.state.deadline,
-                   status: 'Pending'}
+                   status: 'Pending',
+                   direction: 'Sent'
+                  }
       this.props.navigation.state.params.wagers.push(wager);
       clickCount = 0;
       this.forceUpdate();
