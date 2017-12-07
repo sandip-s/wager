@@ -95,7 +95,7 @@ export default class PendingScreen extends React.Component {
       />
 
       <View style={styles.NavBarContainer}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
           {/* Profile Icon */}
           <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
@@ -250,12 +250,7 @@ const styles = StyleSheet.create({
   BottomIcon: {
     height: 30,
     width: 30,
-    margin: 20,
-    marginBottom: 10,
-    marginTop: 10,
-    marginRight: 50,
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginTop: 10
   },
 
 

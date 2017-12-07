@@ -31,13 +31,26 @@ import Background from './Images/Background.png'
 import Target from './Images/goalIcon.png'
 import Reward from './Images/rewardIcon.png'
 import Skull from './Images/penaltyIcon.png'
+import Thumb from './Images/WagerThumbIcon.png'
+import CounterIcon from './Images/WagerCounterIcon.png'
+
 var clickCount = 0;
 
 export default class NewWagerScreen extends React.Component {
   render() {
+
     var wagers = this.props.navigation.state.params.wagers;
     var database = this.props.navigation.state.params.database;
-    var profilePicture = clickCount == 0 ? ProfileIcon : database[clickCount % 4].image
+    var current_wager = this.props.navigation.state.params.current_wager;
+    var pending = Boolean(current_wager);
+    var user = null;
+    var person = null;
+    if(pending) {
+      var user = current_wager.direction == 'Received' ? current_wager.receiver : current_wager.sender;
+      var person = current_wager.direction == 'Received' ? current_wager.sender : current_wager.receiver;
+    }
+    var profilePicture = pending ? person.image : (clickCount == 0 ? ProfileIcon : database[clickCount % 4].image);
+
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
@@ -96,7 +109,7 @@ export default class NewWagerScreen extends React.Component {
                   <Text style={styles.fullName}>Adam Mosharrafa</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Target} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} placeholder="Enter a goal" onChangeText={(myGoal) =>
+                    <TextInput style={styles.placeholder} value={pending ? this.state.myGoal : null} placeholder="Enter a goal" onChangeText={(myGoal) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: myGoal,
                                     myReward: this.state.myReward,
@@ -109,7 +122,7 @@ export default class NewWagerScreen extends React.Component {
                   </View>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Reward} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} placeholder="Enter a reward" onChangeText={(myReward) =>
+                    <TextInput style={styles.placeholder} value={pending ? this.state.myReward : null} placeholder="Enter a reward" onChangeText={(myReward) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: myReward,
@@ -122,7 +135,7 @@ export default class NewWagerScreen extends React.Component {
                   </View>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Skull} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} placeholder="Enter a penalty" onChangeText={(myPenalty) =>
+                    <TextInput style={styles.placeholder} value={pending ? this.state.myPenalty : null} placeholder="Enter a penalty" onChangeText={(myPenalty) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
@@ -141,9 +154,9 @@ export default class NewWagerScreen extends React.Component {
                   <TouchableWithoutFeedback onPress = { () => this.updateClickCount() }>
                     <Image source={profilePicture} style={styles.profilePicture} />
                   </TouchableWithoutFeedback>
-                  <Text style={styles.fullName}>{this.getReceiverName()}</Text>
+                  <Text style={styles.fullName}>{pending ? person.fullName : this.getReceiverName()}</Text>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} placeholder="Enter a goal" onChangeText={(yourGoal) =>
+                    <TextInput style={styles.placeholder} value={pending ? this.state.yourGoal : null} placeholder="Enter a goal" onChangeText={(yourGoal) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
@@ -156,7 +169,7 @@ export default class NewWagerScreen extends React.Component {
                     <Image source={Target} style={styles.headerIcon} />
                   </View>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} placeholder="Enter a reward" onChangeText={(yourReward) =>
+                    <TextInput style={styles.placeholder} value={pending ? this.state.yourReward : null} placeholder="Enter a reward" onChangeText={(yourReward) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
@@ -169,7 +182,7 @@ export default class NewWagerScreen extends React.Component {
                     <Image source={Reward} style={styles.headerIcon} />
                   </View>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} placeholder="Enter a penalty" onChangeText={(yourPenalty) =>
+                    <TextInput style={styles.placeholder} value={pending ? this.state.yourPenalty : null} placeholder="Enter a penalty" onChangeText={(yourPenalty) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
@@ -185,15 +198,40 @@ export default class NewWagerScreen extends React.Component {
               </View>
             </View>
           </View>
+          <Display enable={!pending}>
+            <View style={styles.center}>
+              <TouchableWithoutFeedback style={styles.button} onPress={this.sendWager}>
+                <Text style={styles.buttonText}>Send Wager!</Text>
+              </TouchableWithoutFeedback>
+            </View>
+          </Display>
+          <Display enable={pending}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+              <View style={styles.redCircle}>
+                <TouchableWithoutFeedback onPress={this.rejectWager}>
+                  <Image source={Thumb} style={styles.RejectThumb} />
+                </TouchableWithoutFeedback>
+              </View>
+                <View style={styles.yellowCircle}>
+                <TouchableWithoutFeedback onPress={this.counterWager}>
+                  <Image source={CounterIcon} style={styles.CounterIcon} />
+                </TouchableWithoutFeedback>
+              </View>
+              <View style={styles.greenCircle}>
+                <TouchableWithoutFeedback onPress={this.acceptWager}>
+                  <Image source={Thumb} style={styles.AcceptThumb} />
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+          </Display>
+        {/*
           <View style={styles.center}>
-            <TouchableHighlight style={styles.button} onPress={this.sendWager}>
-              <Text style={styles.buttonText}>Send Wager!</Text>
-            </TouchableHighlight>
             <Button onPress={this.toggleDisplay.bind(this)} title="Show/Hide Wagers" color="#34495e"/>
             <Display enable={this.state.enable}>
               <Text>{JSON.stringify(wagers, null, 4)}</Text>
             </Display>
           </View>
+        */}
         </ScrollView>
       </View>
     );
@@ -201,8 +239,23 @@ export default class NewWagerScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      enable: false
+    this.state = {}
+
+    var current_wager = this.props.navigation.state.params.current_wager;
+    var pending = Boolean(current_wager);
+    if(pending) {
+      var user = current_wager.direction == 'Received' ? current_wager.receiver : current_wager.sender;
+      var person = current_wager.direction == 'Received' ? current_wager.sender : current_wager.receiver;
+      this.state = {
+        deadline: current_wager.deadline,
+        myGoal: user.goal,
+        myReward: user.reward,
+        myPenalty: user.penalty,
+        yourGoal: person.goal,
+        yourReward: person.reward,
+        yourPenalty: person.penalty,
+        enable: false
+      }
     }
   }
 
@@ -244,6 +297,18 @@ export default class NewWagerScreen extends React.Component {
       clickCount = 0;
       this.forceUpdate();
     }
+  }
+
+  rejectWager = () => {
+
+  }
+
+  counterWager = () => {
+    
+  }
+
+  acceptWager = () => {
+    
   }
 
   updateClickCount() {
@@ -376,6 +441,52 @@ const styles = StyleSheet.create({
 
   keyboard: {
 
+  },
+
+  RejectThumb: {
+    width: 60,
+    height: 60,
+    transform: [{ rotate: '180deg'}],
+    marginTop: 10,
+    marginLeft: 5
+  },
+
+  redCircle: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: 'red',
+    marginTop: 40
+  },
+
+  CounterIcon: {
+    width: 50,
+    height: 50,
+    marginTop: 10,
+    marginLeft: 10
+  },
+
+  yellowCircle: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: 'yellow',
+    marginTop: 40
+  },
+
+  AcceptThumb: {
+    width: 60,
+    height: 60,
+    marginTop: 5,
+    marginLeft: 5
+  },
+
+  greenCircle: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#3bc446',
+    marginTop: 40
   }
 
 });

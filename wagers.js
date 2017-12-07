@@ -14,7 +14,7 @@ module.exports = [
 			penalty: "pay for dinner",
 			image: require('./Images/Adam.png')
 		},
-		deadline: "December 16, 2017",
+		deadline: "12-16-2017",
 		status: "Active",
 		direction: "Sent"
 	},
@@ -33,7 +33,7 @@ module.exports = [
 			penalty: "pay for dinner",
 			image: require('./Images/Adam.png'),
 		},
-		deadline: "December 18, 2017",
+		deadline: "12-18-2017",
 		status: "Pending",
 		direction: "Received"
 	},
@@ -52,7 +52,7 @@ module.exports = [
 			penalty: "pay for dinner",
 			image: require('./Images/Adam.png')
 		},
-		deadline: "December 16, 2017",
+		deadline: "12-16-2017",
 		status: "Pending",
 		direction: "Sent"
 	},
@@ -71,7 +71,7 @@ module.exports = [
 			penalty: "pay for dinner",
 			image: require('./Images/Adam.png'),
 		},
-		deadline: "December 18, 2017",
+		deadline: "12-18-2017",
 		status: "Active",
 		direction: "Received"
 	}
