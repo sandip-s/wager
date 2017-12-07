@@ -142,7 +142,6 @@ export default class Active extends React.Component {
   }
 
   clickedProfile(database,wagers) { // go back to Adam home
-    console.log(database)
     this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
   };
 

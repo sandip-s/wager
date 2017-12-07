@@ -43,7 +43,8 @@ export default class NewWagerScreen extends React.Component {
     var database = this.props.navigation.state.params.database;
     var current_wager = this.props.navigation.state.params.current_wager;
     var pending = Boolean(current_wager);
-    var canEdit = this.props.navigation.state.params.countered || !pending;
+    var countered = Boolean(this.props.navigation.state.params.countered);
+    var canEdit = countered || !pending;
     var user = null;
     var person = null;
     if(pending) {
@@ -153,10 +154,10 @@ export default class NewWagerScreen extends React.Component {
               <Text style={styles.w}>W</Text>
               <View style={{flexDirection: 'column'}}>
                 <View style={styles.center}>
-                  <TouchableWithoutFeedback disabled={!canEdit} onPress = { () => this.updateClickCount() }>
+                  <TouchableWithoutFeedback disabled={!canEdit} onPress = { () => this.updateClickCount(canEdit) }>
                     <Image source={profilePicture} style={styles.profilePicture} />
                   </TouchableWithoutFeedback>
-                  <Text style={styles.fullName}>{pending ? person.fullName : this.getReceiverName()}</Text>
+                  <Text style={styles.fullName}>{pending ? person.fullName : 'Tap to choose!'}</Text>
                   <View style={{flexDirection: 'row'}}>
                     <TextInput editable={canEdit} style={styles.placeholder} value={pending ? this.state.yourGoal : null} placeholder="Enter a goal" onChangeText={(yourGoal) =>
                       this.setState({deadline: this.state.deadline,
@@ -226,14 +227,12 @@ export default class NewWagerScreen extends React.Component {
               </View>
             </View>
           </Display>
-        {/*
           <View style={styles.center}>
             <Button onPress={this.toggleDisplay.bind(this)} title="Show/Hide Wagers" color="#34495e"/>
             <Display enable={this.state.enable}>
               <Text>{JSON.stringify(wagers, null, 4)}</Text>
             </Display>
           </View>
-        */}
         </ScrollView>
       </View>
     );
@@ -301,22 +300,28 @@ export default class NewWagerScreen extends React.Component {
     }
   }
 
+  // remove wager from array and navigate to pending wagers
   rejectWager() {
 
   }
 
+  // need to make clicking send wager after this edit current wager instead of creating new one in array
+  // then navigate to pending wagers when clicking send wager
   counterWager(current_wager, database, wagers) {
     this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: true})
   }
 
+  // mark wager.status active and navigate to active wagers
   acceptWager() {
     
   }
 
-  updateClickCount() {
-    clickCount++;
-    if(clickCount % 4 == 1) clickCount++; // skip over adam
-    this.forceUpdate();
+  updateClickCount(canEdit) {
+    if(canEdit) {
+      clickCount++;
+      if(clickCount % 4 == 1) clickCount++; // skip over adam
+      this.forceUpdate();
+    }
   }
 
   getReceiverName() {

@@ -80,8 +80,6 @@ export default class ExploreScreen extends React.Component {
 
 
   clickedFriendsListEntry(personClicked,database,wagers){
-    console.log(database)
-    console.log("data")
     this.props.navigation.navigate('Profile', {user: database[1], person: personClicked, wagers: wagers, database: database});
   }
 
