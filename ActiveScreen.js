@@ -23,11 +23,6 @@ import ProfileIcon from './Images/ProfileIcon.png'
 // background
 import Background from './Images/Background.png'
 
-
-
-
-
-
 export default class Active extends React.Component {
 
 
@@ -36,9 +31,10 @@ export default class Active extends React.Component {
     var wagers = this.props.navigation.state.params.wagers;
     var active_wagers = this.activeWagers(wagers)
 
+
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
-        
+
         {/* Top NavBar */}
         <View style={styles.TopBar}>
           <View style={{flexDirection: 'row'}}>
@@ -56,16 +52,25 @@ export default class Active extends React.Component {
           </View>
         </View>
         {/*end top nav*/}
-
         <FlatList
           data = {active_wagers}
           renderItem = { ({item}) =>
             (
-              <View style = {styles.PendingWager}>
-                <Text>{item.sender.fullName}</Text>
-                <Text>{item.sender.goal}</Text>
-                <Text>{item.sender.reward}</Text>
-                <Text>{item.sender.penalty}</Text>
+
+              <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
+                <View style={{flexDirection: 'row'}}>
+
+                <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
+                  <Image source= {item.sender.image} style={styles.profilePicture} />
+                </TouchableWithoutFeedback>
+                  <View style= {{flexDirection: 'column',flexWrap: 'wrap', width: 300,paddingTop: 10}}>
+                  <Text>You have an active wager with {item.sender.fullName}!</Text>
+                  <Text>Make sure to complete your goal of: {this.isSender(item) ? item.sender.goal: item.receiver.goal}.</Text>
+                  <Text>Deadline: {item.deadline}</Text>
+                  </View>
+                </View>
+
+                <Text style={styles.timestamp}>four o clock</Text>
               </View>
             )
           }
@@ -73,7 +78,7 @@ export default class Active extends React.Component {
         />
 
         <View style={styles.NavBarContainer}>
-          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <View style={{flexDirection: 'row'}}>
 
             {/* Profile Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
@@ -81,25 +86,32 @@ export default class Active extends React.Component {
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedExplore(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore(database,wagers) }>
               <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedPending(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedPending(database,wagers) }>
               <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedActive(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedActive(database,wagers) }>
               <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
-
           </View>
         </View>
       </View>
-
     );
+  }
+
+
+  clickedWagerBanner(current_wager, database,wagers){
+    //this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1]})
+  };
+
+  isSender(wager){
+    return wager.sent == "Sent"
   }
 
   activeWagers(wagers){
@@ -174,6 +186,16 @@ const styles = StyleSheet.create({
     height: 50
   },
 
+  timestamp: {
+    fontFamily: 'Verdana',
+    backgroundColor: 'transparent',
+    fontStyle: 'italic',
+    padding: 10,
+    fontSize: 12,
+    height: 44,
+    marginLeft: 55
+  },
+
   BottomIcon: {
     height: 30,
     width: 30,
@@ -194,6 +216,14 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 12,
     height: 44,
+  },
+
+  profilePicture: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    margin: 10,
+    marginBottom: 10
   },
 
   timestamp: {
