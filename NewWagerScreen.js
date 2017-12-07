@@ -12,7 +12,8 @@ import {
   Image,
   Button,
   Alert,
-  Navigator
+  Navigator,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import DatePicker from 'react-native-datepicker'
@@ -36,13 +37,12 @@ export default class NewWagerScreen extends React.Component {
   render() {
     var wagers = this.props.navigation.state.params.wagers;
     var database = this.props.navigation.state.params.database;
-    var profilePicture = this.choosePicture();
+    var profilePicture = clickCount == 0 ? ProfileIcon : database[clickCount % 4].image
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
-
         <ScrollView>
-          <Image style={{ height: 1000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
+          <Image style={{ height: 2000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
           <View style={styles.center}>
             <View style={{flexDirection: 'row'}}>
               <Text style={styles.deadline}>Deadline:</Text>
@@ -87,11 +87,12 @@ export default class NewWagerScreen extends React.Component {
                                       })}}/>
             </View>
           </View>
+          
           <View style={styles.center}>
             <View style={{flexDirection: 'row'}}>
               <View style={{flexDirection: 'column'}}>
                 <View style={styles.center}>
-                  <Image source={require('./Images/Adam.png')} style={styles.profilePicture} />
+                  <Image source={database[1].image} style={styles.profilePicture} />
                   <Text style={styles.fullName}>Adam Mosharrafa</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Target} style={styles.headerIcon} />
@@ -188,7 +189,7 @@ export default class NewWagerScreen extends React.Component {
             <TouchableHighlight style={styles.button} onPress={this.sendWager}>
               <Text style={styles.buttonText}>Send Wager!</Text>
             </TouchableHighlight>
-            <Button onPress={this.toggleDisplay.bind(this)} title="Toggle display" color="#34495e"/>
+            <Button onPress={this.toggleDisplay.bind(this)} title="Show/Hide Wagers" color="#34495e"/>
             <Display enable={this.state.enable}>
               <Text>{JSON.stringify(wagers, null, 4)}</Text>
             </Display>
@@ -245,31 +246,13 @@ export default class NewWagerScreen extends React.Component {
 
   updateClickCount() {
     clickCount++;
+    if(clickCount % 4 == 1) clickCount++; // skip over adam
     this.forceUpdate();
   }
 
-  choosePicture() {
-    if(clickCount == 0) return ProfileIcon;
-    switch((clickCount - 1) % 3) {
-      case 0:
-        return require('./Images/Charlie.png');
-      case 1:
-        return require('./Images/Sandip.png');
-      case 2:
-        return require('./Images/Zhiwei.png');
-    }
-  };
-
   getReceiverName() {
     if(clickCount == 0) return 'Tap to choose!';
-    switch((clickCount - 1) % 3) {
-      case 0:
-        return 'Charlie Furrer';
-      case 1:
-        return 'Sandip Srinivas';
-      case 2:
-        return 'Zhiwei Gu';
-    }
+    return this.props.navigation.state.params.database[clickCount % 4].fullName;
   };
 
 }
@@ -387,6 +370,10 @@ const styles = StyleSheet.create({
     color: '#3BC446',
     marginTop: 5,
     marginBottom: 25
+  },
+
+  keyboard: {
+
   }
 
 });

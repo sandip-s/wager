@@ -115,25 +115,6 @@ export default class PendingScreen extends React.Component {
     return pending
   }
 
-
-  choosePicture(name) {
-    switch(name) {
-      case "Adam Mosharrafa":
-        return require('./Images/Adam.png');
-      case "Charlie Furrer":
-        return require('./Images/Charlie.png');
-      case "Sandip Srinivas":
-        return require('./Images/Sandip.png');
-      case "Zhiwei Gu":
-        return require('./Images/Zhiwei.png');
-    }
-  }
-
-  clickedFriendsListEntry(index,database,wagers){
-    this.props.navigation.navigate('Profile', {user: database[1], person: database[index], wagers: wagers, database: database});
-  };
-
-
   clickedActiveWager(personClicked,data){
     this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database}); //currently sending them to newWagerScreen with adam profile
   }
