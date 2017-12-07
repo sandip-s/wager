@@ -55,11 +55,13 @@ export default class HomeScreen extends React.Component {
 
   render() {
 
+
     return (
+
       <View style={{flex: 1, alignSelf: 'stretch'}}>
         {/* Top NavBar */}
         <View style={styles.TopBar}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row'} }>
             {/* Profile Icon */}
 
             <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
@@ -105,7 +107,7 @@ export default class HomeScreen extends React.Component {
                   </TouchableWithoutFeedback>
 
                   <Image source = {CommentButton} style ={styles.CommentIcon}/>
-                </View> 
+                </View>
               </View>
             }
             />
@@ -138,6 +140,7 @@ export default class HomeScreen extends React.Component {
 
           </View>
         </View>
+
       </View>
     );
   };
@@ -163,12 +166,12 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedPending(){
-    this.props.navigation.navigate('Pending', {wagers: wagers, database: database});
+    this.props.navigation.navigate('Pending', {user: database[adam_index], wagers:wagers, database: database});
   };
 
   clickedActive(){
-    //this.props.rootNavigation.navigation.navigate('Active');
-    this.props.navigation.navigate('Home');
+    this.props.navigation.navigate('Active', {user: database[adam_index], wagers:wagers, database: database});
+    //this.props.navigation.navigate('Home');
   };
 
   clickedExplore(){
@@ -191,7 +194,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 50,
+    height: 60,
   },
 
   // wager text
@@ -202,6 +205,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Noteworthy',
     color: '#3BC446',
     textAlign: 'center',
+
     marginLeft: 110,
     marginRight: 110
   },
