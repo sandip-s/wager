@@ -53,7 +53,6 @@ export default class NewWagerScreen extends React.Component {
     }
     var profilePicture = pending ? person.image : (clickCount == 0 ? ProfileIcon : database[clickCount % 4].image);
 
-
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
         <ScrollView>
@@ -301,23 +300,29 @@ export default class NewWagerScreen extends React.Component {
       this.props.navigation.state.params.wagers.push(newWager);
       clickCount = 0;
       this.forceUpdate();
+      var wagers = this.props.navigation.state.params.wagers;
+      this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database});
     }
   }
 
-  // remove wager from array and navigate to pending wagers
   rejectWager() {
-
+    var current_wager = this.props.navigation.state.params.current_wager;
+    var database = this.props.navigation.state.params.database;
+    var wagers = this.props.navigation.state.params.wagers;
+    this.props.navigation.state.params.wagers.splice(this.props.navigation.state.params.wagers.indexOf(current_wager), 1);
+    this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database});
   }
 
-  // need to make clicking send wager after this edit current wager instead of creating new one in array
   // then navigate to pending wagers when clicking send wager
   counterWager(current_wager, database, wagers) {
     this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: true})
   }
 
-  // mark wager.status active and navigate to active wagers
   acceptWager() {
-    
+    var database = this.props.navigation.state.params.database;
+    var wagers = this.props.navigation.state.params.wagers;
+    this.props.navigation.state.params.current_wager.status = 'Active';
+    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database});
   }
 
   updateClickCount(canEdit) {
