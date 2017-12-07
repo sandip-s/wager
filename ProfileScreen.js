@@ -25,16 +25,12 @@ import Background from './Images/Background.png'
 
 import Display from 'react-native-display';
 
-var isFriend = false;
-
 export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
     var user = this.props.navigation.state.params.user;
     var database = this.props.navigation.state.params.database;
-
     var profilePicture = database[database.indexOf(person)].image;
-    isFriend = user.friends.includes(person.fullName);
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
@@ -70,7 +66,7 @@ export default class ProfileScreen extends React.Component {
               <Image source={profilePicture} style={styles.profilePicture} />
               <Display enable={user != person}>
                 <View style={{flexDirection: 'row'}}>
-                  <Button onPress = { () => this.friendButton(user, person) } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
+                  <Button onPress = { () => this.friendButton(user, person) } title={this.state.isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
                   <Button onPress = { () => this.wagerFriendButton() } title={"Send Wager"} color="#000000" />
                 </View>
               </Display>
@@ -113,8 +109,17 @@ export default class ProfileScreen extends React.Component {
     );
   };
 
+  constructor(props) {
+    super(props);
+    var person = this.props.navigation.state.params.person;
+    var user = this.props.navigation.state.params.user;
+    this.state = {
+      isFriend: user.friends.includes(person.fullName)
+    }
+  }
+
   clickedProfile(person) {
-    //this.props.navigation.navigate('Profile', {person: this.props.navigation.state.params.person, wagers: this.props.navigation.state.params.wagers, database: this.props.navigation.state.params.database});
+
   };
 
   clickedSendWager() {
@@ -125,7 +130,7 @@ export default class ProfileScreen extends React.Component {
     console.log(adam)
     var index1 = adam.friends.indexOf(person.fullName);
     var index2 = person.friends.indexOf(adam.fullName);
-    isFriend = !isFriend;
+    this.state.isFriend = !this.state.isFriend;
     if(index1 < 0) {
       adam.friends.push(person.fullName);
       person.friends.push(adam.fullName);
@@ -142,8 +147,6 @@ export default class ProfileScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-
-  // top bar
   TopBar: {
     backgroundColor: '#ffffff',
     alignItems: 'center',
@@ -151,7 +154,6 @@ const styles = StyleSheet.create({
     height: 50,
   },
 
-  // wager text
   Wager: {
     backgroundColor: 'transparent',
     fontSize: 30,
@@ -163,7 +165,6 @@ const styles = StyleSheet.create({
     marginRight: 110
   },
 
-  // send wager icon
   TopIcon: {
     width: 30,
     height: 30,
@@ -181,13 +182,11 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
 
-  // name and picture at top of profile
   header: {
     justifyContent: 'center',
     alignItems: 'center'
   },
 
-  // name at top of profile
   fullName: {
     fontSize: 40,
     fontFamily: 'Noteworthy',
@@ -195,7 +194,6 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
 
-  // profile picture
   profilePicture: {
     width: 150,
     height: 150,
@@ -203,7 +201,6 @@ const styles = StyleSheet.create({
     margin: 10
   },
 
-  // location red pin
   LocationIcon: {
     width: 20,
     height: 20,

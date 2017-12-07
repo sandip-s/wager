@@ -16,7 +16,7 @@ module.exports = [
 		},
 		deadline: "12-16-2017",
 		status: "Active",
-		direction: "Sent"
+		direction: "Received"
 	},
 	{
 		sender: {
@@ -54,7 +54,7 @@ module.exports = [
 		},
 		deadline: "12-16-2017",
 		status: "Pending",
-		direction: "Sent"
+		direction: "Received"
 	},
 	{
 		sender: {
@@ -74,6 +74,44 @@ module.exports = [
 		deadline: "12-18-2017",
 		status: "Active",
 		direction: "Received"
+	},
+	{
+		sender: {
+			fullName: "Adam Mosharrafa",
+			goal: "run 5 miles",
+			reward: "free dinner",
+			penalty: "pay for dinner",
+			image: require('./Images/Adam.png'),
+		},
+		receiver: {
+			fullName: "Zhiwei Gu",
+			goal: "run 10 miles",
+			reward: "free dinner",
+			penalty: "pay for dinner",
+			image: require('./Images/Zhiwei.png')
+		},
+		deadline: "12-16-2017",
+		status: "Pending",
+		direction: "Sent"
+	},
+	{
+		sender: {
+			fullName: "Adam Mosharrafa",
+			goal: "run 5 miles",
+			reward: "free dinner",
+			penalty: "pay for dinner",
+			image: require('./Images/Adam.png'),
+		},
+		receiver: {
+			fullName: "Sandip Srinivas",
+			goal: "run 10 miles",
+			reward: "free dinner",
+			penalty: "pay for dinner",
+			image: require('./Images/Sandip.png'),
+		},
+		deadline: "12-18-2017",
+		status: "Pending",
+		direction: "Sent"
 	}
 
 ]

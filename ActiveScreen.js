@@ -38,73 +38,65 @@ export default class Active extends React.Component {
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
-      {/* Top NavBar */}
-      <View style={styles.TopBar}>
-        <View style={{flexDirection: 'row'}}>
-          {/* Profile Icon */}
+        
+        {/* Top NavBar */}
+        <View style={styles.TopBar}>
+          <View style={{flexDirection: 'row'}}>
+            {/* Profile Icon */}
 
-          <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
-            <Image source={ProfileIcon} style={styles.TopIcon} />
-          </TouchableWithoutFeedback>
-          {/* Wager Text */}
-          <Text style={styles.Wager}>Wager</Text>
-          {/* Send Wager Icon */}
-          <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database,wagers) }>
-            <Image source={SendWagerIcon} style={styles.TopIcon} />
-          </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
+              <Image source={ProfileIcon} style={styles.TopIcon} />
+            </TouchableWithoutFeedback>
+            {/* Wager Text */}
+            <Text style={styles.Wager}>Wager</Text>
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database,wagers) }>
+              <Image source={SendWagerIcon} style={styles.TopIcon} />
+            </TouchableWithoutFeedback>
+          </View>
         </View>
-      </View>
-      {/*end top nav*/}
+        {/*end top nav*/}
 
+        <FlatList
+          data = {active_wagers}
+          renderItem = { ({item}) =>
+            (
+              <View style = {styles.PendingWager}>
+                <Text>{item.sender.fullName}</Text>
+                <Text>{item.sender.goal}</Text>
+                <Text>{item.sender.reward}</Text>
+                <Text>{item.sender.penalty}</Text>
+              </View>
+            )
+          }
+          keyExtractor={(item,index) => index}
+        />
 
+        <View style={styles.NavBarContainer}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
+            {/* Profile Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
+              <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
 
-      <FlatList
-        data = {active_wagers}
-        renderItem = { ({item}) =>
-          (
-            <View style = {styles.PendingWager}>
-              <Text>{item.sender.fullName}</Text>
-              <Text>{item.sender.goal}</Text>
-              <Text>{item.sender.reward}</Text>
-              <Text>{item.sender.penalty}</Text>
-            </View>
-          )
-        }
-        keyExtractor={(item,index) => index}
-      />
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedExplore(database,wagers) }>
+              <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
 
-      <View style={styles.NavBarContainer}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedPending(database,wagers) }>
+              <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
 
-          {/* Profile Icon */}
-          <TouchableWithoutFeedback onPress = { (database,wagers) => this.clickedHome(database,wagers) }>
-            <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
-          </TouchableWithoutFeedback>
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedActive(database,wagers) }>
+              <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
 
-          {/* Send Wager Icon */}
-          <TouchableWithoutFeedback onPress = { (database,wagers)=> this.clickedExplore(database,wagers) }>
-            <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
-          </TouchableWithoutFeedback>
-
-          {/* Send Wager Icon */}
-          <TouchableWithoutFeedback onPress = { (database,wagers)=> this.clickedPending(database,wagers) }>
-            <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
-          </TouchableWithoutFeedback>
-
-          {/* Send Wager Icon */}
-          <TouchableWithoutFeedback onPress = { ()=> this.clickedActive(database,wagers) }>
-            <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
-          </TouchableWithoutFeedback>
-
+          </View>
         </View>
-      </View>
-
-
-
-
-
-
       </View>
 
     );
@@ -118,30 +110,15 @@ export default class Active extends React.Component {
     return active
   }
 
-
-  choosePicture(name) {
-    switch(name) {
-      case "Adam Mosharrafa":
-        return require('./Images/Adam.png');
-      case "Charlie Furrer":
-        return require('./Images/Charlie.png');
-      case "Sandip Srinivas":
-        return require('./Images/Sandip.png');
-      case "Zhiwei Gu":
-        return require('./Images/Zhiwei.png');
-    }
-  }
-
   clickedFriendsListEntry(index,database,wagers){
     this.props.navigation.navigate('Profile', {user: database[1], person: database[index], wagers: wagers, database: database});
   };
-
 
   clickedActiveWager(personClicked,database,wagers){
     this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database}); //currently sending them to newWagerScreen with adam profile
   }
 
-  clickedProfile(database,wagers) { // go back to Adam home
+  clickedProfile(database,wagers) {
     this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
   };
 
@@ -158,21 +135,16 @@ export default class Active extends React.Component {
   };
 
   clickedExplore(database,wagers){
-
     this.props.navigation.navigate('Explore',{user: database[1], wagers: wagers, database: database});
   };
 
   clickedHome(database,wagers){
-
     this.props.navigation.navigate('Home', {user: database[1], wagers: wagers, database: database});
   };
 
-
 }
 
-
 const styles = StyleSheet.create({
-  // top bar
   TopBar: {
     backgroundColor: '#ffffff',
     alignItems: 'center',
@@ -180,7 +152,6 @@ const styles = StyleSheet.create({
     height: 50,
   },
 
-  // wager text
   Wager: {
     backgroundColor: 'transparent',
     fontSize: 30,
@@ -192,7 +163,6 @@ const styles = StyleSheet.create({
     marginRight: 110
   },
 
-  // send wager icon
   TopIcon: {
     width: 30,
     height: 30,

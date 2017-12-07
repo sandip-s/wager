@@ -48,13 +48,11 @@ import CommentButton from './Images/WagerCommentIcon.png'
 
 var database = require('./global.js');
 var wagers = require('./wagers.js');
-var adam_index = 1
 var map = [false, false, false, false, false, false, false, false, false]
 
 export default class HomeScreen extends React.Component {
 
   render() {
-
 
     return (
 
@@ -140,7 +138,6 @@ export default class HomeScreen extends React.Component {
 
           </View>
         </View>
-
       </View>
     );
   };
@@ -171,7 +168,6 @@ export default class HomeScreen extends React.Component {
 
   clickedActive(){
     this.props.navigation.navigate('Active', {user: database[1], wagers:wagers, database: database});
-    //this.props.navigation.navigate('Home');
   };
 
   clickedExplore(){
