@@ -78,6 +78,7 @@ export default class PendingScreen extends React.Component {
               <View style = {styles.PendingWager}>
                 <Text>{view_sent? "Sent ": ""}New Wager {view_sent ? "to": "from"} {view_sent? item.receiver.fullName: item.sender.fullName}!</Text>
               </View>
+            </View>
             )
           }
           keyExtractor={(item,index) => index}
