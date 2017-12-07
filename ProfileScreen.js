@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   StyleSheet,
+  FlatList,
   Text,
   View,
   TouchableOpacity,
@@ -26,6 +27,30 @@ import Background from './Images/Background.png'
 import Display from 'react-native-display';
 
 var isFriend = false;
+
+var adam_wagers = [
+    {key: "Adam completed Zhiwei's wager to do laundry by November 23rd.", timestamp: "2 days ago"},
+    {key: "Adam completed Sandip's wager to run 3 miles by November 22nd.", timestamp: "3 days ago"},
+    {key: "Adam failed Sandip's wager to call brothers and parents by November 22nd.", timestamp: "3 days ago"},
+]
+
+var charlie_wagers = [
+    {key: "Charlie completed Sandip's wager to cook family dinner by November 24th.", timestamp: "18 hours ago"},
+    {key: "Charlie completed Zhiwei's wager to go a day without checking Instagram by November 24th.", timestamp: "18 hours ago"},
+    {key: "Charlie completed Zhiwei's wager to get lunch with a professor by November 21st.", timestamp: "4 days ago"},
+]
+
+var sandip_wagers = [
+    {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", timestamp: "7 days ago"},
+    {key: "Sandip completed Charlie)s wager to go to the gym by November 17th.", timestamp: "Nov 17"},
+    {key: "Sandip failed Zhiwei's wager to swim laps by November 16th.", timestamp: "Nov 16"},
+]
+
+var zhiwei_wagers = [
+    {key: "Zhiwei failed Sandip's wager to try new juice cleanse by November 25th.", timestamp: "2 hours ago"},
+    {key: "Zhiwei completed Charlie's wager to run a half marathon by November 15th.", timestamp: "Nov 15"},
+    {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", timestamp: "Nov 14"},
+]
 
 export default class ProfileScreen extends React.Component {
   render() {
@@ -79,6 +104,16 @@ export default class ProfileScreen extends React.Component {
                 <View style={{width: 200 * person.successRate, height: 20, backgroundColor: '#3BC446', borderRadius: 50, marginRight: 200 - 200 * person.successRate}} />
                 <Text style={styles.progressText}>{person.successRate * 100}%</Text>
               </View>
+
+              <FlatList
+              data={this.getWagers(person.fullName)}
+              renderItem={({item}) =>
+                <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
+                  <Text style={styles.timestamp}>{item.timestamp}</Text>
+                </View>
+              }
+              />
+
             </View>
           </ScrollView>
         </View>
@@ -139,6 +174,19 @@ export default class ProfileScreen extends React.Component {
   wagerFriendButton() {
 
   };
+
+  getWagers(fullName) {
+    switch(fullName) {
+      case "Adam Mosharrafa":
+        return adam_wagers;
+      case "Charlie Furrer":
+        return charlie_wagers;
+      case "Sandip Srinivas":
+        return sandip_wagers;
+      case "Zhiwei Gu":
+        return zhiwei_wagers;
+    }
+  }
 }
 
 const styles = StyleSheet.create({
