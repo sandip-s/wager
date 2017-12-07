@@ -76,7 +76,7 @@ export default class NewWagerScreen extends React.Component {
                     marginLeft: 20
                   }
                 }}
-                onDateChange={(date) => {this.setState({deadline: date, 
+                onDateChange={(date) => {this.setState({deadline: date,
                                         myGoal: this.state.myGoal,
                                         myReward: this.state.myReward,
                                         myPenalty: this.state.myPenalty,
@@ -87,7 +87,7 @@ export default class NewWagerScreen extends React.Component {
                                       })}}/>
             </View>
           </View>
-          
+
           <View style={styles.center}>
             <View style={{flexDirection: 'row'}}>
               <View style={{flexDirection: 'column'}}>
@@ -96,8 +96,8 @@ export default class NewWagerScreen extends React.Component {
                   <Text style={styles.fullName}>Adam Mosharrafa</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Target} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} placeholder="Enter a goal" onChangeText={(myGoal) => 
-                      this.setState({deadline: this.state.deadline, 
+                    <TextInput style={styles.placeholder} placeholder="Enter a goal" onChangeText={(myGoal) =>
+                      this.setState({deadline: this.state.deadline,
                                     myGoal: myGoal,
                                     myReward: this.state.myReward,
                                     myPenalty: this.state.myPenalty,
@@ -109,8 +109,8 @@ export default class NewWagerScreen extends React.Component {
                   </View>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Reward} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} placeholder="Enter a reward" onChangeText={(myReward) => 
-                      this.setState({deadline: this.state.deadline, 
+                    <TextInput style={styles.placeholder} placeholder="Enter a reward" onChangeText={(myReward) =>
+                      this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: myReward,
                                     myPenalty: this.state.myPenalty,
@@ -122,8 +122,8 @@ export default class NewWagerScreen extends React.Component {
                   </View>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Skull} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} placeholder="Enter a penalty" onChangeText={(myPenalty) => 
-                      this.setState({deadline: this.state.deadline, 
+                    <TextInput style={styles.placeholder} placeholder="Enter a penalty" onChangeText={(myPenalty) =>
+                      this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
                                     myPenalty: myPenalty,
@@ -143,8 +143,8 @@ export default class NewWagerScreen extends React.Component {
                   </TouchableWithoutFeedback>
                   <Text style={styles.fullName}>{this.getReceiverName()}</Text>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} placeholder="Enter a goal" onChangeText={(yourGoal) => 
-                      this.setState({deadline: this.state.deadline, 
+                    <TextInput style={styles.placeholder} placeholder="Enter a goal" onChangeText={(yourGoal) =>
+                      this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
                                     myPenalty: this.state.myPenalty,
@@ -156,8 +156,8 @@ export default class NewWagerScreen extends React.Component {
                     <Image source={Target} style={styles.headerIcon} />
                   </View>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} placeholder="Enter a reward" onChangeText={(yourReward) => 
-                      this.setState({deadline: this.state.deadline, 
+                    <TextInput style={styles.placeholder} placeholder="Enter a reward" onChangeText={(yourReward) =>
+                      this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
                                     myPenalty: this.state.myPenalty,
@@ -169,8 +169,8 @@ export default class NewWagerScreen extends React.Component {
                     <Image source={Reward} style={styles.headerIcon} />
                   </View>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} placeholder="Enter a penalty" onChangeText={(yourPenalty) => 
-                      this.setState({deadline: this.state.deadline, 
+                    <TextInput style={styles.placeholder} placeholder="Enter a penalty" onChangeText={(yourPenalty) =>
+                      this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
                                     myPenalty: this.state.myPenalty,
@@ -208,7 +208,7 @@ export default class NewWagerScreen extends React.Component {
 
   toggleDisplay() {
     this.setState({
-      deadline: this.state.deadline, 
+      deadline: this.state.deadline,
       myGoal: this.state.myGoal,
       myReward: this.state.myReward,
       myPenalty: this.state.myPenalty,
@@ -232,11 +232,11 @@ export default class NewWagerScreen extends React.Component {
     } else if (this.state.myPenalty == null || this.state.yourPenalty == null) {
       alert("You must enter a penalty for both people.");
     } else {
-      var sender = {fullName: 'Adam Mosharrafa', goal: this.state.myGoal, reward: this.state.myReward, penalty: this.state.myPenalty};
-      var receiver = {fullName: this.getReceiverName(), goal: this.state.yourGoal, reward: this.state.yourReward, penalty: this.state.yourPenalty};
-      var wager = {sender: sender, 
-                   receiver: receiver, 
-                   deadline: this.state.deadline, 
+      var sender = {fullName: 'Adam Mosharrafa', goal: this.state.myGoal, reward: this.state.myReward, penalty: this.state.myPenalty, image: require('./Images/Adam.png')};
+      var receiver = {fullName: this.getReceiverName(), goal: this.state.yourGoal, reward: this.state.yourReward, penalty: this.state.yourPenalty, image: this.props.navigation.state.params.database[clickCount % 4].image};
+      var wager = {sender: sender,
+                   receiver: receiver,
+                   deadline: this.state.deadline,
                    status: 'Pending'}
       this.props.navigation.state.params.wagers.push(wager);
       clickCount = 0;
