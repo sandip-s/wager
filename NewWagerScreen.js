@@ -37,7 +37,7 @@ export default class NewWagerScreen extends React.Component {
   render() {
     var wagers = this.props.navigation.state.params.wagers;
     var database = this.props.navigation.state.params.database;
-    var profilePicture = this.choosePicture();
+    var profilePicture = clickCount == 0 ? ProfileIcon : database[clickCount % 4].image
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
@@ -246,31 +246,13 @@ export default class NewWagerScreen extends React.Component {
 
   updateClickCount() {
     clickCount++;
+    if(clickCount % 4 == 1) clickCount++; // skip over adam
     this.forceUpdate();
   }
 
-  choosePicture() {
-    if(clickCount == 0) return ProfileIcon;
-    switch((clickCount - 1) % 3) {
-      case 0:
-        return require('./Images/Charlie.png');
-      case 1:
-        return require('./Images/Sandip.png');
-      case 2:
-        return require('./Images/Zhiwei.png');
-    }
-  };
-
   getReceiverName() {
     if(clickCount == 0) return 'Tap to choose!';
-    switch((clickCount - 1) % 3) {
-      case 0:
-        return 'Charlie Furrer';
-      case 1:
-        return 'Sandip Srinivas';
-      case 2:
-        return 'Zhiwei Gu';
-    }
+    return this.props.navigation.state.params.database[clickCount % 4].fullName;
   };
 
 }
