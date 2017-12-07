@@ -28,36 +28,39 @@ import Background from './Images/Background.png'
 
 
 
-export default class PendingScreen extends React.Component {
+export default class Active extends React.Component {
 
 
   render() {
     var database = this.props.navigation.state.params.database;
     var wagers = this.props.navigation.state.params.wagers;
-    var pending_wagers = this.pendingWagers(wagers)
+    var active_wagers = this.activeWagers(wagers)
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
-        {/* Top NavBar */}
-        <View style={styles.TopBar}>
-          <View style={{flexDirection: 'row'}}>
-            {/* Profile Icon */}
+      {/* Top NavBar */}
+      <View style={styles.TopBar}>
+        <View style={{flexDirection: 'row'}}>
+          {/* Profile Icon */}
 
-            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
-              <Image source={ProfileIcon} style={styles.TopIcon} />
-            </TouchableWithoutFeedback>
-            {/* Wager Text */}
-            <Text style={styles.Wager}>Wager</Text>
-            {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database,wagers) }>
-              <Image source={SendWagerIcon} style={styles.TopIcon} />
-            </TouchableWithoutFeedback>
-          </View>
+          <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
+            <Image source={ProfileIcon} style={styles.TopIcon} />
+          </TouchableWithoutFeedback>
+          {/* Wager Text */}
+          <Text style={styles.Wager}>Wager</Text>
+          {/* Send Wager Icon */}
+          <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database,wagers) }>
+            <Image source={SendWagerIcon} style={styles.TopIcon} />
+          </TouchableWithoutFeedback>
         </View>
-        {/*end top nav*/}
+      </View>
+      {/*end top nav*/}
+
+
+
 
       <FlatList
-        data = {pending_wagers}
+        data = {active_wagers}
         renderItem = { ({item}) =>
           (
             <View style = {styles.PendingWager}>
@@ -75,17 +78,17 @@ export default class PendingScreen extends React.Component {
         <View style={{flexDirection: 'row'}}>
 
           {/* Profile Icon */}
-          <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
+          <TouchableWithoutFeedback onPress = { (database,wagers) => this.clickedHome(database,wagers) }>
             <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
           </TouchableWithoutFeedback>
 
           {/* Send Wager Icon */}
-          <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore(database,wagers) }>
+          <TouchableWithoutFeedback onPress = { (database,wagers)=> this.clickedExplore(database,wagers) }>
             <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
           </TouchableWithoutFeedback>
 
           {/* Send Wager Icon */}
-          <TouchableWithoutFeedback onPress = { ()=> this.clickedPending(database,wagers) }>
+          <TouchableWithoutFeedback onPress = { (database,wagers)=> this.clickedPending(database,wagers) }>
             <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
           </TouchableWithoutFeedback>
 
@@ -107,12 +110,12 @@ export default class PendingScreen extends React.Component {
     );
   }
 
-  pendingWagers(wagers){
-    pending = []
+  activeWagers(wagers){
+    active = []
     for (i = 0; i < wagers.length; i++){
-      if (wagers[i].status == "Pending") pending.push(wagers[i])
+      if (wagers[i].status == "Active") active.push(wagers[i])
     }
-    return pending
+    return active
   }
 
 
@@ -134,11 +137,12 @@ export default class PendingScreen extends React.Component {
   };
 
 
-  clickedActiveWager(personClicked,data){
+  clickedActiveWager(personClicked,database,wagers){
     this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database}); //currently sending them to newWagerScreen with adam profile
   }
 
-  clickedProfile(database,wagers) {
+  clickedProfile(database,wagers) { // go back to Adam home
+    console.log(database)
     this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
   };
 
@@ -147,21 +151,25 @@ export default class PendingScreen extends React.Component {
   };
 
   clickedPending(database,wagers){
+
     this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database});
     //this.props.navigation.navigate('Home');
   };
 
   clickedActive(database,wagers){
+
     this.props.navigation.navigate('Active', {user: database[1], wagers:wagers, database: database});
     //this.props.navigation.navigate('Home');
   };
 
   clickedExplore(database,wagers){
+
     this.props.navigation.navigate('Explore',{user: database[adam_index], wagers: wagers, database: database});
   };
 
   clickedHome(database,wagers){
-    this.props.navigation.navigate('Home');
+
+    this.props.navigation.navigate('Home', {user: database[adam_index], wagers: wagers, database: database});
   };
 
 
