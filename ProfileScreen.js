@@ -77,6 +77,7 @@ export default class ProfileScreen extends React.Component {
               <View style={{alignItems: 'center'}}>
                 <View style={styles.grayRectangle} />
                 <View style={{width: 200 * person.successRate, height: 20, backgroundColor: '#3BC446', borderRadius: 50, marginRight: 200 - 200 * person.successRate}} />
+                <Text style={styles.progressText}>{person.successRate * 100}%</Text>
               </View>
             </View>
           </ScrollView>
@@ -84,28 +85,27 @@ export default class ProfileScreen extends React.Component {
 
         {/* Bottom NavBar */}
         <View style={styles.NavBarContainer}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
-            {/* Profile Icon */}
+            {/* Home Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedHome() }>
               <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
-            {/* Send Wager Icon */}
+            {/* Explore Icon */}
             <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore() }>
               <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
-            {/* Send Wager Icon */}
+            {/* Pending Icon */}
             <TouchableWithoutFeedback onPress = { ()=> this.clickedPending() }>
               <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
-            {/* Send Wager Icon */}
+            {/* Active Icon */}
             <TouchableWithoutFeedback onPress = { ()=> this.clickedActive() }>
               <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
-
 
           </View>
         </View>
@@ -178,12 +178,7 @@ const styles = StyleSheet.create({
   BottomIcon: {
     height: 30,
     width: 30,
-    margin: 20,
-    marginBottom: 10,
-    marginTop: 10,
-    marginRight: 50,
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginTop: 10
   },
 
   // name and picture at top of profile
@@ -227,6 +222,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#BDC3C7',
     borderRadius: 50,
     position: 'absolute'
+  },
+
+  progressText: {
+    fontSize: 12,
+    fontFamily: 'Noteworthy',
+    color: '#3BC446'
   }
 
 });

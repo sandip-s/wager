@@ -151,25 +151,21 @@ export default class Active extends React.Component {
   };
 
   clickedPending(database,wagers){
-
     this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database});
-    //this.props.navigation.navigate('Home');
   };
 
   clickedActive(database,wagers){
-
     this.props.navigation.navigate('Active', {user: database[1], wagers:wagers, database: database});
-    //this.props.navigation.navigate('Home');
   };
 
   clickedExplore(database,wagers){
 
-    this.props.navigation.navigate('Explore',{user: database[adam_index], wagers: wagers, database: database});
+    this.props.navigation.navigate('Explore',{user: database[1], wagers: wagers, database: database});
   };
 
   clickedHome(database,wagers){
 
-    this.props.navigation.navigate('Home', {user: database[adam_index], wagers: wagers, database: database});
+    this.props.navigation.navigate('Home', {user: database[1], wagers: wagers, database: database});
   };
 
 

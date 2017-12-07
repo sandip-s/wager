@@ -116,24 +116,24 @@ export default class HomeScreen extends React.Component {
 
         {/* Bottom NavBar */}
         <View style={styles.NavBarContainer}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
-            {/* Profile Icon */}
+            {/* Home Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedHome() }>
               <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
-            {/* Send Wager Icon */}
+            {/* Explore Icon */}
             <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore() }>
               <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
-            {/* Send Wager Icon */}
+            {/* Pending Icon */}
             <TouchableWithoutFeedback onPress = { ()=> this.clickedPending() }>
               <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
-            {/* Send Wager Icon */}
+            {/* Active Icon */}
             <TouchableWithoutFeedback onPress = { ()=> this.clickedActive() }>
               <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
@@ -158,7 +158,7 @@ export default class HomeScreen extends React.Component {
   }
 
   clickedProfile() {
-    this.props.navigation.navigate('Profile', {user: database[adam_index], person: database[adam_index], wagers: wagers, database: database});
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
   };
 
   clickedSendWager() {
@@ -166,20 +166,20 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedPending(){
-    this.props.navigation.navigate('Pending', {user: database[adam_index], wagers:wagers, database: database});
+    this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database});
   };
 
   clickedActive(){
-    this.props.navigation.navigate('Active', {user: database[adam_index], wagers:wagers, database: database});
+    this.props.navigation.navigate('Active', {user: database[1], wagers:wagers, database: database});
     //this.props.navigation.navigate('Home');
   };
 
   clickedExplore(){
-    this.props.navigation.navigate('Explore', {user: database[adam_index], wagers: wagers, database: database});
+    this.props.navigation.navigate('Explore', {user: database[1], wagers: wagers, database: database});
   };
 
   clickedHome(){
-    //this.props.navigation.navigate('Home');
+
   };
 
   clickedFriendsListEntry(index,database,wagers){
@@ -205,7 +205,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Noteworthy',
     color: '#3BC446',
     textAlign: 'center',
-
     marginLeft: 110,
     marginRight: 110
   },
@@ -225,12 +224,7 @@ const styles = StyleSheet.create({
   BottomIcon: {
     height: 30,
     width: 30,
-    margin: 20,
-    marginBottom: 10,
-    marginTop: 10,
-    marginRight: 50,
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginTop: 10
   },
 
   container: {
