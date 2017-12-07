@@ -65,7 +65,8 @@ export default class PendingScreen extends React.Component {
             <View><Text style = {styles.Button}>Received</Text></View>
           </TouchableWithoutFeedback>
         </View>
-
+      </View>
+      
       <FlatList
         data = {display_wagers}
         renderItem = { ({item}) =>

@@ -56,20 +56,17 @@ export default class Active extends React.Component {
           data = {active_wagers}
           renderItem = { ({item}) =>
             (
-
               <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
                 <View style={{flexDirection: 'row'}}>
-
-                <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
-                  <Image source= {item.sender.image} style={styles.profilePicture} />
-                </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
+                    <Image source= {item.sender.image} style={styles.profilePicture} />
+                  </TouchableWithoutFeedback>
                   <View style= {{flexDirection: 'column',flexWrap: 'wrap', width: 300,paddingTop: 10}}>
-                  <Text>You have an active wager with {item.sender.fullName}!</Text>
-                  <Text>Make sure to complete your goal of: {this.isSender(item) ? item.sender.goal: item.receiver.goal}.</Text>
-                  <Text>Deadline: {item.deadline}</Text>
+                    <Text>You have an active wager with {item.sender.fullName}!</Text>
+                    <Text>Make sure to complete your goal of: {this.isSender(item) ? item.sender.goal: item.receiver.goal}.</Text>
+                    <Text>Deadline: {item.deadline}</Text>
                   </View>
                 </View>
-
                 <Text style={styles.timestamp}>four o clock</Text>
               </View>
             )
