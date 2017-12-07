@@ -25,8 +25,7 @@ import Background from './Images/Background.png'
 
 
 
-
-
+var view_sent = false
 
 export default class PendingScreen extends React.Component {
 
@@ -34,7 +33,14 @@ export default class PendingScreen extends React.Component {
   render() {
     var database = this.props.navigation.state.params.database;
     var wagers = this.props.navigation.state.params.wagers;
-    var pending_wagers = this.pendingWagers(wagers)
+    var pending_wagers = this.pendingWagers(wagers);
+    var sent_wagers = this.filterPending(pending_wagers,"Sent");
+    var recieved_wagers = this.filterPending(pending_wagers, "Received");
+    var display_wagers = view_sent ? sent_wagers: recieved_wagers;
+
+
+    console.log(display_wagers);
+
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
@@ -42,7 +48,6 @@ export default class PendingScreen extends React.Component {
         <View style={styles.TopBar}>
           <View style={{flexDirection: 'row'}}>
             {/* Profile Icon */}
-
             <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
               <Image source={ProfileIcon} style={styles.TopIcon} />
             </TouchableWithoutFeedback>
@@ -56,15 +61,33 @@ export default class PendingScreen extends React.Component {
         </View>
         {/*end top nav*/}
 
+      {/*The buttons for filtering sent/recieved */}
+      <View style = {{justifyContent: 'center',alignItems: 'center'}} >
+        <View style = {styles.FilterButtonContainer}>
+          <TouchableWithoutFeedback onPress = { () => this.flipDisplay() } style = {styles.ButtonContainer}>
+            <View><Text style = {styles.Button}>Sent</Text></View>
+          </TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback onPress = { () => this.flipDisplay() } style = {styles.ButtonContainer} >
+            <View><Text style = {styles.Button}>Received</Text></View>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+
+
+
+
       <FlatList
-        data = {pending_wagers}
+        data = {display_wagers}
         renderItem = { ({item}) =>
           (
-            <View style = {styles.PendingWager}>
-              <Text>{item.sender.fullName}</Text>
-              <Text>{item.sender.goal}</Text>
-              <Text>{item.sender.reward}</Text>
-              <Text>{item.sender.penalty}</Text>
+            <View style = {styles.WagerBanner}>
+              <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
+                <Image source= {item.sender.image} style={styles.profilePicture} />
+              </TouchableWithoutFeedback>
+              <View style = {styles.PendingWager}>
+                <Text>New Wager from {item.sender.fullName}!</Text>
+              </View>
             </View>
           )
         }
@@ -107,12 +130,26 @@ export default class PendingScreen extends React.Component {
     );
   }
 
+
+  flipDisplay(){
+    view_sent = !view_sent;
+    this.forceUpdate();
+  }
+
   pendingWagers(wagers){
     pending = []
     for (i = 0; i < wagers.length; i++){
       if (wagers[i].status == "Pending") pending.push(wagers[i])
     }
     return pending
+  }
+
+  filterPending(pending,filterString){
+    filtered = []
+    for (i = 0; i < pending.length; i++){
+      if (pending[i].direction == filterString) filtered.push(pending[i])
+    }
+    return filtered
   }
 
   clickedActiveWager(personClicked,data){
@@ -123,12 +160,16 @@ export default class PendingScreen extends React.Component {
     this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
   };
 
+  clickedWagerBanner(current_wager, database,wagers){
+    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1]})
+  };
+
   clickedSendWager(database,wagers) {
     this.props.navigation.navigate('NewWager', {wagers: wagers, database: database});
   };
 
   clickedPending(database,wagers){
-    
+
   };
 
   clickedActive(database,wagers){
@@ -156,6 +197,17 @@ const styles = StyleSheet.create({
     height: 50,
   },
 
+
+  Button: {
+    backgroundColor: '#3BC446',
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'Noteworthy',
+    color: '#ffffff',
+    margin: 20,
+    padding: 10
+  },
+
   // wager text
   Wager: {
     backgroundColor: 'transparent',
@@ -175,9 +227,24 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
 
+  FilterButtonContainer: {
+    flexDirection: 'row',
+
+  },
+
   NavBarContainer: {
     backgroundColor: '#ffffff',
     height: 50
+  },
+
+  ButtonContainer:{
+
+    borderRadius: 20,
+
+  },
+
+  WagerBanner:{
+    flexDirection: 'row'
   },
 
   BottomIcon: {
@@ -191,10 +258,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
+
+  FilterButton: {
+    backgroundColor: '#3BC446',
+    textAlign: 'center',
+    fontSize: 16,
+    borderRadius: 5,
+  },
+
   container: {
    flex: 5,
    paddingTop: 10,
    paddingBottom: 10
+  },
+
+  profilePicture: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    margin: 10,
+    marginBottom: 10
   },
 
   item: {
