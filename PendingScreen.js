@@ -64,11 +64,11 @@ export default class PendingScreen extends React.Component {
       {/*The buttons for filtering sent/recieved */}
       <View style = {{justifyContent: 'center',alignItems: 'center'}} >
         <View style = {styles.FilterButtonContainer}>
-          <TouchableWithoutFeedback onPress = { () => this.flipDisplay() } style = {styles.ButtonContainer}>
+          <TouchableWithoutFeedback onPress = { () => this.flipDisplay("sent") } style = {styles.ButtonContainer}>
             <View><Text style = {styles.Button}>Sent</Text></View>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback onPress = { () => this.flipDisplay() } style = {styles.ButtonContainer} >
+          <TouchableWithoutFeedback onPress = { () => this.flipDisplay("received") } style = {styles.ButtonContainer} >
             <View><Text style = {styles.Button}>Received</Text></View>
           </TouchableWithoutFeedback>
         </View>
@@ -83,10 +83,10 @@ export default class PendingScreen extends React.Component {
           (
             <View style = {styles.WagerBanner}>
               <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
-                <Image source= {item.sender.image} style={styles.profilePicture} />
+                <Image source= {view_sent? item.receiver.image: item.sender.image} style={styles.profilePicture} />
               </TouchableWithoutFeedback>
               <View style = {styles.PendingWager}>
-                <Text>New Wager from {item.sender.fullName}!</Text>
+                <Text>{view_sent? "Sent ": ""}New Wager {view_sent? "to": "from"} {view_sent? item.receiver.fullName: item.sender.fullName}!</Text>
               </View>
             </View>
           )
@@ -131,9 +131,11 @@ export default class PendingScreen extends React.Component {
   }
 
 
-  flipDisplay(){
-    view_sent = !view_sent;
-    this.forceUpdate();
+  flipDisplay(str){
+    if ((str == "sent" && !view_sent) || (str == "received" && view_sent)){
+      view_sent = !view_sent
+      this.forceUpdate();
+    }
   }
 
   pendingWagers(wagers){
