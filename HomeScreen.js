@@ -94,7 +94,7 @@ export default class HomeScreen extends React.Component {
               <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
                 <View style={{flexDirection: 'row'}}>
                   <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item.index,database,wagers) } style = {styles.FriendListEntry}>
-                    <Image source = {this.choosePicture(item.photo)} style ={styles.WagerPhoto}/>
+                    <Image source = {database[item.index].image} style ={styles.WagerPhoto}/>
                   </TouchableWithoutFeedback>
                   <Text style={styles.item}>{item.key}</Text>
                 </View>
@@ -163,8 +163,7 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedPending(){
-    //this.props.rootNavigation.navigation.navigate('Pending');
-    this.props.navigation.navigate('Home');
+    this.props.navigation.navigate('Pending', {wagers: wagers, database: database});
   };
 
   clickedActive(){
@@ -173,24 +172,11 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedExplore(){
-    this.props.navigation.navigate('Explore',{user: database[adam_index], wagers: wagers, database: database});
+    this.props.navigation.navigate('Explore', {user: database[adam_index], wagers: wagers, database: database});
   };
 
   clickedHome(){
-    this.props.navigation.navigate('Home');
-  };
-
-  choosePicture(name) {
-    switch(name) {
-      case "Adam Mosharrafa":
-        return require('./Images/Adam.png');
-      case "Charlie Furrer":
-        return require('./Images/Charlie.png');
-      case "Sandip Srinivas":
-        return require('./Images/Sandip.png');
-      case "Zhiwei Gu":
-        return require('./Images/Zhiwei.png');
-    }
+    //this.props.navigation.navigate('Home');
   };
 
   clickedFriendsListEntry(index,database,wagers){

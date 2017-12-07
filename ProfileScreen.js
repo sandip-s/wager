@@ -31,8 +31,9 @@ export default class ProfileScreen extends React.Component {
   render() {
     var person = this.props.navigation.state.params.person;
     var user = this.props.navigation.state.params.user;
+    var database = this.props.navigation.state.params.database;
 
-    var profilePicture = this.choosePicture(person.fullName);
+    var profilePicture = database[database.indexOf(person)].image;
     isFriend = user.friends.includes(person.fullName);
 
     return (
@@ -69,7 +70,7 @@ export default class ProfileScreen extends React.Component {
               <Image source={profilePicture} style={styles.profilePicture} />
               <Display enable={user != person}>
                 <View style={{flexDirection: 'row'}}>
-                  <Button onPress = { () => this.friendButton(this.props.navigation.state.params.user, person) } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
+                  <Button onPress = { () => this.friendButton(user, person) } title={isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
                   <Button onPress = { () => this.wagerFriendButton() } title={"Send Wager"} color="#000000" />
                 </View>
               </Display>
@@ -118,19 +119,6 @@ export default class ProfileScreen extends React.Component {
 
   clickedSendWager() {
     this.props.navigation.navigate('NewWager', {wagers: this.props.navigation.state.params.wagers, database: this.props.navigation.state.params.database});
-  };
-
-  choosePicture(name) {
-    switch(name) {
-      case "Adam Mosharrafa":
-        return require('./Images/Adam.png');
-      case "Charlie Furrer":
-        return require('./Images/Charlie.png');
-      case "Sandip Srinivas":
-        return require('./Images/Sandip.png');
-      case "Zhiwei Gu":
-        return require('./Images/Zhiwei.png');
-    }
   };
 
   friendButton(adam, person) {

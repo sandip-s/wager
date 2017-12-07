@@ -43,7 +43,7 @@ export default class ExploreScreen extends React.Component {
         renderItem = { ({item}) =>
           (
           <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item) } style = {styles.FriendListEntry}>
-            <Image source = {this.choosePicture(item.fullName)} style = {styles.FriendsListEntryElement}/>
+            <Image source = {database[database.indexOf(item)].image} style = {styles.FriendsListEntryElement}/>
           </TouchableWithoutFeedback>
           )
         }
@@ -66,21 +66,6 @@ export default class ExploreScreen extends React.Component {
     }
     return active
   }
-
-
-  choosePicture(name) {
-    switch(name) {
-      case "Adam Mosharrafa":
-        return require('./Images/Adam.png');
-      case "Charlie Furrer":
-        return require('./Images/Charlie.png');
-      case "Sandip Srinivas":
-        return require('./Images/Sandip.png');
-      case "Zhiwei Gu":
-        return require('./Images/Zhiwei.png');
-    }
-  }
-
 
   clickedActiveWager(personClicked,data){
     this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database}); //currently sending them to newWagerScreen with adam profile
