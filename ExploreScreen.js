@@ -38,14 +38,19 @@ export default class ExploreScreen extends React.Component {
 
 
     return (
-      <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
+      <View style={{flex: 1, justifyContent: 'space-around', alignSelf: 'stretch', paddingTop: 20,  backgroundColor: '#ffffff'}}>
+      <Text style={styles.YouMightKnow}>{"You Might Know..."}</Text>
       <FlatList
-        data = {database}
+        data = {[ database[0], database[2], database[3] ]}
+        numColumns={3}
         renderItem = { ({item,}) =>
           (
-          <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item,database,wagers) } style = {styles.FriendListEntry}>
-            <Image source = {this.choosePicture(item.fullName)} style = {styles.FriendsListEntryElement}/>
-          </TouchableWithoutFeedback>
+          <View style={{flexDirection: 'column', paddingLeft: 55}}>
+            <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item,database,wagers) } style = {styles.FriendListEntry}>
+              <Image source = {this.choosePicture(item.fullName)} style = {styles.FriendsListEntryElement}/>
+            </TouchableWithoutFeedback>
+            <Text style={styles.name}>{item.fullName.split(" ")[0]}</Text>
+          </View>
           )
         }
         keyExtractor={(item,index) => index}
@@ -132,6 +137,16 @@ const styles = StyleSheet.create({
   // profile icon
   ProfileIcon: {
     marginTop: 5
-  }
+  },
+
+  YouMightKnow: {
+    backgroundColor: 'transparent',
+    fontSize: 32,
+    fontWeight: 'bold',
+    fontFamily: 'Noteworthy',
+    color: '#3BC446',
+    textAlign: 'center',
+    paddingBottom: 100
+   },
 
 });
