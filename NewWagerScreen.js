@@ -43,6 +43,7 @@ export default class NewWagerScreen extends React.Component {
     var database = this.props.navigation.state.params.database;
     var current_wager = this.props.navigation.state.params.current_wager;
     var pending = Boolean(current_wager);
+    var canEdit = this.props.navigation.state.params.countered || !pending;
     var user = null;
     var person = null;
     if(pending) {
@@ -60,6 +61,7 @@ export default class NewWagerScreen extends React.Component {
             <View style={{flexDirection: 'row'}}>
               <Text style={styles.deadline}>Deadline:</Text>
               <DatePicker
+                disabled={!canEdit}
                 style={styles.datepicker}
                 date={this.state.deadline}
                 mode="date"
@@ -109,7 +111,7 @@ export default class NewWagerScreen extends React.Component {
                   <Text style={styles.fullName}>Adam Mosharrafa</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Target} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} value={pending ? this.state.myGoal : null} placeholder="Enter a goal" onChangeText={(myGoal) =>
+                    <TextInput editable={canEdit} style={styles.placeholder} value={pending ? this.state.myGoal : null} placeholder="Enter a goal" onChangeText={(myGoal) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: myGoal,
                                     myReward: this.state.myReward,
@@ -122,7 +124,7 @@ export default class NewWagerScreen extends React.Component {
                   </View>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Reward} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} value={pending ? this.state.myReward : null} placeholder="Enter a reward" onChangeText={(myReward) =>
+                    <TextInput editable={canEdit} style={styles.placeholder} value={pending ? this.state.myReward : null} placeholder="Enter a reward" onChangeText={(myReward) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: myReward,
@@ -135,7 +137,7 @@ export default class NewWagerScreen extends React.Component {
                   </View>
                   <View style={{flexDirection: 'row'}}>
                     <Image source={Skull} style={styles.headerIcon} />
-                    <TextInput style={styles.placeholder} value={pending ? this.state.myPenalty : null} placeholder="Enter a penalty" onChangeText={(myPenalty) =>
+                    <TextInput editable={canEdit} style={styles.placeholder} value={pending ? this.state.myPenalty : null} placeholder="Enter a penalty" onChangeText={(myPenalty) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
@@ -151,12 +153,12 @@ export default class NewWagerScreen extends React.Component {
               <Text style={styles.w}>W</Text>
               <View style={{flexDirection: 'column'}}>
                 <View style={styles.center}>
-                  <TouchableWithoutFeedback onPress = { () => this.updateClickCount() }>
+                  <TouchableWithoutFeedback disabled={!canEdit} onPress = { () => this.updateClickCount() }>
                     <Image source={profilePicture} style={styles.profilePicture} />
                   </TouchableWithoutFeedback>
                   <Text style={styles.fullName}>{pending ? person.fullName : this.getReceiverName()}</Text>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} value={pending ? this.state.yourGoal : null} placeholder="Enter a goal" onChangeText={(yourGoal) =>
+                    <TextInput editable={canEdit} style={styles.placeholder} value={pending ? this.state.yourGoal : null} placeholder="Enter a goal" onChangeText={(yourGoal) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
@@ -169,7 +171,7 @@ export default class NewWagerScreen extends React.Component {
                     <Image source={Target} style={styles.headerIcon} />
                   </View>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} value={pending ? this.state.yourReward : null} placeholder="Enter a reward" onChangeText={(yourReward) =>
+                    <TextInput editable={canEdit} style={styles.placeholder} value={pending ? this.state.yourReward : null} placeholder="Enter a reward" onChangeText={(yourReward) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
@@ -182,7 +184,7 @@ export default class NewWagerScreen extends React.Component {
                     <Image source={Reward} style={styles.headerIcon} />
                   </View>
                   <View style={{flexDirection: 'row'}}>
-                    <TextInput style={styles.placeholder} value={pending ? this.state.yourPenalty : null} placeholder="Enter a penalty" onChangeText={(yourPenalty) =>
+                    <TextInput editable={canEdit} style={styles.placeholder} value={pending ? this.state.yourPenalty : null} placeholder="Enter a penalty" onChangeText={(yourPenalty) =>
                       this.setState({deadline: this.state.deadline,
                                     myGoal: this.state.myGoal,
                                     myReward: this.state.myReward,
@@ -198,14 +200,14 @@ export default class NewWagerScreen extends React.Component {
               </View>
             </View>
           </View>
-          <Display enable={!pending}>
+          <Display enable={!pending || canEdit}>
             <View style={styles.center}>
               <TouchableWithoutFeedback style={styles.button} onPress={this.sendWager}>
-                <Text style={styles.buttonText}>Send Wager!</Text>
+                <View><Text style={styles.buttonText}>Send Wager!</Text></View>
               </TouchableWithoutFeedback>
             </View>
           </Display>
-          <Display enable={pending}>
+          <Display enable={pending && !canEdit}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <View style={styles.redCircle}>
                 <TouchableWithoutFeedback onPress={this.rejectWager}>
@@ -213,7 +215,7 @@ export default class NewWagerScreen extends React.Component {
                 </TouchableWithoutFeedback>
               </View>
                 <View style={styles.yellowCircle}>
-                <TouchableWithoutFeedback onPress={this.counterWager}>
+                <TouchableWithoutFeedback onPress={ () => this.counterWager(current_wager, database, wagers)}>
                   <Image source={CounterIcon} style={styles.CounterIcon} />
                 </TouchableWithoutFeedback>
               </View>
@@ -299,15 +301,15 @@ export default class NewWagerScreen extends React.Component {
     }
   }
 
-  rejectWager = () => {
+  rejectWager() {
 
   }
 
-  counterWager = () => {
-    
+  counterWager(current_wager, database, wagers) {
+    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: true})
   }
 
-  acceptWager = () => {
+  acceptWager() {
     
   }
 

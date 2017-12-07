@@ -161,7 +161,7 @@ export default class PendingScreen extends React.Component {
   };
 
   clickedWagerBanner(current_wager, database,wagers){
-    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1]})
+    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: false})
   };
 
   clickedSendWager(database,wagers) {
