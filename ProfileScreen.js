@@ -31,33 +31,29 @@ import EmptyHeart from './Images/WagerLikeIcon.png'
 import FullHeart from './Images/WagerUnLikeIcon.png'
 import CommentButton from './Images/WagerCommentIcon.png'
 
-var isFriend = false;
-
 var adam_wagers = [
-    {key: "Adam completed Zhiwei's wager to do laundry by November 23rd.", timestamp: "2 days ago"},
-    {key: "Adam completed Sandip's wager to run 3 miles by November 22nd.", timestamp: "3 days ago"},
-    {key: "Adam failed Sandip's wager to call brothers and parents by November 22nd.", timestamp: "3 days ago"},
+    {key: "Adam completed Zhiwei's wager to do laundry by November 23rd.", timestamp: "2 days ago", ID: 0},
+    {key: "Adam completed Sandip's wager to run 3 miles by November 22nd.", timestamp: "3 days ago", ID: 1},
+    {key: "Adam failed Sandip's wager to call brothers and parents by November 22nd.", timestamp: "3 days ago", ID: 2},
 ]
 
 var charlie_wagers = [
-    {key: "Charlie completed Sandip's wager to cook family dinner by November 24th.", timestamp: "18 hours ago"},
-    {key: "Charlie completed Zhiwei's wager to go a day without checking Instagram by November 24th.", timestamp: "18 hours ago"},
-    {key: "Charlie completed Zhiwei's wager to get lunch with a professor by November 21st.", timestamp: "4 days ago"},
+    {key: "Charlie completed Sandip's wager to cook family dinner by November 24th.", timestamp: "18 hours ago", ID: 0},
+    {key: "Charlie completed Zhiwei's wager to go a day without checking Instagram by November 24th.", timestamp: "18 hours ago", ID: 1},
+    {key: "Charlie completed Zhiwei's wager to get lunch with a professor by November 21st.", timestamp: "4 days ago", ID: 2},
 ]
 
 var sandip_wagers = [
-    {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", timestamp: "7 days ago"},
-    {key: "Sandip completed Charlie's wager to go to the gym by November 17th.", timestamp: "Nov 17"},
-    {key: "Sandip failed Zhiwei's wager to swim laps by November 16th.", timestamp: "Nov 16"},
+    {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", timestamp: "7 days ago", ID: 0},
+    {key: "Sandip completed Charlie's wager to go to the gym by November 17th.", timestamp: "Nov 17", ID: 1},
+    {key: "Sandip failed Zhiwei's wager to swim laps by November 16th.", timestamp: "Nov 16", ID: 2},
 ]
 
 var zhiwei_wagers = [
-    {key: "Zhiwei failed Sandip's wager to try new juice cleanse by November 25th.", timestamp: "2 hours ago"},
-    {key: "Zhiwei completed Charlie's wager to run a half marathon by November 15th.", timestamp: "Nov 15"},
-    {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", timestamp: "Nov 14"},
+    {key: "Zhiwei failed Sandip's wager to try new juice cleanse by November 25th.", timestamp: "2 hours ago", ID: 0},
+    {key: "Zhiwei completed Charlie's wager to run a half marathon by November 15th.", timestamp: "Nov 15", ID: 1},
+    {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", timestamp: "Nov 14", ID: 2},
 ]
-
-var wager_map = [{"Adam Mosharrafa": adam_wagers}, {"Charlie Furrer": charlie_wagers}, {"Sandip Srinivas": sandip_wagers}, {"Zhiwei Gu": zhiwei_wagers}]
 
 export default class ProfileScreen extends React.Component {
   render() {
@@ -65,6 +61,8 @@ export default class ProfileScreen extends React.Component {
     var user = this.props.navigation.state.params.user;
     var database = this.props.navigation.state.params.database;
     var profilePicture = database[database.indexOf(person)].image;
+    var person_index = this.getIndex(person.fullName);
+    var wager_array = this.props.navigation.state.params.wager_array;
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
@@ -101,7 +99,6 @@ export default class ProfileScreen extends React.Component {
               <Display enable={user != person}>
                 <View style={{flexDirection: 'row'}}>
                   <Button onPress = { () => this.friendButton(user, person) } title={this.state.isFriend ? "✓ Friends" : "+ Add Friend"} color="#000000" />
-                  <Button onPress = { () => this.wagerFriendButton() } title={"Send Wager"} color="#000000" />
                 </View>
               </Display>
               <View style={{alignItems: 'center'}}>
@@ -119,8 +116,8 @@ export default class ProfileScreen extends React.Component {
                 </View>
                 <Text style={styles.timestamp}>{item.timestamp}</Text>
                 <View style={{flexDirection: 'row', paddingLeft: 55}}>
-                  <TouchableWithoutFeedback onPress = { () => {this.toggleHeart(item.ID)} }>
-                    <Image source = {EmptyHeart} style ={styles.LikeIcon}/>
+                  <TouchableWithoutFeedback onPress = { () => {this.toggleHeart(person_index, item.ID, wager_array)} }>
+                    <Image source = {wager_array[person_index][item.ID] ? FullHeart : EmptyHeart} style ={styles.LikeIcon}/>
                   </TouchableWithoutFeedback>
 
                   <Image source = {CommentButton} style ={styles.CommentIcon}/>
@@ -168,9 +165,27 @@ export default class ProfileScreen extends React.Component {
     var person = this.props.navigation.state.params.person;
     var user = this.props.navigation.state.params.user;
     this.state = {
-      isFriend: user.friends.includes(person.fullName)
+      isFriend: user.friends.includes(person.fullName),
     }
-  }
+  };
+
+  toggleHeart(index, ID, wager_array) {
+    wager_array[index][ID] = !wager_array[index][ID];
+    this.forceUpdate();
+  };
+
+  getIndex(fullName) {
+    switch(fullName) {
+      case "Charlie Furrer":          
+        return 0;
+      case "Adam Mosharrafa":          
+        return 1;
+      case "Sandip Srinivas":
+        return 2;
+      case "Zhiwei Gu":
+        return 3;
+    }
+  };
 
   clickedProfile(person) {
 

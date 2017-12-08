@@ -48,7 +48,8 @@ import CommentButton from './Images/WagerCommentIcon.png'
 
 var database = require('./global.js');
 var wagers = require('./wagers.js');
-var map = [false, false, false, false, false, false, false, false, false]
+var map = [false, false, false, false, false, false, false, false, false];
+var wager_array = [[false, false, false], [false, false, false], [false, false, false], [false, false, false]];
 
 export default class HomeScreen extends React.Component {
 
@@ -93,7 +94,7 @@ export default class HomeScreen extends React.Component {
             renderItem={({item}) =>
               <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
                 <View style={{flexDirection: 'row'}}>
-                  <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item.index,database,wagers) } style = {styles.FriendListEntry}>
+                  <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item.index,database,wagers, wager_array) } style = {styles.FriendListEntry}>
                     <Image source = {database[item.index].image} style ={styles.WagerPhoto}/>
                   </TouchableWithoutFeedback>
                   <Text style={styles.item}>{item.key}</Text>
@@ -155,7 +156,7 @@ export default class HomeScreen extends React.Component {
   }
 
   clickedProfile() {
-    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
   clickedSendWager() {
@@ -178,8 +179,8 @@ export default class HomeScreen extends React.Component {
 
   };
 
-  clickedFriendsListEntry(index,database,wagers){
-    this.props.navigation.navigate('Profile', {user: database[1], person: database[index], wagers: wagers, database: database});
+  clickedFriendsListEntry(index,database,wagers,wager_array){
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[index], wagers: wagers, database: database, wager_array: wager_array});
   };
 
 }
