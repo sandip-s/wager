@@ -41,9 +41,11 @@ export default class NewWagerScreen extends React.Component {
 
     var wagers = this.props.navigation.state.params.wagers;
     var database = this.props.navigation.state.params.database;
+    var wager_array = this.props.navigation.state.params.wager_array;
     var current_wager = this.props.navigation.state.params.current_wager;
     var pending = Boolean(current_wager);
     var countered = Boolean(this.props.navigation.state.params.countered);
+    var fromSent = Boolean(this.props.navigation.state.params.fromSent);
     var canEdit = countered || !pending;
     var user = null;
     var person = null;
@@ -202,12 +204,12 @@ export default class NewWagerScreen extends React.Component {
           </View>
           <Display enable={!pending || canEdit}>
             <View style={styles.center}>
-              <TouchableWithoutFeedback style={styles.button} onPress={this.sendWager}>
-                <View><Text style={styles.buttonText}>Send Wager!</Text></View>
+              <TouchableWithoutFeedback onPress={this.sendWager}>
+                <View style={styles.GreenButton}><Text style={styles.buttonText}>Send Wager!</Text></View>
               </TouchableWithoutFeedback>
             </View>
           </Display>
-          <Display enable={pending && !canEdit}>
+          <Display enable={pending && !canEdit && !fromSent}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <View style={styles.redCircle}>
                 <TouchableWithoutFeedback onPress={ () => this.rejectWager()}>
@@ -215,7 +217,7 @@ export default class NewWagerScreen extends React.Component {
                 </TouchableWithoutFeedback>
               </View>
               <View style={styles.yellowCircle}>
-                <TouchableWithoutFeedback onPress={ () => this.counterWager(current_wager, database, wagers)}>
+                <TouchableWithoutFeedback onPress={ () => this.counterWager(current_wager, database, wagers, wager_array)}>
                   <Image source={CounterIcon} style={styles.CounterIcon} />
                 </TouchableWithoutFeedback>
               </View>
@@ -226,12 +228,6 @@ export default class NewWagerScreen extends React.Component {
               </View>
             </View>
           </Display>
-          <View style={styles.center}>
-            <Button onPress={this.toggleDisplay.bind(this)} title="Show/Hide Wagers" color="#34495e"/>
-            <Display enable={this.state.enable}>
-              <Text>{JSON.stringify(wagers, null, 4)}</Text>
-            </Display>
-          </View>
         </ScrollView>
       </View>
     );
@@ -302,7 +298,8 @@ export default class NewWagerScreen extends React.Component {
       this.forceUpdate();
       var wagers = this.props.navigation.state.params.wagers;
       var database = this.props.navigation.state.params.database;
-      this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database});
+      var wager_array = this.props.navigation.state.params.wager_array;
+      this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
     }
   }
 
@@ -310,21 +307,22 @@ export default class NewWagerScreen extends React.Component {
     var current_wager = this.props.navigation.state.params.current_wager;
     var database = this.props.navigation.state.params.database;
     var wagers = this.props.navigation.state.params.wagers;
+    var wager_array = this.props.navigation.state.params.wager_array;
 
     wagers.splice(wagers.indexOf(current_wager), 1);
-    this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database});
+    this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   }
 
-  // then navigate to pending wagers when clicking send wager
-  counterWager(current_wager, database, wagers) {
-    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: true})
+  counterWager(current_wager, database, wagers, wager_array) {
+    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: true, wager_array: wager_array})
   }
 
   acceptWager() {
     var database = this.props.navigation.state.params.database;
     var wagers = this.props.navigation.state.params.wagers;
+    var wager_array = this.props.navigation.state.params.wager_array;
     this.props.navigation.state.params.current_wager.status = 'Active';
-    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database});
+    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   }
 
   updateClickCount(canEdit) {
@@ -437,12 +435,6 @@ const styles = StyleSheet.create({
     marginTop: 25
   },
 
-  buttonText: {
-    color: 'white',
-    fontSize: 40,
-    fontFamily: 'Noteworthy'
-  },
-
   datepicker: {
     width: 170,
     marginTop: 20
@@ -463,8 +455,22 @@ const styles = StyleSheet.create({
     marginBottom: 25
   },
 
-  keyboard: {
+  GreenButton:{
+    width: 180,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: '#3bc446',
+    margin: 30
+  },
 
+  buttonText:{
+    alignSelf: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+    fontFamily: 'Noteworthy',
+    color: '#ffffff',
+    marginTop: 18
   },
 
   RejectThumb: {

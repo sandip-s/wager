@@ -162,26 +162,26 @@ export default class HomeScreen extends React.Component {
   };
 
   clickedSendWager() {
-    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database});
+    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database, wager_array: wager_array});
   };
 
   clickedPending(){
-    this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database});
+    this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database, wager_array: wager_array});
   };
 
   clickedActive(){
-    this.props.navigation.navigate('Active', {user: database[1], wagers:wagers, database: database});
+    this.props.navigation.navigate('Active', {user: database[1], wagers:wagers, database: database, wager_array: wager_array});
   };
 
   clickedExplore(){
-    this.props.navigation.navigate('Explore', {user: database[1], wagers: wagers, database: database});
+    this.props.navigation.navigate('Explore', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
   clickedHome(){
 
   };
 
-  clickedFriendsListEntry(index,database,wagers,wager_array){
+  clickedFriendsListEntry(index, database, wagers, wager_array){
     this.props.navigation.navigate('Profile', {user: database[1], person: database[index], wagers: wagers, database: database, wager_array: wager_array});
   };
 

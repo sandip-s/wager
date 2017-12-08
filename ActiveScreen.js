@@ -29,8 +29,8 @@ export default class Active extends React.Component {
   render() {
     var database = this.props.navigation.state.params.database;
     var wagers = this.props.navigation.state.params.wagers;
-    var active_wagers = this.activeWagers(wagers)
-
+    var active_wagers = this.activeWagers(wagers);
+    var wager_array = this.props.navigation.state.params.wager_array;
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch',}}>
@@ -40,13 +40,13 @@ export default class Active extends React.Component {
           <View style={{flexDirection: 'row'}}>
             {/* Profile Icon */}
 
-            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database, wagers, wager_array) }>
               <Image source={database[1].image} style={styles.TopProfileIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
             <Text style={styles.Wager}>Wager</Text>
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database, wagers, wager_array) }>
               <Image source={SendWagerIcon} style={styles.TopIcon} />
             </TouchableWithoutFeedback>
           </View>
@@ -65,7 +65,7 @@ export default class Active extends React.Component {
             (
               <View style={{flexDirection: 'column', flexWrap: 'wrap',}}>
                 <View style={styles.WagerBanner}>
-                  <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
+                  <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers, wager_array) }>
                     <Image source= {this.isSender(item)? item.receiver.image: item.sender.image} style={styles.profilePicture} />
                   </TouchableWithoutFeedback>
                   <View style= {{flexDirection: 'column',flexWrap: 'wrap', width: 300,paddingTop: 10,justifyContent: 'center'}}>
@@ -89,22 +89,22 @@ export default class Active extends React.Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
             {/* Profile Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database, wagers, wager_array) }>
               <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore(database, wagers, wager_array) }>
               <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedPending(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedPending(database, wagers, wager_array) }>
               <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedActive(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedActive(database, wagers, wager_array) }>
               <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomHighlightedIcon} />
             </TouchableWithoutFeedback>
           </View>
@@ -114,8 +114,8 @@ export default class Active extends React.Component {
   }
 
 
-  clickedWagerBanner(current_wager, database,wagers){
-    //this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1]})
+  clickedWagerBanner(current_wager, database, wagers, wager_array){
+
   };
 
   isSender(wager){
@@ -130,36 +130,32 @@ export default class Active extends React.Component {
     return active
   }
 
-  clickedFriendsListEntry(index,database,wagers){
-    this.props.navigation.navigate('Profile', {user: database[1], person: database[index], wagers: wagers, database: database});
+  clickedFriendsListEntry(index, database, wagers, wager_array){
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[index], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedActiveWager(personClicked,database,wagers){
-    //this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database}); //currently sending them to newWagerScreen with adam profile
-  }
-
-  clickedProfile(database,wagers) {
-    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
+  clickedProfile(database, wagers, wager_array) {
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedSendWager(database,wagers) {
-    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database});
+  clickedSendWager(database, wagers, wager_array) {
+    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedPending(database,wagers){
-    this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database});
+  clickedPending(database, wagers, wager_array){
+    this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database, wager_array: wager_array});
   };
 
-  clickedActive(database,wagers){
-    this.props.navigation.navigate('Active', {user: database[1], wagers:wagers, database: database});
+  clickedActive(database, wagers, wager_array){
+
   };
 
-  clickedExplore(database,wagers){
-    this.props.navigation.navigate('Explore',{user: database[1], wagers: wagers, database: database});
+  clickedExplore(database,wagers, wager_array){
+    this.props.navigation.navigate('Explore',{user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedHome(database,wagers){
-    this.props.navigation.navigate('Home', {user: database[1], wagers: wagers, database: database});
+  clickedHome(database,wagers, wager_array){
+    this.props.navigation.navigate('Home', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
 }

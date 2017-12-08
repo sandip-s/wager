@@ -35,6 +35,7 @@ export default class PendingScreen extends React.Component {
     var sent_wagers = this.filterPending(pending_wagers,"Sent");
     var recieved_wagers = this.filterPending(pending_wagers, "Received");
     var display_wagers = view_sent ? sent_wagers: recieved_wagers;
+    var wager_array = this.props.navigation.state.params.wager_array;
 
     return (
 
@@ -43,13 +44,13 @@ export default class PendingScreen extends React.Component {
         <View style={styles.TopBar}>
           <View style={{flexDirection: 'row'}}>
             {/* Profile Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database, wagers, wager_array) }>
               <Image source={database[1].image} style={styles.TopProfileIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
             <Text style={styles.Wager}>Wager</Text>
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database, wagers, wager_array) }>
               <Image source={SendWagerIcon} style={styles.TopIcon} />
             </TouchableWithoutFeedback>
           </View>
@@ -80,14 +81,14 @@ export default class PendingScreen extends React.Component {
           (
             <View style={{flexDirection: 'column', flexWrap: 'wrap', }}>
             <View style = {styles.WagerBanner}>
-              <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
+              <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database, wagers, view_sent, wager_array) }>
                 <Image source= {view_sent? item.receiver.image: item.sender.image} style={styles.profilePicture} />
               </TouchableWithoutFeedback>
               <View style = {styles.PendingWager}>
                 <View style = {styles.ButtonParent}>
-                  <Button style = {styles.ButtonTextStyle} title = {this.buttonText(item)} color="#000000" onPress = { () => this.clickedWagerBanner(item,database,wagers)} />
+                  <Button style = {styles.ButtonTextStyle} title = {this.buttonText(item)} color="#000000" onPress = { () => this.clickedWagerBanner(item, database, wagers, view_sent, wager_array)} />
                 </View>
-                <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
+                <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item, database, wagers, view_sent, wager_array) }>
                   <Image source = {RightArrow} style = {styles.rightArrow}/>
                 </TouchableWithoutFeedback>
               </View>
@@ -104,22 +105,22 @@ export default class PendingScreen extends React.Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
             {/* Profile Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database, wagers, wager_array) }>
               <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedExplore(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedExplore(database, wagers, wager_array) }>
               <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedPending(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedPending(database, wagers, wager_array) }>
               <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomHighlightedIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedActive(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedActive(database, wagers, wager_array) }>
               <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
@@ -153,41 +154,35 @@ export default class PendingScreen extends React.Component {
     return filtered
   }
 
-  clickedActiveWager(personClicked, data){
-    this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database});
-  }
-
-  clickedProfile(database, wagers) {
-    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
+  clickedProfile(database, wagers, wager_array) {
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedWagerBanner(current_wager, database, wagers){
-    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: false})
+  clickedWagerBanner(current_wager, database, wagers, fromSent, wager_array){
+    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: false, fromSent: fromSent, wager_array: wager_array})
   };
 
-  clickedSendWager(database, wagers) {
-    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database});
+  clickedSendWager(database, wagers, wager_array) {
+    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedPending(database,wagers){
+  clickedPending(database, wagers){
 
   };
 
-  clickedActive(database,wagers){
-    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database});
+  clickedActive(database, wagers, wager_array){
+    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedExplore(database,wagers){
-    this.props.navigation.navigate('Explore',{user: database[1], wagers: wagers, database: database});
+  clickedExplore(database, wagers, wager_array){
+    this.props.navigation.navigate('Explore',{user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedHome(database,wagers){
-    this.props.navigation.navigate('Home');
+  clickedHome(database, wagers, wager_array){
+    this.props.navigation.navigate('Home', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
   buttonText(item){
-    //{view_sent? "Sent ": ""}}New Wager {view_sent ? "to": "from"} {view_sent? item.receiver.fullName: item.sender.fullName}
-
     return (view_sent? "Sent ": "") + ("New Wager ") + (view_sent ? "to ": "from ") + (view_sent? item.receiver.fullName: item.sender.fullName)
   }
 
