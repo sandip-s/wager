@@ -33,7 +33,7 @@ export default class Active extends React.Component {
 
 
     return (
-      <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
+      <View style={{flex: 1, alignSelf: 'stretch',}}>
 
         {/* Top NavBar */}
         <View style={styles.TopBar}>
@@ -52,18 +52,25 @@ export default class Active extends React.Component {
           </View>
         </View>
         {/*end top nav*/}
+
+        <ScrollView>
+          <Image style={{ height: 2000, width: '100%', position: 'absolute', marginTop:0}} source={Background} />
+
+
+        <View style = {{marginTop:10}}>
         <FlatList
+
           data = {active_wagers}
           renderItem = { ({item}) =>
             (
-              <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
-                <View style={{flexDirection: 'row'}}>
+              <View style={{flexDirection: 'column', flexWrap: 'wrap',}}>
+                <View style={styles.WagerBanner}>
                   <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
                     <Image source= {this.isSender(item)? item.receiver.image: item.sender.image} style={styles.profilePicture} />
                   </TouchableWithoutFeedback>
                   <View style= {{flexDirection: 'column',flexWrap: 'wrap', width: 300,paddingTop: 10,justifyContent: 'center'}}>
-                    <Text>You have an active wager with {this.isSender(item) ? item.receiver.fullName : item.sender.fullName    }!</Text>
-                    <Text>Make sure to complete your goal of: {this.isSender(item) ? item.sender.goal: item.receiver.goal}.</Text>
+                    <Text style = {styles.TransparentText}>You have an active wager with {this.isSender(item) ? item.receiver.fullName : item.sender.fullName    }!</Text>
+                    <Text style = {styles.TransparentText}>Make sure to complete your goal of: {this.isSender(item) ? item.sender.goal: item.receiver.goal}.</Text>
                     <Text style={styles.timestamp}> Deadline: {item.deadline}</Text>
                   </View>
                 </View>
@@ -73,6 +80,10 @@ export default class Active extends React.Component {
           }
           keyExtractor={(item,index) => index}
         />
+        </View>
+
+        </ScrollView>
+
 
         <View style={styles.NavBarContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
@@ -124,7 +135,7 @@ export default class Active extends React.Component {
   };
 
   clickedActiveWager(personClicked,database,wagers){
-    this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database}); //currently sending them to newWagerScreen with adam profile
+    //this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database}); //currently sending them to newWagerScreen with adam profile
   }
 
   clickedProfile(database,wagers) {
@@ -160,6 +171,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 50,
   },
+  TransparentText:{
+    backgroundColor: 'transparent'
+  },
 
   Wager: {
     backgroundColor: 'transparent',
@@ -183,14 +197,15 @@ const styles = StyleSheet.create({
     height: 50
   },
 
-  timestamp: {
-    fontFamily: 'Verdana',
-    backgroundColor: 'transparent',
-    fontStyle: 'italic',
-
-    fontSize: 12,
-    height: 44,
+  WagerBanner:{
+    flexDirection: 'row',
+    borderRadius: 8,
+    borderWidth: .5,
+    margin: 10,
+    backgroundColor: 'white'
   },
+
+
 
   BottomIcon: {
     height: 30,
@@ -246,7 +261,8 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 12,
     height: 44,
-    marginLeft: 55
+    marginLeft: 55,
+    backgroundColor: 'transparent'
   },
 
   WagerPhoto: {

@@ -38,8 +38,15 @@ export default class ExploreScreen extends React.Component {
 
 
     return (
+
+
       <View style={{flex: 1, justifyContent: 'space-around', alignSelf: 'stretch', paddingTop: 20,  backgroundColor: '#ffffff'}}>
+
+      <Image style={{ height: 2000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
       <Text style={styles.YouMightKnow}>{"You Might Know..."}</Text>
+
+
+
       <FlatList
         data = {[ database[0], database[2], database[3] ]}
         numColumns={3}
@@ -116,7 +123,7 @@ export default class ExploreScreen extends React.Component {
   };
 
   clickedExplore(database,wagers){
-    
+
   };
 
   clickedHome(database,wagers){
@@ -170,6 +177,10 @@ const styles = StyleSheet.create({
     width: 30,
     marginTop: 10,
     backgroundColor: '#D8F3DA'
+  },
+
+  name: {
+    backgroundColor: 'transparent',
   },
 
   FriendsList: {
