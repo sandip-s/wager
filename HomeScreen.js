@@ -118,7 +118,7 @@ export default class HomeScreen extends React.Component {
 
             {/* Home Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedHome() }>
-              <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
+              <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomHighlightedIcon} />
             </TouchableWithoutFeedback>
 
             {/* Explore Icon */}
@@ -218,6 +218,13 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginTop: 10
+  },
+
+  BottomHighlightedIcon: {
+    height: 30,
+    width: 30,
+    marginTop: 10,
+    backgroundColor: '#D8F3DA'
   },
 
   container: {

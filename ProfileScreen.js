@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   StyleSheet,
+  FlatList,
   Text,
   View,
   TouchableOpacity,
@@ -24,6 +25,39 @@ import LocationIcon from './Images/redpin.png'
 import Background from './Images/Background.png'
 
 import Display from 'react-native-display';
+
+//like and comment
+import EmptyHeart from './Images/WagerLikeIcon.png'
+import FullHeart from './Images/WagerUnLikeIcon.png'
+import CommentButton from './Images/WagerCommentIcon.png'
+
+var isFriend = false;
+
+var adam_wagers = [
+    {key: "Adam completed Zhiwei's wager to do laundry by November 23rd.", timestamp: "2 days ago"},
+    {key: "Adam completed Sandip's wager to run 3 miles by November 22nd.", timestamp: "3 days ago"},
+    {key: "Adam failed Sandip's wager to call brothers and parents by November 22nd.", timestamp: "3 days ago"},
+]
+
+var charlie_wagers = [
+    {key: "Charlie completed Sandip's wager to cook family dinner by November 24th.", timestamp: "18 hours ago"},
+    {key: "Charlie completed Zhiwei's wager to go a day without checking Instagram by November 24th.", timestamp: "18 hours ago"},
+    {key: "Charlie completed Zhiwei's wager to get lunch with a professor by November 21st.", timestamp: "4 days ago"},
+]
+
+var sandip_wagers = [
+    {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", timestamp: "7 days ago"},
+    {key: "Sandip completed Charlie's wager to go to the gym by November 17th.", timestamp: "Nov 17"},
+    {key: "Sandip failed Zhiwei's wager to swim laps by November 16th.", timestamp: "Nov 16"},
+]
+
+var zhiwei_wagers = [
+    {key: "Zhiwei failed Sandip's wager to try new juice cleanse by November 25th.", timestamp: "2 hours ago"},
+    {key: "Zhiwei completed Charlie's wager to run a half marathon by November 15th.", timestamp: "Nov 15"},
+    {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", timestamp: "Nov 14"},
+]
+
+var wager_map = [{"Adam Mosharrafa": adam_wagers}, {"Charlie Furrer": charlie_wagers}, {"Sandip Srinivas": sandip_wagers}, {"Zhiwei Gu": zhiwei_wagers}]
 
 export default class ProfileScreen extends React.Component {
   render() {
@@ -75,6 +109,26 @@ export default class ProfileScreen extends React.Component {
                 <View style={{width: 200 * person.successRate, height: 20, backgroundColor: '#3BC446', borderRadius: 50, marginRight: 200 - 200 * person.successRate}} />
                 <Text style={styles.progressText}>{person.successRate * 100}%</Text>
               </View>
+
+              <FlatList
+              data={this.getWagers(person.fullName, this.state.isFriend)}
+              renderItem={({item}) =>
+              <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.item}>{item.key}</Text>
+                </View>
+                <Text style={styles.timestamp}>{item.timestamp}</Text>
+                <View style={{flexDirection: 'row', paddingLeft: 55}}>
+                  <TouchableWithoutFeedback onPress = { () => {this.toggleHeart(item.ID)} }>
+                    <Image source = {EmptyHeart} style ={styles.LikeIcon}/>
+                  </TouchableWithoutFeedback>
+
+                  <Image source = {CommentButton} style ={styles.CommentIcon}/>
+                </View>
+              </View>
+              }
+              />
+
             </View>
           </ScrollView>
         </View>
@@ -144,6 +198,19 @@ export default class ProfileScreen extends React.Component {
   wagerFriendButton() {
 
   };
+
+  getWagers(fullName, isFriend) {
+    if (fullName == "Adam Mosharrafa") {return adam_wagers;}
+    if (!isFriend) {return []};
+    switch(fullName) {
+      case "Charlie Furrer":          
+        return charlie_wagers;
+      case "Sandip Srinivas":
+        return sandip_wagers;
+      case "Zhiwei Gu":
+        return zhiwei_wagers;
+    }
+  }
 }
 
 const styles = StyleSheet.create({
@@ -225,6 +292,37 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Noteworthy',
     color: '#3BC446'
+  },
+
+  item: {
+    fontFamily: 'Verdana',
+    backgroundColor: 'transparent',
+    flexWrap: 'wrap',
+    width: 325,
+    padding: 10,
+    fontSize: 12,
+    height: 44,
+  },
+
+  timestamp: {
+    fontFamily: 'Verdana',
+    backgroundColor: 'transparent',
+    fontStyle: 'italic',
+    padding: 10,
+    fontSize: 12,
+    height: 44,
+    marginLeft: 55
+  },
+
+  LikeIcon: {
+    width: 30,
+    height: 30
+  },
+
+  CommentIcon: {
+    width: 30,
+    height: 30,
+    marginLeft: 25
   }
 
 });

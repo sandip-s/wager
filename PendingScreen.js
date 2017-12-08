@@ -78,6 +78,7 @@ export default class PendingScreen extends React.Component {
               <View style = {styles.PendingWager}>
                 <Text>{view_sent? "Sent ": ""}New Wager {view_sent ? "to": "from"} {view_sent? item.receiver.fullName: item.sender.fullName}!</Text>
               </View>
+            </View>
             )
           }
           keyExtractor={(item,index) => index}
@@ -98,7 +99,7 @@ export default class PendingScreen extends React.Component {
 
             {/* Send Wager Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedPending(database,wagers) }>
-              <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
+              <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomHighlightedIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
@@ -226,6 +227,13 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginTop: 10
+  },
+
+  BottomHighlightedIcon: {
+    height: 30,
+    width: 30,
+    marginTop: 10,
+    backgroundColor: '#D8F3DA'
   },
 
   FilterButton: {
