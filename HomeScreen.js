@@ -188,7 +188,6 @@ export default class HomeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  // top bar
   TopBar: {
     backgroundColor: '#ffffff',
     alignItems: 'center',
@@ -196,7 +195,6 @@ const styles = StyleSheet.create({
     height: 60,
   },
 
-  // wager text
   Wager: {
     backgroundColor: 'transparent',
     fontSize: 30,
@@ -208,7 +206,6 @@ const styles = StyleSheet.create({
     marginRight: 110
   },
 
-  // send wager icon
   TopIcon: {
     width: 30,
     height: 30,
