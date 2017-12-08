@@ -210,17 +210,17 @@ export default class NewWagerScreen extends React.Component {
           <Display enable={pending && !canEdit}>
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
               <View style={styles.redCircle}>
-                <TouchableWithoutFeedback onPress={this.rejectWager}>
+                <TouchableWithoutFeedback onPress={ () => this.rejectWager()}>
                   <Image source={Thumb} style={styles.RejectThumb} />
                 </TouchableWithoutFeedback>
               </View>
-                <View style={styles.yellowCircle}>
+              <View style={styles.yellowCircle}>
                 <TouchableWithoutFeedback onPress={ () => this.counterWager(current_wager, database, wagers)}>
                   <Image source={CounterIcon} style={styles.CounterIcon} />
                 </TouchableWithoutFeedback>
               </View>
               <View style={styles.greenCircle}>
-                <TouchableWithoutFeedback onPress={this.acceptWager}>
+                <TouchableWithoutFeedback onPress={ () => this.acceptWager()}>
                   <Image source={Thumb} style={styles.AcceptThumb} />
                 </TouchableWithoutFeedback>
               </View>
@@ -301,6 +301,7 @@ export default class NewWagerScreen extends React.Component {
       clickCount = 0;
       this.forceUpdate();
       var wagers = this.props.navigation.state.params.wagers;
+      var database = this.props.navigation.state.params.database;
       this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database});
     }
   }
@@ -309,7 +310,8 @@ export default class NewWagerScreen extends React.Component {
     var current_wager = this.props.navigation.state.params.current_wager;
     var database = this.props.navigation.state.params.database;
     var wagers = this.props.navigation.state.params.wagers;
-    this.props.navigation.state.params.wagers.splice(this.props.navigation.state.params.wagers.indexOf(current_wager), 1);
+
+    wagers.splice(wagers.indexOf(current_wager), 1);
     this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database});
   }
 
