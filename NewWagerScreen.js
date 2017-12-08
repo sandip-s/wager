@@ -16,6 +16,8 @@ import {
   KeyboardAvoidingView
 } from 'react-native';
 
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+
 import DatePicker from 'react-native-datepicker'
 import SearchBar from 'react-native-elements'
 import Display from 'react-native-display';
@@ -55,7 +57,7 @@ export default class NewWagerScreen extends React.Component {
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
-        <ScrollView>
+        <KeyboardAwareScrollView>
           <Image style={{ height: 2000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
           <View style={styles.center}>
             <View style={{flexDirection: 'row'}}>
@@ -232,7 +234,7 @@ export default class NewWagerScreen extends React.Component {
               <Text>{JSON.stringify(wagers, null, 4)}</Text>
             </Display>
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   };
