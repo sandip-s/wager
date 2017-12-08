@@ -91,8 +91,9 @@ export default class HomeScreen extends React.Component {
                 {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", photo: "Zhiwei Gu", index: 3, timestamp: "Nov 14", ID: 8},
               ]}
             renderItem={({item}) =>
-              <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
-                <View style={{flexDirection: 'row'}}>
+              <View style = {styles.WagerBanner}>
+              <View style={{flexDirection: 'column', flexWrap: 'wrap',marginTop: 5}}>
+                <View style={{flexDirection: 'row',}}>
                   <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item.index,database,wagers) } style = {styles.FriendListEntry}>
                     <Image source = {database[item.index].image} style ={styles.WagerPhoto}/>
                   </TouchableWithoutFeedback>
@@ -106,6 +107,7 @@ export default class HomeScreen extends React.Component {
 
                   <Image source = {CommentButton} style ={styles.CommentIcon}/>
                 </View>
+              </View>
               </View>
             }
             />
@@ -250,7 +252,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Verdana',
     backgroundColor: 'transparent',
     flexWrap: 'wrap',
-    width: 325,
+    width: 275,
     padding: 10,
     fontSize: 12,
     height: 44,
@@ -276,6 +278,15 @@ const styles = StyleSheet.create({
   LikeIcon: {
     width: 30,
     height: 30
+  },
+
+  WagerBanner:{
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    borderRadius: 8,
+    borderWidth: .5,
+    margin: 10,
+    paddingBottom: 5
   },
 
   CommentIcon: {

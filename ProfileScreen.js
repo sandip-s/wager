@@ -108,7 +108,7 @@ export default class ProfileScreen extends React.Component {
               <View style={{alignItems: 'center'}}>
                 <View style={styles.grayRectangle} />
                 <View style={{width: 200 * person.successRate, height: 20, backgroundColor: '#3BC446', borderRadius: 50, marginRight: 200 - 200 * person.successRate}} />
-                <Text style={styles.progressText}>{person.successRate * 100}%</Text>
+                <Text style={styles.progressText}>{person.successRate * 100}% of Wagers Completed</Text>
               </View>
 
               <FlatList
@@ -304,7 +304,9 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    margin: 10
+    margin: 10,
+    borderWidth: 1,
+    borderColor: '#3bc446',
   },
 
   LocationIcon: {
@@ -328,7 +330,7 @@ const styles = StyleSheet.create({
   },
 
   progressText: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: 'Noteworthy',
     color: '#3BC446'
   },

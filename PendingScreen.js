@@ -19,6 +19,7 @@ import {
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
 import ProfileIcon from './Images/ProfileIcon.png'
+import RightArrow from './Images/WagerRightArrow.png'
 
 // background
 import Background from './Images/Background.png'
@@ -54,10 +55,13 @@ export default class PendingScreen extends React.Component {
           </View>
         </View>
         {/*end top nav*/}
-        <Image style={{ height: 2000, width: '100%', position: 'absolute', marginTop:50}} source={Background} />
+
+
+        <ScrollView>
+        <Image style={{ height: 2000, width: '100%', position: 'absolute', marginTop:0}} source={Background} />
 
       {/*The buttons for filtering sent/recieved */}
-      <View style = {{justifyContent: 'center',alignItems: 'center'}} >
+      <View style = {{justifyContent: 'center',alignItems: 'center',marginTop: 10}} >
         <View style = {{flexDirection: 'row'}}>
           <TouchableWithoutFeedback onPress = { () => this.flipDisplay("sent") }>
             <View style = {view_sent ? styles.GreenButton: styles.GreyButton}><Text style = {styles.InnerButton}>Sent</Text></View>
@@ -69,22 +73,32 @@ export default class PendingScreen extends React.Component {
         </View>
       </View>
 
+
       <FlatList
         data = {display_wagers}
         renderItem = { ({item}) =>
           (
+            <View style={{flexDirection: 'column', flexWrap: 'wrap', }}>
             <View style = {styles.WagerBanner}>
               <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
                 <Image source= {view_sent? item.receiver.image: item.sender.image} style={styles.profilePicture} />
               </TouchableWithoutFeedback>
               <View style = {styles.PendingWager}>
-                <Text style = {{backgroundColor: 'transparent'}}>{view_sent? "Sent ": ""}New Wager {view_sent ? "to": "from"} {view_sent? item.receiver.fullName: item.sender.fullName}!</Text>
+                <View style = {styles.ButtonParent}>
+                  <Button style = {styles.ButtonTextStyle} title = {this.buttonText(item)} color="#000000" onPress = { () => this.clickedWagerBanner(item,database,wagers)} />
+                </View>
+                <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
+                  <Image source = {RightArrow} style = {styles.rightArrow}/>
+                </TouchableWithoutFeedback>
               </View>
+            </View>
             </View>
             )
           }
           keyExtractor={(item,index) => index}
         />
+        </ScrollView>
+
 
         <View style={styles.NavBarContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
@@ -171,6 +185,12 @@ export default class PendingScreen extends React.Component {
     this.props.navigation.navigate('Home');
   };
 
+  buttonText(item){
+    //{view_sent? "Sent ": ""}}New Wager {view_sent ? "to": "from"} {view_sent? item.receiver.fullName: item.sender.fullName}
+
+    return (view_sent? "Sent ": "") + ("New Wager ") + (view_sent ? "to ": "from ") + (view_sent? item.receiver.fullName: item.sender.fullName)
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -190,9 +210,20 @@ const styles = StyleSheet.create({
     margin: 20,
     padding: 10
   },
+  rightArrow:{
+    width: 20,
+    height: 20,
+    marginTop: 28,
+    marginLeft: 5,
+  },
+  ButtonTextStyle:{
+    fontSize: 14,
+    color: 'black',
+  },
 
   PendingWager:{
-    justifyContent: 'center'
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 
   Wager: {
@@ -215,6 +246,11 @@ const styles = StyleSheet.create({
   FilterButtonContainer: {
 
 
+  },
+
+  ButtonParent:{
+    backgroundColor: 'transparent',
+    justifyContent: 'center'
   },
 
   TopProfileIcon:{
@@ -261,7 +297,11 @@ const styles = StyleSheet.create({
 
 
   WagerBanner:{
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderRadius: 8,
+    borderWidth: .5,
+    margin: 10,
+    backgroundColor: 'white'
   },
 
   BottomIcon: {
