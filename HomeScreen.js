@@ -64,7 +64,7 @@ export default class HomeScreen extends React.Component {
             {/* Profile Icon */}
 
             <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
-              <Image source={ProfileIcon} style={styles.TopIcon} />
+              <Image source={database[1].image} style={styles.TopProfileIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
             <Text style={styles.Wager}>Wager</Text>
@@ -210,7 +210,17 @@ const styles = StyleSheet.create({
   TopIcon: {
     width: 30,
     height: 30,
-    marginTop: 5
+    marginTop: 5,
+  },
+
+  TopProfileIcon:{
+    width: 36,
+    height: 36,
+    marginTop: 5,
+    borderRadius: 18,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#3bc446',
   },
 
   NavBarContainer: {
