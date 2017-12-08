@@ -48,13 +48,11 @@ import CommentButton from './Images/WagerCommentIcon.png'
 
 var database = require('./global.js');
 var wagers = require('./wagers.js');
-var adam_index = 1
 var map = [false, false, false, false, false, false, false, false, false]
 
 export default class HomeScreen extends React.Component {
 
   render() {
-
 
     return (
 
@@ -120,7 +118,7 @@ export default class HomeScreen extends React.Component {
 
             {/* Home Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedHome() }>
-              <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
+              <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomHighlightedIcon} />
             </TouchableWithoutFeedback>
 
             {/* Explore Icon */}
@@ -140,7 +138,6 @@ export default class HomeScreen extends React.Component {
 
           </View>
         </View>
-
       </View>
     );
   };
@@ -171,7 +168,6 @@ export default class HomeScreen extends React.Component {
 
   clickedActive(){
     this.props.navigation.navigate('Active', {user: database[1], wagers:wagers, database: database});
-    //this.props.navigation.navigate('Home');
   };
 
   clickedExplore(){
@@ -225,6 +221,13 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginTop: 10
+  },
+
+  BottomHighlightedIcon: {
+    height: 30,
+    width: 30,
+    marginTop: 10,
+    backgroundColor: '#D8F3DA'
   },
 
   container: {

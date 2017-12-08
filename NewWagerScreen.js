@@ -157,7 +157,7 @@ export default class NewWagerScreen extends React.Component {
                   <TouchableWithoutFeedback disabled={!canEdit} onPress = { () => this.updateClickCount(canEdit) }>
                     <Image source={profilePicture} style={styles.profilePicture} />
                   </TouchableWithoutFeedback>
-                  <Text style={styles.fullName}>{pending ? person.fullName : 'Tap to choose!'}</Text>
+                  <Text style={styles.fullName}>{pending ? person.fullName : this.getReceiverName()}</Text>
                   <View style={{flexDirection: 'row'}}>
                     <TextInput editable={canEdit} style={styles.placeholder} value={pending ? this.state.yourGoal : null} placeholder="Enter a goal" onChangeText={(yourGoal) =>
                       this.setState({deadline: this.state.deadline,
@@ -275,9 +275,10 @@ export default class NewWagerScreen extends React.Component {
   }
 
   sendWager = () => {
+    var countered = Boolean(this.props.navigation.state.params.countered);
     if(this.state.deadline == null) {
       alert("You must enter a deadline.");
-    } else if(this.getReceiverName() == 'Tap to choose!') {
+    } else if(this.getReceiverName() == 'Tap to choose!' && !countered) {
       alert("You must choose a friend to wager.");
     } else if (this.state.myGoal == null || this.state.yourGoal == null) {
       alert("You must enter a goal for both people.");
@@ -288,13 +289,16 @@ export default class NewWagerScreen extends React.Component {
     } else {
       var sender = {fullName: 'Adam Mosharrafa', goal: this.state.myGoal, reward: this.state.myReward, penalty: this.state.myPenalty, image: require('./Images/Adam.png')};
       var receiver = {fullName: this.getReceiverName(), goal: this.state.yourGoal, reward: this.state.yourReward, penalty: this.state.yourPenalty, image: this.props.navigation.state.params.database[clickCount % 4].image};
-      var wager = {sender: sender,
+      var newWager = {sender: sender,
                    receiver: receiver,
                    deadline: this.state.deadline,
                    status: 'Pending',
                    direction: 'Sent'
                   }
-      this.props.navigation.state.params.wagers.push(wager);
+      var current_wager = this.props.navigation.state.params.current_wager;
+      var pending = Boolean(current_wager);
+      if(pending) this.props.navigation.state.params.wagers.splice(this.props.navigation.state.params.wagers.indexOf(current_wager), 1);
+      this.props.navigation.state.params.wagers.push(newWager);
       clickCount = 0;
       this.forceUpdate();
     }
@@ -325,6 +329,12 @@ export default class NewWagerScreen extends React.Component {
   }
 
   getReceiverName() {
+    var countered = Boolean(this.props.navigation.state.params.countered);
+    if(countered) {
+      var current_wager = this.props.navigation.state.params.current_wager;
+      var person = current_wager.direction == 'Received' ? current_wager.sender : current_wager.receiver;
+      return person.fullName;
+    } 
     if(clickCount == 0) return 'Tap to choose!';
     return this.props.navigation.state.params.database[clickCount % 4].fullName;
   };
