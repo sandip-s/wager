@@ -23,70 +23,74 @@ import ProfileIcon from './Images/ProfileIcon.png'
 // background
 import Background from './Images/Background.png'
 
-
-
-
-
-
 export default class ExploreScreen extends React.Component {
 
 
   render() {
     var database = this.props.navigation.state.params.database;
     var wagers = this.props.navigation.state.params.wagers;
-
-
+    var wager_array = this.props.navigation.state.params.wager_array;
 
     return (
 
-
-      <View style={{flex: 1, justifyContent: 'space-around', alignSelf: 'stretch', paddingTop: 20,  backgroundColor: '#ffffff'}}>
-
-      <Image style={{ height: 2000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
-      <Text style={styles.YouMightKnow}>{"You Might Know..."}</Text>
-
-
-
-      <FlatList
-        data = {[ database[0], database[2], database[3] ]}
-        renderItem = { ({item,}) =>
-          (
-          <View style={{flexDirection: 'column', alignItems: 'center', paddingBottom: 10}}>
-            <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item,database,wagers) } style = {styles.FriendListEntry}>
-              <Image source = {item.image} style = {styles.FriendsListEntryElement}/>
+      <View style={{flex: 1, alignSelf: 'stretch'}}>
+        {/* Top NavBar */}
+        <View style={styles.TopBar}>
+          <View style={{flexDirection: 'row'} }>
+            {/* Profile Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database, wagers, wager_array) }>
+              <Image source={database[1].image} style={styles.TopProfileIcon} />
             </TouchableWithoutFeedback>
-            <Text style={styles.name}>{item.fullName.split(" ")[0]}</Text>
-            <Text style={styles.name}>{item.location}</Text>
+            {/* Wager Text */}
+            <Text style={styles.Wager}>Wager</Text>
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database, wagers, wager_array) }>
+              <Image source={SendWagerIcon} style={styles.TopIcon} />
+            </TouchableWithoutFeedback>
           </View>
-          )
-        }
-        keyExtractor={(item,index) => index}
-      />
+        </View>
 
-          <ScrollView style = {styles.FriendsList}>
-              <View style = {{flexDirection: 'row'}}>
-            </View>
+        <ScrollView>
+          <Image style={{ height: 2000, width: '100%', position: 'absolute', top:-200, left:0 }} source={Background} />
+          <Text style={styles.YouMightKnow}>{"You Might Know..."}</Text>
+
+          <FlatList
+            data = {[ database[0], database[2], database[3] ]}
+            renderItem = { ({item,}) =>
+              (
+              <View style={{flexDirection: 'column', alignItems: 'center', paddingBottom: 10}}>
+                <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item, database, wagers, wager_array) } style = {styles.FriendListEntry}>
+                  <Image source = {item.image} style = {styles.FriendsListEntryElement}/>
+                </TouchableWithoutFeedback>
+                <Text style={styles.name}>{item.fullName.split(" ")[0]}</Text>
+                <Text style={styles.name}>{item.location}</Text>
+              </View>
+              )
+            }
+            keyExtractor={(item,index) => index}
+          />
         </ScrollView>
+
         <View style={styles.NavBarContainer}>
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
             {/* Profile Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers, wager_array) }>
               <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedExplore(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedExplore(database,wagers, wager_array) }>
               <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomHighlightedIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedPending(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedPending(database,wagers, wager_array) }>
               <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedActive(database,wagers) }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedActive(database,wagers, wager_array) }>
               <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
@@ -94,44 +98,35 @@ export default class ExploreScreen extends React.Component {
         </View>
 
       </View>
-
     );
   }
 
-  clickedActiveWager(personClicked, data){
-    this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database});
-  }
-
-  clickedProfile(database, wagers) {
-    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
+  clickedProfile(database, wagers, wager_array) {
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedWagerBanner(current_wager, database, wagers){
-    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: false})
+  clickedSendWager(database, wagers, wager_array) {
+    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedSendWager(database, wagers) {
-    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database});
+  clickedPending(database, wagers, wager_array){
+    this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database, wager_array: wager_array});
   };
 
-  clickedPending(database,wagers){
-    this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database});
+  clickedActive(database, wagers, wager_array){
+    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedActive(database,wagers){
-    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database});
-  };
-
-  clickedExplore(database,wagers){
+  clickedExplore(database, wagers, wager_array){
 
   };
 
-  clickedHome(database,wagers){
-    this.props.navigation.navigate('Home');
+  clickedHome(database, wagers, wager_array){
+    this.props.navigation.navigate('Home', {user: database[1], wagers: wagers, database: database, wager_array: wager_array});
   };
 
-  clickedFriendsListEntry(personClicked,database,wagers){
-    this.props.navigation.navigate('Profile', {user: database[1], person: personClicked, wagers: wagers, database: database});
+  clickedFriendsListEntry(personClicked, database, wagers, wager_array){
+    this.props.navigation.navigate('Profile', {user: database[1], person: personClicked, wagers: wagers, database: database, wager_array: wager_array});
   }
 }
 
@@ -148,6 +143,22 @@ const styles = StyleSheet.create({
   NavBarContainer: {
     backgroundColor: '#ffffff',
     height: 50
+  },
+
+  TopProfileIcon:{
+    width: 36,
+    height: 36,
+    marginTop: 5,
+    borderRadius: 18,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#3bc446',
+  },
+
+  TopIcon: {
+    width: 30,
+    height: 30,
+    marginTop: 5,
   },
 
   BottomIcon: {
