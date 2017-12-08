@@ -36,13 +36,14 @@ export default class PendingScreen extends React.Component {
     var display_wagers = view_sent ? sent_wagers: recieved_wagers;
 
     return (
-      <View style={{flex: 1, alignSelf: 'stretch', paddingTop: 20, backgroundColor: '#ffffff'}}>
+
+      <View style={{flex: 1, alignSelf: 'stretch', backgroundColor: '#ffffff'}}>
         {/* Top NavBar */}
         <View style={styles.TopBar}>
           <View style={{flexDirection: 'row'}}>
             {/* Profile Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
-              <Image source={ProfileIcon} style={styles.TopIcon} />
+              <Image source={database[1].image} style={styles.TopProfileIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
             <Text style={styles.Wager}>Wager</Text>
@@ -53,20 +54,21 @@ export default class PendingScreen extends React.Component {
           </View>
         </View>
         {/*end top nav*/}
+        <Image style={{ height: 2000, width: '100%', position: 'absolute', marginTop:50}} source={Background} />
 
       {/*The buttons for filtering sent/recieved */}
       <View style = {{justifyContent: 'center',alignItems: 'center'}} >
-        <View style = {styles.FilterButtonContainer}>
-          <TouchableWithoutFeedback onPress = { () => this.flipDisplay("sent") } style = {styles.ButtonContainer}>
-            <View><Text style = {styles.Button}>Sent</Text></View>
+        <View style = {{flexDirection: 'row'}}>
+          <TouchableWithoutFeedback onPress = { () => this.flipDisplay("sent") }>
+            <View style = {view_sent ? styles.GreenButton: styles.GreyButton}><Text style = {styles.InnerButton}>Sent</Text></View>
           </TouchableWithoutFeedback>
 
-          <TouchableWithoutFeedback onPress = { () => this.flipDisplay("received") } style = {styles.ButtonContainer} >
-            <View><Text style = {styles.Button}>Received</Text></View>
+          <TouchableWithoutFeedback onPress = { () => this.flipDisplay("received")}  >
+            <View style = {!view_sent ? styles.GreenButton: styles.GreyButton}><Text style = {styles.InnerButton}>Received</Text></View>
           </TouchableWithoutFeedback>
         </View>
       </View>
-      
+
       <FlatList
         data = {display_wagers}
         renderItem = { ({item}) =>
@@ -76,7 +78,7 @@ export default class PendingScreen extends React.Component {
                 <Image source= {view_sent? item.receiver.image: item.sender.image} style={styles.profilePicture} />
               </TouchableWithoutFeedback>
               <View style = {styles.PendingWager}>
-                <Text>{view_sent? "Sent ": ""}New Wager {view_sent ? "to": "from"} {view_sent? item.receiver.fullName: item.sender.fullName}!</Text>
+                <Text style = {{backgroundColor: 'transparent'}}>{view_sent? "Sent ": ""}New Wager {view_sent ? "to": "from"} {view_sent? item.receiver.fullName: item.sender.fullName}!</Text>
               </View>
             </View>
             )
@@ -189,6 +191,10 @@ const styles = StyleSheet.create({
     padding: 10
   },
 
+  PendingWager:{
+    justifyContent: 'center'
+  },
+
   Wager: {
     backgroundColor: 'transparent',
     fontSize: 30,
@@ -207,7 +213,19 @@ const styles = StyleSheet.create({
   },
 
   FilterButtonContainer: {
-    flexDirection: 'row',
+
+
+  },
+
+  TopProfileIcon:{
+    width: 36,
+    height: 36,
+    marginTop: 5,
+    borderRadius: 18,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#3bc446',
+
   },
 
   NavBarContainer: {
@@ -215,9 +233,32 @@ const styles = StyleSheet.create({
     height: 50
   },
 
-  ButtonContainer:{
-    borderRadius: 20,
+  InnerButton:{
+    alignSelf: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    backgroundColor: 'transparent',
+    fontFamily: 'Noteworthy',
+    marginTop: 5
   },
+
+  GreenButton:{
+    width: 100,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#3bc446',
+    margin: 10
+  },
+  GreyButton:{
+    width: 100,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'lightgrey',
+    margin: 10
+  },
+
+
+
 
   WagerBanner:{
     flexDirection: 'row'
@@ -247,6 +288,10 @@ const styles = StyleSheet.create({
    flex: 5,
    paddingTop: 10,
    paddingBottom: 10
+  },
+
+  ButtonContainer:{
+    borderRadius: 20,
   },
 
   profilePicture: {
