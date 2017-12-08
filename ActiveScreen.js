@@ -41,7 +41,7 @@ export default class Active extends React.Component {
             {/* Profile Icon */}
 
             <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
-              <Image source={ProfileIcon} style={styles.TopIcon} />
+              <Image source={database[1].image} style={styles.TopProfileIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
             <Text style={styles.Wager}>Wager</Text>
@@ -59,15 +59,15 @@ export default class Active extends React.Component {
               <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
                 <View style={{flexDirection: 'row'}}>
                   <TouchableWithoutFeedback onPress = { () => this.clickedWagerBanner(item,database,wagers) }>
-                    <Image source= {item.sender.image} style={styles.profilePicture} />
+                    <Image source= {this.isSender(item)? item.receiver.image: item.sender.image} style={styles.profilePicture} />
                   </TouchableWithoutFeedback>
-                  <View style= {{flexDirection: 'column',flexWrap: 'wrap', width: 300,paddingTop: 10}}>
-                    <Text>You have an active wager with {item.sender.fullName}!</Text>
+                  <View style= {{flexDirection: 'column',flexWrap: 'wrap', width: 300,paddingTop: 10,justifyContent: 'center'}}>
+                    <Text>You have an active wager with {this.isSender(item) ? item.receiver.fullName : item.sender.fullName    }!</Text>
                     <Text>Make sure to complete your goal of: {this.isSender(item) ? item.sender.goal: item.receiver.goal}.</Text>
-                    <Text>Deadline: {item.deadline}</Text>
+                    <Text style={styles.timestamp}> Deadline: {item.deadline}</Text>
                   </View>
                 </View>
-                <Text style={styles.timestamp}>four o clock</Text>
+
               </View>
             )
           }
@@ -108,7 +108,7 @@ export default class Active extends React.Component {
   };
 
   isSender(wager){
-    return wager.sent == "Sent"
+    return wager.direction == "Sent"
   }
 
   activeWagers(wagers){
@@ -187,16 +187,25 @@ const styles = StyleSheet.create({
     fontFamily: 'Verdana',
     backgroundColor: 'transparent',
     fontStyle: 'italic',
-    padding: 10,
+
     fontSize: 12,
     height: 44,
-    marginLeft: 55
   },
 
   BottomIcon: {
     height: 30,
     width: 30,
     marginTop: 10
+  },
+
+  TopProfileIcon:{
+    width: 36,
+    height: 36,
+    marginTop: 5,
+    borderRadius: 18,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#3bc446',
   },
 
   BottomHighlightedIcon: {

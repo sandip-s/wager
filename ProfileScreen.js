@@ -65,6 +65,7 @@ export default class ProfileScreen extends React.Component {
     var user = this.props.navigation.state.params.user;
     var database = this.props.navigation.state.params.database;
     var profilePicture = database[database.indexOf(person)].image;
+    var wagers = this.props.navigation.state.params.wagers;
 
     return (
       <View style={{flex: 1, alignSelf: 'stretch'}}>
@@ -73,13 +74,13 @@ export default class ProfileScreen extends React.Component {
           <View style={{flexDirection: 'row'}}>
             {/* Profile Icon */}
 
-            <TouchableWithoutFeedback onPress = { () => this.clickedProfile() }>
-              <Image source={ProfileIcon} style={styles.TopIcon} />
+            <TouchableWithoutFeedback onPress = { () => this.clickedProfile(database,wagers) }>
+              <Image source={database[1].image} style={styles.TopProfileIcon} />
             </TouchableWithoutFeedback>
             {/* Wager Text */}
             <Text style={styles.Wager}>Wager</Text>
             {/* Send Wager Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager() }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedSendWager(database,wagers) }>
               <Image source={SendWagerIcon} style={styles.TopIcon} />
             </TouchableWithoutFeedback>
           </View>
@@ -138,22 +139,22 @@ export default class ProfileScreen extends React.Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
             {/* Home Icon */}
-            <TouchableWithoutFeedback onPress = { () => this.clickedHome() }>
+            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
               <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Explore Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore() }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedExplore(database,wagers) }>
               <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Pending Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedPending() }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedPending(database,wagers) }>
               <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
             {/* Active Icon */}
-            <TouchableWithoutFeedback onPress = { ()=> this.clickedActive() }>
+            <TouchableWithoutFeedback onPress = { ()=> this.clickedActive(database,wagers) }>
               <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
             </TouchableWithoutFeedback>
 
@@ -172,13 +173,41 @@ export default class ProfileScreen extends React.Component {
     }
   }
 
-  clickedProfile(person) {
 
+
+
+  clickedActiveWager(personClicked, data){
+    this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database});
+  }
+
+  clickedProfile(database, wagers) {
+    //this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
   };
 
-  clickedSendWager() {
-    this.props.navigation.navigate('NewWager', {wagers: this.props.navigation.state.params.wagers, database: this.props.navigation.state.params.database});
+  clickedWagerBanner(current_wager, database, wagers){
+    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: false})
   };
+
+  clickedSendWager(database, wagers) {
+    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database});
+  };
+
+  clickedPending(database,wagers){
+    this.props.navigation.navigate('Pending', {user: database[1], wagers: wagers, database: database});
+  };
+
+  clickedActive(database,wagers){
+    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database});
+  };
+
+  clickedExplore(database,wagers){
+    this.props.navigation.navigate('Explore',{user: database[1], wagers: wagers, database: database});
+  };
+
+  clickedHome(database,wagers){
+    this.props.navigation.navigate('Home');
+  };
+
 
   friendButton(adam, person) {
     console.log(adam)
@@ -203,7 +232,7 @@ export default class ProfileScreen extends React.Component {
     if (fullName == "Adam Mosharrafa") {return adam_wagers;}
     if (!isFriend) {return []};
     switch(fullName) {
-      case "Charlie Furrer":          
+      case "Charlie Furrer":
         return charlie_wagers;
       case "Sandip Srinivas":
         return sandip_wagers;
@@ -241,6 +270,16 @@ const styles = StyleSheet.create({
   NavBarContainer: {
     backgroundColor: '#ffffff',
     height: 50
+  },
+
+  TopProfileIcon:{
+    width: 36,
+    height: 36,
+    marginTop: 5,
+    borderRadius: 18,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#3bc446',
   },
 
   BottomIcon: {
