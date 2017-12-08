@@ -26,6 +26,11 @@ import Background from './Images/Background.png'
 
 import Display from 'react-native-display';
 
+//like and comment
+import EmptyHeart from './Images/WagerLikeIcon.png'
+import FullHeart from './Images/WagerUnLikeIcon.png'
+import CommentButton from './Images/WagerCommentIcon.png'
+
 var isFriend = false;
 
 var adam_wagers = [
@@ -42,7 +47,7 @@ var charlie_wagers = [
 
 var sandip_wagers = [
     {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", timestamp: "7 days ago"},
-    {key: "Sandip completed Charlie)s wager to go to the gym by November 17th.", timestamp: "Nov 17"},
+    {key: "Sandip completed Charlie's wager to go to the gym by November 17th.", timestamp: "Nov 17"},
     {key: "Sandip failed Zhiwei's wager to swim laps by November 16th.", timestamp: "Nov 16"},
 ]
 
@@ -51,6 +56,8 @@ var zhiwei_wagers = [
     {key: "Zhiwei completed Charlie's wager to run a half marathon by November 15th.", timestamp: "Nov 15"},
     {key: "Zhiwei completed Adam's wager to read a new book by November 14th.", timestamp: "Nov 14"},
 ]
+
+var wager_map = [{"Adam Mosharrafa": adam_wagers}, {"Charlie Furrer": charlie_wagers}, {"Sandip Srinivas": sandip_wagers}, {"Zhiwei Gu": zhiwei_wagers}]
 
 export default class ProfileScreen extends React.Component {
   render() {
@@ -104,11 +111,21 @@ export default class ProfileScreen extends React.Component {
               </View>
 
               <FlatList
-              data={this.getWagers(person.fullName)}
+              data={this.getWagers(person.fullName, this.state.isFriend)}
               renderItem={({item}) =>
-                <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
-                  <Text style={styles.timestamp}>{item.timestamp}</Text>
+              <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.item}>{item.key}</Text>
                 </View>
+                <Text style={styles.timestamp}>{item.timestamp}</Text>
+                <View style={{flexDirection: 'row', paddingLeft: 55}}>
+                  <TouchableWithoutFeedback onPress = { () => {this.toggleHeart(item.ID)} }>
+                    <Image source = {EmptyHeart} style ={styles.LikeIcon}/>
+                  </TouchableWithoutFeedback>
+
+                  <Image source = {CommentButton} style ={styles.CommentIcon}/>
+                </View>
+              </View>
               }
               />
 
@@ -182,11 +199,11 @@ export default class ProfileScreen extends React.Component {
 
   };
 
-  getWagers(fullName) {
+  getWagers(fullName, isFriend) {
+    if (fullName == "Adam Mosharrafa") {return adam_wagers;}
+    if (!isFriend) {return []};
     switch(fullName) {
-      case "Adam Mosharrafa":
-        return adam_wagers;
-      case "Charlie Furrer":
+      case "Charlie Furrer":          
         return charlie_wagers;
       case "Sandip Srinivas":
         return sandip_wagers;
@@ -275,6 +292,37 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Noteworthy',
     color: '#3BC446'
+  },
+
+  item: {
+    fontFamily: 'Verdana',
+    backgroundColor: 'transparent',
+    flexWrap: 'wrap',
+    width: 325,
+    padding: 10,
+    fontSize: 12,
+    height: 44,
+  },
+
+  timestamp: {
+    fontFamily: 'Verdana',
+    backgroundColor: 'transparent',
+    fontStyle: 'italic',
+    padding: 10,
+    fontSize: 12,
+    height: 44,
+    marginLeft: 55
+  },
+
+  LikeIcon: {
+    width: 30,
+    height: 30
+  },
+
+  CommentIcon: {
+    width: 30,
+    height: 30,
+    marginLeft: 25
   }
 
 });
