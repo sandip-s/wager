@@ -49,14 +49,14 @@ export default class ExploreScreen extends React.Component {
 
       <FlatList
         data = {[ database[0], database[2], database[3] ]}
-        numColumns={3}
         renderItem = { ({item,}) =>
           (
-          <View style={{flexDirection: 'column', paddingLeft: 55}}>
+          <View style={{flexDirection: 'column', alignItems: 'center', paddingBottom: 10}}>
             <TouchableWithoutFeedback onPress = { () => this.clickedFriendsListEntry(item,database,wagers) } style = {styles.FriendListEntry}>
-              <Image source = {this.choosePicture(item.fullName)} style = {styles.FriendsListEntryElement}/>
+              <Image source = {item.image} style = {styles.FriendsListEntryElement}/>
             </TouchableWithoutFeedback>
             <Text style={styles.name}>{item.fullName.split(" ")[0]}</Text>
+            <Text style={styles.name}>{item.location}</Text>
           </View>
           )
         }
@@ -130,25 +130,9 @@ export default class ExploreScreen extends React.Component {
     this.props.navigation.navigate('Home');
   };
 
-  choosePicture(name) {
-    switch(name) {
-      case "Adam Mosharrafa":
-        return require('./Images/Adam.png');
-      case "Charlie Furrer":
-        return require('./Images/Charlie.png');
-      case "Sandip Srinivas":
-        return require('./Images/Sandip.png');
-      case "Zhiwei Gu":
-        return require('./Images/Zhiwei.png');
-    }
-  }
-
-
   clickedFriendsListEntry(personClicked,database,wagers){
     this.props.navigation.navigate('Profile', {user: database[1], person: personClicked, wagers: wagers, database: database});
   }
-
-
 }
 
 
@@ -181,6 +165,8 @@ const styles = StyleSheet.create({
 
   name: {
     backgroundColor: 'transparent',
+    fontWeight: 'bold',
+    fontFamily: 'Noteworthy',
   },
 
   FriendsList: {
@@ -192,9 +178,10 @@ const styles = StyleSheet.create({
   },
 
   FriendsListEntryElement:{
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    paddingBottom: 5
   },
 
   FriendsListEntryName:{
@@ -232,7 +219,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Noteworthy',
     color: '#3BC446',
     textAlign: 'center',
-    paddingBottom: 100
+    paddingBottom: 20
    },
 
 });
