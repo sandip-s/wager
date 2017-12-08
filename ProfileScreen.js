@@ -111,18 +111,20 @@ export default class ProfileScreen extends React.Component {
               <FlatList
               data={this.getWagers(person.fullName, this.state.isFriend)}
               renderItem={({item}) =>
+              <View style = {styles.WagerBanner}>
               <View style={{flexDirection: 'column', flexWrap: 'wrap'}}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={styles.item}>{item.key}</Text>
                 </View>
                 <Text style={styles.timestamp}>{item.timestamp}</Text>
                 <View style={{flexDirection: 'row', paddingLeft: 55}}>
-                  <TouchableWithoutFeedback onPress = { () => {this.toggleHeart(person_index, item.ID, wager_array)} }>
+                  <TouchableWithoutFeedback onPress = { () => {this.toggleHeart(person_index, item.ID, wager_array,database,wagers)} }>
                     <Image source = {wager_array[person_index][item.ID] ? FullHeart : EmptyHeart} style ={styles.LikeIcon}/>
                   </TouchableWithoutFeedback>
 
                   <Image source = {CommentButton} style ={styles.CommentIcon}/>
                 </View>
+              </View>
               </View>
               }
               />
@@ -170,16 +172,18 @@ export default class ProfileScreen extends React.Component {
     }
   };
 
-  toggleHeart(index, ID, wager_array) {
+  toggleHeart(index, ID, wager_array,database,wagers) {
     wager_array[index][ID] = !wager_array[index][ID];
     this.forceUpdate();
+    
+
   };
 
   getIndex(fullName) {
     switch(fullName) {
-      case "Charlie Furrer":          
+      case "Charlie Furrer":
         return 0;
-      case "Adam Mosharrafa":          
+      case "Adam Mosharrafa":
         return 1;
       case "Sandip Srinivas":
         return 2;
@@ -306,6 +310,15 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+
+  WagerBanner:{
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    borderRadius: 8,
+    borderWidth: .5,
+    margin: 10,
+    paddingBottom: 5
   },
 
   fullName: {
