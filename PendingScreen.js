@@ -99,7 +99,7 @@ export default class PendingScreen extends React.Component {
 
             {/* Send Wager Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedPending(database,wagers) }>
-              <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
+              <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomHighlightedIcon} />
             </TouchableWithoutFeedback>
 
             {/* Send Wager Icon */}
@@ -227,6 +227,13 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginTop: 10
+  },
+
+  BottomHighlightedIcon: {
+    height: 30,
+    width: 30,
+    marginTop: 10,
+    backgroundColor: '#D8F3DA'
   },
 
   FilterButton: {

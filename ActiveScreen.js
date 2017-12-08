@@ -75,7 +75,7 @@ export default class Active extends React.Component {
         />
 
         <View style={styles.NavBarContainer}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
 
             {/* Profile Icon */}
             <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
@@ -94,7 +94,7 @@ export default class Active extends React.Component {
 
             {/* Send Wager Icon */}
             <TouchableWithoutFeedback onPress = { ()=> this.clickedActive(database,wagers) }>
-              <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
+              <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomHighlightedIcon} />
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -197,6 +197,13 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginTop: 10
+  },
+
+  BottomHighlightedIcon: {
+    height: 30,
+    width: 30,
+    marginTop: 10,
+    backgroundColor: '#D8F3DA'
   },
 
   container: {

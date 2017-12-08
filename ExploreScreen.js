@@ -60,10 +60,68 @@ export default class ExploreScreen extends React.Component {
               <View style = {{flexDirection: 'row'}}>
             </View>
         </ScrollView>
+        <View style={styles.NavBarContainer}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+
+            {/* Profile Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedHome(database,wagers) }>
+              <Image source={require('./Images/WagerHomeIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
+
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedExplore(database,wagers) }>
+              <Image source={require('./Images/WagerSearchIcon.png')} style={styles.BottomHighlightedIcon} />
+            </TouchableWithoutFeedback>
+
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedPending(database,wagers) }>
+              <Image source={require('./Images/WagerPendingIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
+
+            {/* Send Wager Icon */}
+            <TouchableWithoutFeedback onPress = { () => this.clickedActive(database,wagers) }>
+              <Image source={require('./Images/WagerHourglassIcon.png')} style={styles.BottomIcon} />
+            </TouchableWithoutFeedback>
+
+          </View>
+        </View>
+
       </View>
 
     );
   }
+
+  clickedActiveWager(personClicked, data){
+    this.props.navigation.navigate('NewWagerScreen', {person: database[1], wagers: wagers, database: database});
+  }
+
+  clickedProfile(database, wagers) {
+    this.props.navigation.navigate('Profile', {user: database[1], person: database[1], wagers: wagers, database: database});
+  };
+
+  clickedWagerBanner(current_wager, database, wagers){
+    this.props.navigation.navigate('NewWager', { current_wager: current_wager, database: database, wagers: wagers, user: database[1], countered: false})
+  };
+
+  clickedSendWager(database, wagers) {
+    this.props.navigation.navigate('NewWager', {wagers: wagers, database: database});
+  };
+
+  clickedPending(database,wagers){
+    this.props.navigation.navigate('Pending', {user: database[1], wagers:wagers, database: database});
+  };
+
+  clickedActive(database,wagers){
+    this.props.navigation.navigate('Active', {user: database[1], wagers: wagers, database: database});
+  };
+
+  clickedExplore(database,wagers){
+    
+  };
+
+  clickedHome(database,wagers){
+    this.props.navigation.navigate('Home');
+  };
 
   choosePicture(name) {
     switch(name) {
@@ -95,6 +153,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 50,
   },
+
+  NavBarContainer: {
+    backgroundColor: '#ffffff',
+    height: 50
+  },
+
+  BottomIcon: {
+    height: 30,
+    width: 30,
+    marginTop: 10
+  },
+
+  BottomHighlightedIcon: {
+    height: 30,
+    width: 30,
+    marginTop: 10,
+    backgroundColor: '#D8F3DA'
+  },
+
   FriendsList: {
 
   },
