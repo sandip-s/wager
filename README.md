@@ -2,7 +2,7 @@
 CS147 Final Project
 Adam, Charlie, Sandip, Allen
 
-Instructions:
+Download/Run Instructions:
 
 1) `git clone https://github.com/sandip-s/wager.git`
 
@@ -16,26 +16,7 @@ Instructions:
 
 6) scan QR code in terminal with Expo
 
-Branch Workflow:
+Expo QR Code:
 
-0) `git pull`
-
-1) `git checkout -b "your name here"`
-
-2) `git checkout "your name here"`
-
-3) `git merge master`
-
-4) From here, do all your work on your local branch. Once you're positive that the app won't crash:
-
-5) `git add .`
-
-6) `git commit -m "your message here"`
-
-7) `git push --set-upstream origin your_name_here`
-
-8) `git checkout master`
-
-9) `git merge "your name here"`
-
-10) `git push`
+Expo Web Address:
+  exp://10.0.1.89:19000
