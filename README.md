@@ -16,6 +16,6 @@ Download/Run Instructions:
 
 6) scan QR code in terminal with Expo
 
-Expo QR Code: ![View Here](/Images/ExpoQRCode.png)
+Expo QR Code: ![](/Images/ExpoQRCode.png =250x)
 
-Expo Web Address: [exp://10.0.1.89:19000]()
+Expo Web Address: [exp://10.0.1.89:19000]
