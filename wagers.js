@@ -59,14 +59,14 @@ module.exports = [
 	{
 		sender: {
 			fullName: "Adam Mosharrafa",
-			goal: "eat breakfast every day this week",
-			reward: "one pat on the back",
+			goal: "eat healthy",
+			reward: "pat on the back",
 			penalty: "do my dishes",
 			image: require('./Images/Adam.png'),
 		},
 		receiver: {
 			fullName: "Sandip Srinvas",
-			goal: "do twenty pushups every night this week",
+			goal: "twenty pushups",
 			reward: "free dinner",
 			penalty: "streak the quad",
 			image: require('./Images/Sandip.png')
@@ -78,16 +78,16 @@ module.exports = [
 	{
 		sender: {
 			fullName: "Adam Mosharrafa",
-			goal: "finish the hi-fi by thursday",
-			reward: "a healthy amount of sleep",
-			penalty: "stay up all night working on the hi-fi",
+			goal: "finish the hi-fi",
+			reward: "sleep",
+			penalty: "stay up all night",
 			image: require('./Images/Adam.png'),
 		},
 		receiver: {
 			fullName: "Charlie Furrer",
-			goal: "fill out the hi-fi database on the plane-ride to Philadelphia",
+			goal: "finish out the hi-fi",
 			reward: "twenty dollars",
-			penalty: "do the PendingScreen as well",
+			penalty: "stay up all night",
 			image: require('./Images/Charlie.png')
 		},
 		deadline: "12-19-2018",
