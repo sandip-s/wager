@@ -83,7 +83,7 @@ export default class HomeScreen extends React.Component {
               data={[
                 {key: "Zhiwei failed Sandip's wager to try new juice cleanse by November 25th.", photo: "Zhiwei Gu", index: 3, timestamp: "2 hours ago", ID: 0},
                 {key: "Charlie completed Sandip's wager to cook family dinner by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago", ID: 1},
-                {key: "Charlie completed Zhiwei's wager to go a day without checking Instagram by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago", ID: 2},
+                {key: "Charlie completed Zhiwei's wager to stay off Instagram by November 24th.", photo: "Charlie Furrer", index: 0, timestamp: "18 hours ago", ID: 2},
                 {key: "Charlie completed Zhiwei's wager to get lunch with a professor by November 21st.", photo: "Charlie Furrer", index: 0, timestamp: "4 days ago", ID: 3},
                 {key: "Sandip failed Adam's wager to finish history paper draft by November 18th.", photo: "Sandip Srinivas", index: 2, timestamp: "7 days ago", ID: 4},
                 {key: "Sandip completed Charlie's wager to go to the gym by November 17th.", photo: "Sandip Srinivas", index: 2, timestamp: "Nov 17", ID: 5},

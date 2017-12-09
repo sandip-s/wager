@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
-  StyleSheet,
+  AppRegistry,
   FlatList,
+  List,
+  ListItem,
+  StyleSheet,
   Text,
   View,
   TouchableOpacity,
@@ -15,6 +18,10 @@ import {
   Alert,
   Navigator
 } from 'react-native';
+
+import {
+  StackNavigator
+} from 'react-navigation';
 
 // top bar icons
 import SendWagerIcon from './Images/SendWagerIcon.png'
@@ -169,14 +176,13 @@ export default class ProfileScreen extends React.Component {
     var user = this.props.navigation.state.params.user;
     this.state = {
       isFriend: user.friends.includes(person.fullName),
+      enable: false,
     }
   };
 
   toggleHeart(index, ID, wager_array,database,wagers) {
     wager_array[index][ID] = !wager_array[index][ID];
     this.forceUpdate();
-    
-
   };
 
   getIndex(fullName) {
